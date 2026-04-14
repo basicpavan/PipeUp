@@ -47,7 +47,7 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!-- Adicionar validacção de dados (NotBlank, email, etc)-->
+        <!-- Adicionar validação de dados (NotBlank, email, etc)-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>

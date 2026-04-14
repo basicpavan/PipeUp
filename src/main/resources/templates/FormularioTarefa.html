@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pipe Up - Nova Tarefa</title>
+    <style>
+
+    </style>
 </head>
 <body>
+    <!-- Cabeçalho -->
+    <div class = "modal-header">
+        <span class="modal-titulo">Tarefa</span>
+        <a class="modal-fechar" href="/" title="Fechar">&#x2715;</a> <!-- pode mudar a posição do X se necessário-->
+    </div>
+    <!-- Mensagem de sucesso-->
+    <div class = "alerta-sucesso" th:if="${sucesso}" th:text="${sucesso}"></div>
+    <!-- Erro de negócio (e-mail duplicado, etc)-->
+    <div class = "alerta-negocio" th:if="${erroNegocio}" th:text="${erroNegocio}"></div>
+    <!-- Formulário ligado ao objeto "tarefa" do Controller-->
+    <form th:action="@{/tarefas/criar}" th:object="${tarefa}" method="post" class="modal-form">
+        <!-- Nome -->
+        <div class = "campo-grupo" th:classappend="${#fields.hasErrors('nome')} ? 'erro' ">
+            <label class="campo-label" for="nome">Nome:</label>
+            <input class="campo-input" type="text" id="nome" th:field="*{nome}" placeholder="" />
+        </div>
+        <span class="msg-erro" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
 
+        <!-- E-mail -->
+        <div class = "campo-grupo" th:classappend="${#fields.hasErrors('email')} ? 'erro' ">
+            <label class="campo-label" for="email">E-mail:</label>
+            <input class="campo-input" type="email" id="email" th:field="*{email}" placeholder="" />
+        </div>
+        <span class="msg-erro" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+        <!-- Senha -->
+        <div class = "campo-grupo" th:classappend="${#fields.hasErrors('senha')} ? 'erro' ">
+            <label class="campo-label" for="senha">Senha:</label>
+            <input class="campo-input" type="password" id="senha" th:field="*{senha}" placeholder="" />
+        </div>
+        <span class="msg-erro" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></span>
+    </form>
 </body>
-</html>☺
+</html>
