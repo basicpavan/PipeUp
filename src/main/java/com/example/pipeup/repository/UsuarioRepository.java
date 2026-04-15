@@ -1,4 +1,4 @@
 package com.example.pipeup.repository;
 
-public interface TarefaRepository {
+public class UsuarioRepository {
 }
