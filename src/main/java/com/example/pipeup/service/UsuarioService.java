@@ -1,4 +1,4 @@
 package com.example.pipeup.service;
 
-public class TarefaService git {
+public class UsuarioService git {
 }

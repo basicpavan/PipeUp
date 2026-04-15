@@ -1,4 +1,4 @@
 package com.example.pipeup.model;
 
-public class Tarefa {
+public class Usuario {
 }
