@@ -9,37 +9,97 @@
     </style>
 </head>
 <body>
+
+<div class="modal">
+
     <!-- Cabeçalho -->
-    <div class = "modal-header">
+    <div class="modal-header">
         <span class="modal-titulo">Tarefa</span>
-        <a class="modal-fechar" href="/" title="Fechar">&#x2715;</a> <!-- pode mudar a posição do X se necessário-->
+        <a class="modal-fechar" href="/" title="Fechar">&#x2715;</a>
     </div>
-    <!-- Mensagem de sucesso-->
-    <div class = "alerta-sucesso" th:if="${sucesso}" th:text="${sucesso}"></div>
-    <!-- Erro de negócio (e-mail duplicado, etc)-->
-    <div class = "alerta-negocio" th:if="${erroNegocio}" th:text="${erroNegocio}"></div>
-    <!-- Formulário ligado ao objeto "tarefa" do Controller-->
-    <form th:action="@{/tarefas/criar}" th:object="${tarefa}" method="post" class="modal-form">
+
+    <!-- Mensagem de sucesso -->
+    <div class="alerta-sucesso" th:if="${sucesso}" th:text="${sucesso}"></div>
+
+    <!-- Erro de negócio (e-mail duplicado, etc.) -->
+    <div class="alerta-negocio" th:if="${erroNegocio}" th:text="${erroNegocio}"></div>
+
+    <!-- Formulário ligado ao objeto "usuario" do controller -->
+    <form th:action="@{/tarefas/criar}" th:object="${usuario}" method="post" class="modal-form">
+
         <!-- Nome -->
-        <div class = "campo-grupo" th:classappend="${#fields.hasErrors('nome')} ? 'erro' ">
+        <div class="campo-grupo" th:classappend="${#fields.hasErrors('nome')} ? 'erro'">
             <label class="campo-label" for="nome">Nome:</label>
             <input class="campo-input" type="text" id="nome" th:field="*{nome}" placeholder="" />
         </div>
         <span class="msg-erro" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
 
         <!-- E-mail -->
-        <div class = "campo-grupo" th:classappend="${#fields.hasErrors('email')} ? 'erro' ">
+        <div class="campo-grupo" th:classappend="${#fields.hasErrors('email')} ? 'erro'">
             <label class="campo-label" for="email">E-mail:</label>
             <input class="campo-input" type="email" id="email" th:field="*{email}" placeholder="" />
         </div>
         <span class="msg-erro" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 
         <!-- Senha -->
-        <div class = "campo-grupo" th:classappend="${#fields.hasErrors('senha')} ? 'erro' ">
+        <div class="campo-grupo" th:classappend="${#fields.hasErrors('senha')} ? 'erro'">
             <label class="campo-label" for="senha">Senha:</label>
             <input class="campo-input" type="password" id="senha" th:field="*{senha}" placeholder="" />
         </div>
         <span class="msg-erro" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></span>
+
+        <!-- Telefone + Data Nascimento -->
+        <div class="campo-linha">
+            <div class="campo-metade">
+                <div class="campo-grupo" th:classappend="${#fields.hasErrors('telefone')} ? 'erro'">
+                    <label class="campo-label" for="telefone">Telefone:</label>
+                    <input class="campo-input" type="tel" id="telefone" th:field="*{telefone}"
+                           placeholder="(99)99999-9999" />
+                </div>
+                <span class="msg-erro" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></span>
+            </div>
+            <div class="campo-metade">
+                <div class="campo-grupo" th:classappend="${#fields.hasErrors('dataNascimento')} ? 'erro'">
+                    <label class="campo-label" for="dataNascimento">Data Nascimento:</label>
+                    <input class="campo-input" type="date" id="dataNascimento" th:field="*{dataNascimento}" />
+                </div>
+                <span class="msg-erro" th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}"></span>
+            </div>
+        </div>
+
+        <!-- Setor + Cargo (selects populados pelo controller) -->
+        <div class="campo-linha">
+            <div class="campo-metade">
+                <div class="campo-grupo">
+                    <label class="campo-label" for="setor">Setor:</label>
+                    <select id="setor" th:field="*{setor}">
+                        <option value="">Selecione</option>
+                        <option th:each="s : ${setores}"
+                                th:value="${s.idSetor}"
+                                th:text="${s.nomeSetor}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="campo-metade">
+                <div class="campo-grupo">
+                    <label class="campo-label" for="cargo">Cargo:</label>
+                    <select id="cargo" th:field="*{cargo}">
+                        <option value="">Selecione</option>
+                        <option th:each="c : ${cargos}"
+                                th:value="${c.idCargo}"
+                                th:text="${c.nomeCargo}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botão -->
+        <div class="modal-rodape">
+            <button class="btn-criar" type="submit">Criar Tarefa</button>
+        </div>
+
     </form>
+</div>
+
 </body>
 </html>
