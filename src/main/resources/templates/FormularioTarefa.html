@@ -189,7 +189,7 @@
                 <div class="campo-grupo" th:classappend="${#fields.hasErrors('telefone')} ? 'erro'">
                     <label class="campo-label" for="telefone">Telefone:</label>
                     <input class="campo-input" type="tel" id="telefone" th:field="*{telefone}"
-                           placeholder="(99)99999-9999" />
+                           placeholder="(--)-----*----" />
                 </div>
                 <span class="msg-erro" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></span>
             </div>
