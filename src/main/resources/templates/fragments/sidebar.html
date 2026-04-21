@@ -1,0 +1,144 @@
+<div class="sidebar-container" id="sidebarShell" th:fragment="sidebar">
+    <aside class="sidebar-mini">
+        <div class="mini-logo">
+            <img th:src="@{/img/logo-up.png}" alt="UP">
+        </div>
+
+        <nav class="mini-nav">
+            <a href="/dashboard" class="mini-item active">
+                <div class="mini-icon-box">
+                    <img th:src="@{/img/icon-home.png}" alt="Início" class="mini-icon-img">
+                </div>
+                <span>Início</span>
+            </a>
+
+            <a href="/empresas" class="mini-item">
+                <div class="mini-icon-box">
+                    <img th:src="@{/img/icon-company.png}" alt="Empresas" class="mini-icon-img">
+                </div>
+                <span>Empresas</span>
+            </a>
+
+            <a href="/usuarios" class="mini-item">
+                <div class="mini-icon-box">
+                    <img th:src="@{/img/icon-users.png}" alt="Usuários" class="mini-icon-img">
+                </div>
+                <span>Usuários</span>
+            </a>
+        </nav>
+    </aside>
+
+    <aside class="sidebar-full" id="sidebarFull">
+        <div class="sidebar-full-top">
+            <button type="button" class="collapse-button" id="collapseButton">«</button>
+        </div>
+
+        <nav class="full-menu">
+            <a href="/dashboard" class="full-link selected">Início</a>
+            <a href="/equipes" class="full-link">Equipes</a>
+            <a href="/dashboard/minhas-tarefas" class="full-link">Minhas Tarefas</a>
+        </nav>
+
+        <section class="spaces-block">
+            <div class="spaces-title-row">
+                <span>Espaços</span>
+                <button type="button" class="plain-icon-btn" onclick="toggleNovoEspacoForm()">
+                    <img th:src="@{/img/icon-plus.png}" alt="Adicionar">
+                </button>
+            </div>
+
+            <form action="/espacos" method="post" class="novo-espaco-form" id="novoEspacoForm">
+                <label class="novo-espaco-label">Empresa</label>
+                <select name="empresaId" required>
+                    <option value="">Selecione a empresa cadastrada</option>
+                    <option th:each="empresa : ${empresas}"
+                            th:value="${empresa.id}"
+                            th:text="${empresa.nome}">
+                    </option>
+                </select>
+
+                <label class="novo-espaco-label">Micro espaço</label>
+                <input type="text" name="nome" placeholder="Ex.: Recrutamento RH" required>
+
+                <div class="novo-espaco-actions">
+                    <button type="submit" class="novo-espaco-btn">Criar micro espaço</button>
+                </div>
+            </form>
+
+            <div th:each="empresa : ${empresas}" class="space-entry empresa-group">
+                <div class="space-header empresa-header">
+                    <div class="space-name-wrap">
+                        <div class="space-badge">E1</div>
+                        <span class="space-name" th:text="${empresa.nome}"></span>
+                    </div>
+
+                    <div class="space-controls empresa-controls">
+                        <div class="empresa-menu-wrapper">
+                            <button type="button"
+                                    class="plain-icon-btn small"
+                                    onclick="toggleEmpresaMenu(this)">
+                                ⋯
+                            </button>
+
+                            <div class="empresa-menu">
+                                <form action="/empresas/editar" method="post" class="empresa-menu-form">
+                                    <input type="hidden" name="empresaId" th:value="${empresa.id}">
+                                    <input type="text" name="nome" th:value="${empresa.nome}" required>
+                                    <button type="submit" class="empresa-menu-btn editar">Salvar</button>
+                                </form>
+
+                                <form action="/empresas/excluir" method="post"
+                                      onsubmit="return confirm('Deseja excluir esta empresa e todos os espaços vinculados?');">
+                                    <input type="hidden" name="empresaId" th:value="${empresa.id}">
+                                    <button type="submit" class="empresa-menu-btn excluir">Excluir empresa</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <button type="button"
+                                class="plain-icon-btn small"
+                                th:attr="data-empresa-id=${empresa.id}"
+                                onclick="abrirNovoEspacoParaEmpresa(this)">
+                            +
+                        </button>
+                    </div>
+                </div>
+
+                <div th:each="espaco : ${espacos}"
+                     th:if="${espaco.empresa != null and espaco.empresa.id == empresa.id}"
+                     class="space-subitem-row">
+
+                    <div class="space-subitem" th:text="'— ' + ${espaco.nome}"></div>
+
+                    <div class="space-subitem-actions">
+                        <button type="button"
+                                class="plain-icon-btn small"
+                                onclick="toggleEspacoMenu(this)">
+                            ⋯
+                        </button>
+
+                        <div class="espaco-menu">
+                            <form action="/espacos/editar" method="post" class="espaco-menu-form">
+                                <input type="hidden" name="espacoId" th:value="${espaco.id}">
+                                <input type="text" name="nome" th:value="${espaco.nome}" required>
+                                <button type="submit" class="espaco-menu-btn editar">Salvar</button>
+                            </form>
+
+                            <form action="/espacos/excluir" method="post"
+                                  onsubmit="return confirm('Deseja excluir este espaço?');">
+                                <input type="hidden" name="espacoId" th:value="${espaco.id}">
+                                <button type="submit" class="espaco-menu-btn excluir">Excluir</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="space-subitem add-space-subitem add-space-button"
+                        onclick="toggleNovoEspacoForm()">
+                    + Novo Espaço
+                </button>
+            </div>
+        </section>
+    </aside>
+</div>

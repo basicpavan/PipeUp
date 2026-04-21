@@ -1,0 +1,29 @@
+<header class="header" th:fragment="header">
+    <div class="header-left-spacer"></div>
+
+    <form action="/dashboard" method="get" class="search-box">
+        <img th:src="@{/img/icon-search.png}" alt="Pesquisar" class="search-icon">
+        <input type="text"
+               id="taskSearch"
+               name="filtro"
+               placeholder="Pesquisar tarefa">
+    </form>
+
+    <div class="header-icons">
+        <button type="button" class="header-btn">
+            <img th:src="@{/img/icon-menu.png}" alt="Menu">
+        </button>
+
+        <button type="button" class="header-btn">
+            <img th:src="@{/img/icon-bell.png}" alt="Notificações">
+        </button>
+
+        <button type="button" class="header-btn">
+            <img th:src="@{/img/icon-gear.png}" alt="Configurações">
+        </button>
+
+        <div class="avatar">
+            <img th:src="@{/img/icon-avatar.png}" alt="Avatar" onerror="this.style.display='none'">
+        </div>
+    </div>
+</header>
