@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PipeUp - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+
+<div class="layout">
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    <div class="main">
+        <div th:replace="~{fragments/header :: header}"></div>
+        <div class="orange-bar"></div>
+
+        <div class="content">
+            <div class="kanban-placeholder"></div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/sidebar.js}"></script>
+</body>
+</html>
