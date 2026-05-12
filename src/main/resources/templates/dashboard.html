@@ -14,10 +14,86 @@
 
     <div class="main">
         <div th:replace="~{fragments/header :: header}"></div>
-        <div class="orange-bar"></div>
+
+        <div class="orange-bar">
+            <div class="titulo-laranja">
+                Recrutamento <span class="btn-mais-laranja">+</span>
+            </div>
+        </div>
 
         <div class="content">
-            <div class="kanban-placeholder"></div>
+
+            <div class="board-container">
+
+                <div class="board-coluna">
+                    <div class="coluna-topo">
+                        <span>Em Atraso</span>
+                        <span class="coluna-btn">+</span>
+                    </div>
+                    <div class="coluna-cartoes">
+
+                        <div class="cartao">
+                            <div class="cartao-topo">
+                                <span class="cartao-titulo">Tarefa</span>
+                                <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="cartao-avatar">
+                            </div>
+                            <div class="cartao-rodape">
+                                <span>📅 12/12/2100</span>
+                            </div>
+                        </div>
+
+                        <div class="cartao">
+                            <div class="cartao-topo">
+                                <span class="cartao-titulo">Tarefa</span>
+                                <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="cartao-avatar">
+                            </div>
+                            <div class="cartao-rodape">
+                                <span>📅 12/12/2100</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="board-coluna">
+                    <div class="coluna-topo">
+                        <span>Em Andamento</span>
+                        <span class="coluna-btn">+</span>
+                    </div>
+                    <div class="coluna-cartoes">
+
+                        <div class="cartao">
+                            <div class="cartao-topo">
+                                <span class="cartao-titulo">Tarefa</span>
+                                <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="cartao-avatar">
+                            </div>
+                            <div class="cartao-rodape">
+                                <span>📅 12/12/2100</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="board-coluna">
+                    <div class="coluna-topo">
+                        <span>A Iniciar</span>
+                        <span class="coluna-btn">+</span>
+                    </div>
+                    <div class="coluna-cartoes">
+                    </div>
+                </div>
+
+                <div class="board-coluna">
+                    <div class="coluna-topo">
+                        <span>Concluído</span>
+                        <span class="coluna-btn">+</span>
+                    </div>
+                    <div class="coluna-cartoes">
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
