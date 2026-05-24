@@ -1,0 +1,517 @@
+/* ── Importa variáveis e base do dashboard ── */
+@import url('/css/dashboard.css');
+
+/* ── Layout principal da tela de detalhes ── */
+
+.detalhes-content {
+    flex: 1;
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    overflow: hidden;
+    height: calc(100vh - var(--header-height) - var(--orange-bar-height));
+}
+
+/* ── Coluna esquerda — formulário ── */
+
+.col-formulario {
+    flex: 0 0 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.col-formulario::-webkit-scrollbar { width: 4px; }
+.col-formulario::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+}
+
+/* ── Título da tarefa ── */
+
+.tarefa-titulo-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tarefa-titulo-input {
+    flex: 1;
+    background: #2b2b2b;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--text-white);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.tarefa-titulo-input:focus { outline: 2px solid var(--accent); }
+
+.btn-mais {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* ── Campos do formulário (empresa, responsável, status) ── */
+
+.campo-detalhe {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #2b2b2b;
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+.campo-detalhe label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    white-space: nowrap;
+    min-width: 90px;
+}
+
+.campo-detalhe select,
+.campo-detalhe input[type="text"] {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-white);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 0.92rem;
+    cursor: pointer;
+}
+
+.campo-detalhe select option { color: #111; }
+
+/* ── Descrição ── */
+
+.descricao-textarea {
+    width: 100%;
+    min-height: 100px;
+    background: #2b2b2b;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text-white);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 0.92rem;
+    resize: vertical;
+}
+
+.descricao-textarea:focus { outline: 2px solid var(--accent); }
+.descricao-textarea::placeholder { color: rgba(255,255,255,0.35); }
+
+/* ── Bloco calendário + datas importantes ── */
+
+.calendario-bloco {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+/* ── Calendário ── */
+
+.calendario {
+    flex: 0 0 220px;
+    background: #2b2b2b;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.cal-titulo {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+.cal-nav {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: background 0.15s;
+}
+
+.cal-nav:hover { background: rgba(255,255,255,0.08); }
+
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.cal-dia-semana {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    padding: 2px 0 4px;
+}
+
+.cal-dia {
+    font-size: 0.78rem;
+    text-align: center;
+    padding: 4px 2px;
+    border-radius: 6px;
+    color: rgba(255,255,255,0.75);
+    cursor: default;
+}
+
+.cal-dia.hoje {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+}
+
+.cal-dia.marcado {
+    background: rgba(251,125,41,0.25);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.cal-dia.vazio { visibility: hidden; }
+
+/* ── Datas importantes ── */
+
+.datas-importantes {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.datas-importantes h4 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.data-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.data-campo label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    font-weight: 600;
+}
+
+.data-campo input[type="date"] {
+    background: #2b2b2b;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: var(--text-white);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 0.88rem;
+    cursor: pointer;
+    width: 100%;
+}
+
+.data-campo input[type="date"]:focus { outline: 2px solid var(--accent); }
+.data-campo input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.7);
+    cursor: pointer;
+}
+
+/* ── Botão salvar ── */
+
+.btn-salvar {
+    align-self: flex-end;
+    height: 38px;
+    padding: 0 24px;
+    border: none;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: filter 0.15s;
+}
+
+.btn-salvar:hover { filter: brightness(1.08); }
+
+/* ── Alertas (sucesso / erro) ── */
+
+.alerta-sucesso {
+    background: rgba(77,255,150,0.12);
+    border: 1px solid #4dff96;
+    border-radius: 8px;
+    padding: 9px 14px;
+    color: #d0ffe8;
+    font-size: 0.85rem;
+}
+
+.alerta-negocio {
+    background: rgba(255,77,77,0.15);
+    border: 1px solid #ff4d4d;
+    border-radius: 8px;
+    padding: 9px 14px;
+    color: #ffe0e0;
+    font-size: 0.85rem;
+}
+
+/* ── Coluna direita — abas e histórico ── */
+
+.col-historico {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+/* ── Abas ── */
+
+.abas {
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+    padding-bottom: 0;
+}
+
+.aba-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    padding: 8px 16px;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.aba-btn:hover { color: var(--text-white); }
+
+.aba-btn.ativa {
+    color: var(--text-white);
+    border-bottom-color: var(--accent);
+}
+
+.aba-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    padding: 1px 7px;
+    margin-left: 4px;
+    font-weight: 700;
+}
+
+/* ── Campo adicionar atividade ── */
+
+.adicionar-bloco {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.adicionar-bloco label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.45);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.adicionar-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.adicionar-input {
+    flex: 1;
+    background: #2b2b2b;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--text-white);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 0.92rem;
+    resize: none;
+    min-height: 42px;
+}
+
+.adicionar-input:focus { outline: 2px solid var(--accent); }
+.adicionar-input::placeholder { color: rgba(255,255,255,0.3); }
+
+.btn-adicionar {
+    height: 42px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: filter 0.15s;
+}
+
+.btn-adicionar:hover { filter: brightness(1.08); }
+
+/* ── Histórico ── */
+
+.historico-bloco {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.historico-bloco::-webkit-scrollbar { width: 4px; }
+.historico-bloco::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+}
+
+.historico-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.historico-titulo {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.historico-filtros {
+    display: flex;
+    gap: 6px;
+}
+
+.filtro-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+    padding: 3px 12px;
+    color: rgba(255,255,255,0.55);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    text-decoration: none;
+}
+
+.filtro-btn:hover,
+.filtro-btn.ativo {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-white);
+    border-color: rgba(255,255,255,0.3);
+}
+
+/* ── Entrada do histórico ── */
+
+.historico-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    background: #2b2b2b;
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+
+.historico-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+}
+
+.historico-item-tipo {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--accent);
+}
+
+.historico-item-descricao {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    word-break: break-word;
+}
+
+.historico-item-data {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+}
+
+.historico-item-acoes {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+    align-items: center;
+}
+
+.acao-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+}
+
+.acao-btn:hover {
+    color: var(--text-white);
+    background: rgba(255,255,255,0.08);
+}
+
+.historico-vazio {
+    text-align: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.88rem;
+    padding: 32px 0;
+}
