@@ -35,6 +35,13 @@ public class TarefaController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    /* ── Sidebar requer empresas e espacos em qualquer view ── */
+
+    private void adicionarDadosSidebar(Model model) {
+        model.addAttribute("empresas", empresaRepository.findAll());
+        model.addAttribute("espacos",  espacoRepository.findAll());
+    }
+
     /* ── GET /tarefas/{id} — exibe a tela de detalhes ── */
 
     @GetMapping("/{id}")
@@ -48,6 +55,7 @@ public class TarefaController {
                 .orElse(null);
 
         if (tarefa == null) {
+            adicionarDadosSidebar(model);
             model.addAttribute("erroNegocio", "Tarefa não encontrada.");
             return "erroNegocio";
         }
@@ -58,10 +66,9 @@ public class TarefaController {
                 : YearMonth.now();
 
         /* ── dados do modelo ── */
-        model.addAttribute("tarefa",        tarefa);
-        model.addAttribute("empresas",      empresaRepository.findAll());
-        model.addAttribute("espacos",       espacoRepository.findAll());
-        model.addAttribute("usuarios",      usuarioRepository.findAll());
+        adicionarDadosSidebar(model);
+        model.addAttribute("tarefa",    tarefa);
+        model.addAttribute("usuarios", usuarioRepository.findAll());
         model.addAttribute("responsaveis",  usuarioRepository.findUsuariosByTarefaId(id));
         model.addAttribute("statusOpcoes",  Tarefa.Status.values());
 

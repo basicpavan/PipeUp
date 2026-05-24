@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PipeUp - Erro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+
+<div class="layout">
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    <div class="main">
+        <div th:replace="~{fragments/header :: header}"></div>
+
+        <div class="orange-bar">
+            <div class="titulo-laranja">Erro</div>
+        </div>
+
+        <div class="content" style="display:flex; align-items:center; justify-content:center;">
+            <div style="text-align:center; display:flex; flex-direction:column; gap:16px; align-items:center;">
+                <span style="font-size:2.5rem;">⚠️</span>
+                <p style="font-size:1rem; color:rgba(255,255,255,0.75);"
+                   th:text="${erroNegocio} ?: 'Ocorreu um erro inesperado.'"></p>
+                <a href="/dashboard"
+                   style="color:#FB7D29; font-weight:600; font-size:0.92rem;">
+                    ← Voltar ao Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/sidebar.js}"></script>
+</body>
+</html>
