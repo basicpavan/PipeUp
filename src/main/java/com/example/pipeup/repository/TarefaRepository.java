@@ -10,6 +10,10 @@ public interface TarefaRepository extends JpaRepository<Tarefa, Integer> {
 
     List<Tarefa> findByDescricaoContaining(String filtro);
 
+    List<Tarefa> findByStatus(Tarefa.Status status);
+
+    List<Tarefa> findByEspaco_Id(Integer espacoId);
+
     @Query(value = """
         SELECT t.*
         FROM tarefa t

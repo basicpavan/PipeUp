@@ -71,6 +71,7 @@ public class TarefaController {
         model.addAttribute("usuarios", usuarioRepository.findAll());
         model.addAttribute("responsaveis",  usuarioRepository.findUsuariosByTarefaId(id));
         model.addAttribute("statusOpcoes",  Tarefa.Status.values());
+        model.addAttribute("prioridadeOpcoes", Tarefa.Prioridade.values());
 
         /* histórico e contadores */
         model.addAttribute("historico",     atualizacaoService.listarPorTarefa(id));
@@ -100,6 +101,8 @@ public class TarefaController {
                             @RequestParam(required = false) String dataInicio,
                             @RequestParam(required = false) String dataEntrega,
                             @RequestParam Integer espacoId,
+                            @RequestParam(required = false) String prioridade,
+                            @RequestParam(required = false) Float progresso,
                             RedirectAttributes redirect) {
         try {
             Tarefa dados = new Tarefa();
@@ -108,6 +111,13 @@ public class TarefaController {
             dados.setStatus(Tarefa.Status.valueOf(status));
             dados.setDataInicio(dataInicio  != null && !dataInicio.isBlank()  ? LocalDate.parse(dataInicio)  : null);
             dados.setDataEntrega(dataEntrega != null && !dataEntrega.isBlank() ? LocalDate.parse(dataEntrega) : null);
+
+            if (prioridade != null && !prioridade.isBlank()) {
+                dados.setPrioridade(Tarefa.Prioridade.valueOf(prioridade));
+            }
+            if (progresso != null) {
+                dados.setProgresso(progresso);
+            }
 
             tarefaService.atualizar(id, dados, espacoId);
             redirect.addFlashAttribute("sucesso", "Tarefa atualizada com sucesso.");

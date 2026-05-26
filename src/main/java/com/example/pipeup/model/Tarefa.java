@@ -12,6 +12,10 @@ public class Tarefa {
         A_INICIAR, EM_ANDAMENTO, EM_ATRASO, CONCLUIDO
     }
 
+    public enum Prioridade {
+        BAIXA, MEDIA, ALTA
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tarefa")
@@ -26,6 +30,10 @@ public class Tarefa {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private Status status = Status.A_INICIAR;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 10)
+    private Prioridade prioridade = Prioridade.BAIXA;
 
     @Column(nullable = false)
     private Float progresso = 0f;
@@ -63,4 +71,7 @@ public class Tarefa {
 
     public Espaco getEspaco() { return espaco; }
     public void setEspaco(Espaco espaco) { this.espaco = espaco; }
+
+    public Prioridade getPrioridade() { return prioridade; }
+    public void setPrioridade(Prioridade prioridade) { this.prioridade = prioridade; }
 }

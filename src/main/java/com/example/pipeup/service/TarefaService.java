@@ -43,6 +43,12 @@ public class TarefaService {
         tarefa.setStatus(dados.getStatus());
         tarefa.setDataInicio(dados.getDataInicio());
         tarefa.setDataEntrega(dados.getDataEntrega());
+        if (dados.getPrioridade() != null) {
+            tarefa.setPrioridade(dados.getPrioridade());
+        }
+        if (dados.getProgresso() != null) {
+            tarefa.setProgresso(dados.getProgresso());
+        }
         tarefa.setEspaco(espaco);
 
         validar(tarefa);
@@ -64,6 +70,9 @@ public class TarefaService {
         if (tarefa.getDataInicio() != null && tarefa.getDataEntrega() != null
                 && tarefa.getDataEntrega().isBefore(tarefa.getDataInicio())) {
             throw new IllegalArgumentException("A data de entrega não pode ser anterior à data de início.");
+        }
+        if (tarefa.getProgresso() != null && (tarefa.getProgresso() < 0 || tarefa.getProgresso() > 100)) {
+            throw new IllegalArgumentException("O progresso deve ser entre 0 e 100.");
         }
         if (tarefa.getEspaco() == null) {
             throw new IllegalArgumentException("A tarefa deve estar vinculada a um espaço.");
