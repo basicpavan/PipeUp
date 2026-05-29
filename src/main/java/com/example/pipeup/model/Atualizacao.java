@@ -33,7 +33,12 @@ public class Atualizacao {
     private String descricao;
 
     @Column(name = "data_time", nullable = false)
-    private LocalDateTime dataTime;
+    private LocalDateTime dataTime = LocalDateTime.now();
+
+    @PrePersist
+    public void prePersist() {
+        if (dataTime == null) dataTime = LocalDateTime.now();
+    }
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }

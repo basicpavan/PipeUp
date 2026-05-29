@@ -31,6 +31,15 @@ public class TarefaService {
         return tarefaRepository.save(tarefa);
     }
 
+    public Tarefa criar(Tarefa tarefa, Integer espacoId) {
+        Espaco espaco = espacoRepository.findById(espacoId)
+                .orElseThrow(() -> new IllegalArgumentException("Espaço não encontrado."));
+        
+        tarefa.setEspaco(espaco);
+        validar(tarefa);
+        return tarefaRepository.save(tarefa);
+    }
+
     public Tarefa atualizar(Integer id, Tarefa dados, Integer espacoId) {
         Tarefa tarefa = tarefaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Tarefa não encontrada."));

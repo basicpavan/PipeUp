@@ -2,6 +2,7 @@ package com.example.pipeup.controller;
 
 import com.example.pipeup.model.Empresa;
 import com.example.pipeup.model.Espaco;
+import com.example.pipeup.model.Tarefa; // Import Tarefa to access its Status enum
 import com.example.pipeup.repository.EmpresaRepository;
 import com.example.pipeup.repository.EspacoRepository;
 import com.example.pipeup.repository.TarefaRepository;
@@ -24,12 +25,19 @@ public class DashboardController {
     @Autowired
     private TarefaRepository tarefaRepository;
 
+    /* ── GET / — redireciona para o dashboard ── */
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/dashboard";
+    }
+
     @GetMapping("/dashboard")
     public String dashboard(Model model,
                             @RequestParam(required = false) String filtro) {
 
         model.addAttribute("empresas", empresaRepository.findAll());
         model.addAttribute("espacos", espacoRepository.findAll());
+        model.addAttribute("statusOpcoes", Tarefa.Status.values()); // Add task statuses to the model
 
         if (filtro != null && !filtro.isBlank()) {
             model.addAttribute("tarefas",
@@ -81,6 +89,40 @@ public class DashboardController {
         empresaRepository.deleteById(empresaId);
         return "redirect:/dashboard";
     }
-}
 
-/* bckp */
+    @PostMapping("/espacos/editar")
+    public String editarEspaco(@RequestParam Integer espacoId,
+                               @RequestParam String nome) {
+        espacoRepository.findById(espacoId).ifPresent(espaco -> {
+            if (!nome.isBlank()) {
+                espaco.setNome(nome.trim());
+                espacoRepository.save(espaco);
+            }
+        });
+        return "redirect:/dashboard";
+    }
+
+    @PostMapping("/empresas/editar")
+    public String editarEmpresa(@RequestParam Integer empresaId,
+                                @RequestParam String nome) {
+        empresaRepository.findById(empresaId).ifPresent(empresa -> {
+            if (!nome.isBlank()) {
+                empresa.setNome(nome.trim());
+                empresaRepository.save(empresa);
+            }
+        });
+        return "redirect:/dashboard";
+    }
+
+    /* ── GET /empresas — redireciona para o dashboard ── */
+    @GetMapping("/empresas")
+    public String empresas() {
+        return "redirect:/dashboard";
+    }
+
+    /* ── GET /usuarios — redireciona para o dashboard ── */
+    @GetMapping("/usuarios")
+    public String usuarios() {
+        return "redirect:/dashboard";
+    }
+}

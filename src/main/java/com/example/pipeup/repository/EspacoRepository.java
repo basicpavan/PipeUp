@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface EspacoRepository extends JpaRepository<Espaco, Integer> {
-    List<Espaco> findByEmpresa_Id(Integer empresaId);
+    List<Espaco> findByEmpresaId(Integer empresaId);
 }

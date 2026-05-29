@@ -9,7 +9,20 @@ public class Tarefa {
 
     /* ── Status possíveis da tarefa ── */
     public enum Status {
-        A_INICIAR, EM_ANDAMENTO, EM_ATRASO, CONCLUIDO
+        A_INICIAR("A Iniciar"),
+        EM_ANDAMENTO("Em Andamento"),
+        EM_ATRASO("Em Atraso"),
+        CONCLUIDO("Concluído");
+
+        private final String displayName;
+
+        Status(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
     }
 
     public enum Prioridade {

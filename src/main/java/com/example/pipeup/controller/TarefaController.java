@@ -70,7 +70,7 @@ public class TarefaController {
         model.addAttribute("tarefa",    tarefa);
         model.addAttribute("usuarios", usuarioRepository.findAll());
         model.addAttribute("responsaveis",  usuarioRepository.findUsuariosByTarefaId(id));
-        model.addAttribute("statusOpcoes",  Tarefa.Status.values());
+        model.addAttribute("statusOpcoes",     Tarefa.Status.values());
         model.addAttribute("prioridadeOpcoes", Tarefa.Prioridade.values());
 
         /* histórico e contadores */
@@ -82,10 +82,10 @@ public class TarefaController {
         /* aba ativa (padrão: ATIVIDADE) */
         model.addAttribute("abaAtiva", abaAtiva != null ? abaAtiva : "ATIVIDADE");
 
-        /* calendário */
+        /* calendário — semana começa na segunda (DayOfWeek.MONDAY = 1, então offset = valor - 1) */
         model.addAttribute("calMesAtual",   mesAtual);
         model.addAttribute("calDiasNoMes",  mesAtual.lengthOfMonth());
-        model.addAttribute("calPrimeiroDia", mesAtual.atDay(1).getDayOfWeek().getValue() % 7);
+        model.addAttribute("calPrimeiroDia", mesAtual.atDay(1).getDayOfWeek().getValue() - 1);
         model.addAttribute("hoje",          LocalDate.now());
 
         return "detalhesTarefa";
@@ -129,7 +129,54 @@ public class TarefaController {
         return "redirect:/tarefas/" + id;
     }
 
-    /* ── POST /tarefas/{id}/atividades — adiciona entrada no histórico ── */
+    /* ── GET /tarefas/nova — formulário de nova tarefa ── */
+
+    @GetMapping("/nova")
+    public String novaTarefa(Model model) {
+        adicionarDadosSidebar(model);
+        model.addAttribute("tarefa", new Tarefa());
+        model.addAttribute("usuarios", usuarioRepository.findAll());
+        model.addAttribute("statusOpcoes", Tarefa.Status.values());
+        model.addAttribute("prioridadeOpcoes", Tarefa.Prioridade.values());
+        return "FormularioTarefa";
+    }
+
+    /* ── POST /tarefas/nova — salva nova tarefa ── */
+
+    @PostMapping("/nova")
+    public String criarTarefa(@RequestParam String titulo,
+                              @RequestParam(required = false) String descricao,
+                              @RequestParam String status,
+                              @RequestParam(required = false) String dataInicio,
+                              @RequestParam(required = false) String dataEntrega,
+                              @RequestParam Integer espacoId,
+                              @RequestParam(required = false) String prioridade,
+                              @RequestParam(required = false) Float progresso,
+                              RedirectAttributes redirect) {
+        try {
+            Tarefa tarefa = new Tarefa();
+            tarefa.setTitulo(titulo);
+            tarefa.setDescricao(descricao);
+            tarefa.setStatus(Tarefa.Status.valueOf(status));
+            tarefa.setDataInicio(dataInicio != null && !dataInicio.isBlank() ? LocalDate.parse(dataInicio) : null);
+            tarefa.setDataEntrega(dataEntrega != null && !dataEntrega.isBlank() ? LocalDate.parse(dataEntrega) : null);
+            
+            if (prioridade != null && !prioridade.isBlank()) {
+                tarefa.setPrioridade(Tarefa.Prioridade.valueOf(prioridade));
+            }
+            if (progresso != null) {
+                tarefa.setProgresso(progresso);
+            }
+
+            Tarefa novaTarefa = tarefaService.criar(tarefa, espacoId);
+            redirect.addFlashAttribute("sucesso", "Tarefa criada com sucesso.");
+            return "redirect:/tarefas/" + novaTarefa.getId();
+
+        } catch (IllegalArgumentException e) {
+            redirect.addFlashAttribute("erroNegocio", e.getMessage());
+            return "redirect:/tarefas/nova";
+        }
+    }
 
     @PostMapping("/{id}/atividades")
     public String adicionarAtividade(@PathVariable Integer id,

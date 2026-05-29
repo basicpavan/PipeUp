@@ -3,299 +3,324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PipeUp - Detalhes da Tarefa</title>
+    <title>PipeUp - Detalhes</title>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/detalhesTarefa.css}">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Instrument Sans', sans-serif; background: #111; color: #fff; height: 100vh; overflow: hidden; }
+        a { text-decoration: none; color: inherit; }
+        button, input, select, textarea { font-family: inherit; }
+
+        .layout { display: flex; height: 100vh; width: 100%; }
+
+        /* Sidebar */
+        .sidebar-mini {
+            width: 80px; min-width: 80px; background: linear-gradient(180deg,#1b1b1b,#101010);
+            display: flex; flex-direction: column; align-items: center; padding: 10px 8px;
+        }
+        .mini-logo { width: 52px; margin-bottom: 22px; }
+        .mini-logo img { width: 52px; display: block; }
+        .mini-nav { display: flex; flex-direction: column; gap: 18px; width: 100%; align-items: center; }
+        .mini-item { display: flex; flex-direction: column; align-items: center; gap: 6px; color: #fff; }
+        .mini-icon-box { width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+        .mini-item:hover .mini-icon-box { background: rgba(255,255,255,0.1); }
+        .mini-icon-box img { width: 28px; height: 28px; object-fit: contain; display: block; }
+        .mini-item span { font-size: 0.72rem; font-weight: 700; }
+
+        /* Main */
+        .main { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+
+        /* Header */
+        .header { height: 56px; background: #1a1a1a; display: flex; align-items: center; justify-content: flex-end; padding: 0 18px; position: relative; flex-shrink: 0; }
+        .search-box { position: absolute; left: 50%; transform: translateX(-50%); width: 365px; height: 36px; background: #2b2b2b; border-radius: 999px; display: flex; align-items: center; padding: 0 14px; gap: 10px; }
+        .search-box input { border: none; outline: none; background: transparent; color: #fff; font-size: 0.95rem; width: 100%; }
+        .search-box input::placeholder { color: #aaa; }
+        .search-icon { width: 18px; height: 18px; opacity: 0.8; display: block; }
+        .header-icons { display: flex; align-items: center; gap: 10px; }
+        .header-btn { width: 38px; height: 38px; border: none; background: transparent; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .header-btn img { width: 24px; height: 24px; opacity: 0.9; display: block; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; background: #9d9d9d; overflow: hidden; border: 2px solid rgba(255,255,255,0.15); }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* Orange bar */
+        .orange-bar { height: 40px; background: linear-gradient(180deg,#FB7D29,#f07020); display: flex; align-items: center; padding: 0 20px; flex-shrink: 0; }
+        .titulo-laranja { font-size: 1rem; font-weight: 700; color: #fff; }
+
+        /* Content */
+        .detalhes-content { flex: 1; display: flex; overflow: hidden; min-height: 0; }
+
+        /* Coluna esquerda */
+        .col-esq {
+            width: 440px; min-width: 440px; overflow-y: auto; padding: 16px;
+            display: flex; flex-direction: column; gap: 12px;
+            border-right: 1px solid rgba(255,255,255,0.07);
+            height: 100%;
+        }
+        .col-esq::-webkit-scrollbar { width: 4px; }
+        .col-esq::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 999px; }
+
+        .titulo-input { width: 100%; background: #2b2b2b; border: none; border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 1rem; font-weight: 700; outline: none; }
+        .titulo-input:focus { outline: 2px solid #FB7D29; }
+
+        .campo { background: #3a3a3a; border-radius: 10px; padding: 11px 16px; display: flex; align-items: center; gap: 10px; }
+        .campo label { font-size: 0.88rem; font-weight: 700; color: #fff; white-space: nowrap; min-width: 100px; }
+        .campo select { flex: 1; background: transparent; border: none; outline: none; color: rgba(255,255,255,0.75); font-size: 0.88rem; cursor: pointer; }
+        .campo select option { color: #111; }
+
+        .progresso-bloco { background: #3a3a3a; border-radius: 10px; padding: 11px 16px; display: flex; flex-direction: column; gap: 8px; }
+        .progresso-label { font-size: 0.88rem; font-weight: 700; color: #fff; display: flex; justify-content: space-between; }
+        .progresso-bloco input[type="range"] { width: 100%; accent-color: #FB7D29; cursor: pointer; }
+
+        .descricao-bloco { background: #3a3a3a; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+        .desc-label { font-size: 0.88rem; font-weight: 700; }
+        .descricao-bloco textarea { width: 100%; min-height: 110px; background: transparent; border: none; outline: none; color: rgba(255,255,255,0.7); font-size: 0.88rem; resize: vertical; }
+        .descricao-bloco textarea::placeholder { color: rgba(255,255,255,0.3); }
+
+        .cal-section-label { font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.6); }
+        .cal-bloco { display: flex; gap: 16px; align-items: flex-start; }
+
+        .calendario { background: #3a3a3a; border-radius: 12px; padding: 12px; flex: 0 0 210px; }
+        .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+        .cal-mes { font-size: 0.85rem; font-weight: 700; }
+        .cal-nav-btn { background: transparent; border: none; color: rgba(255,255,255,0.7); font-size: 1.1rem; cursor: pointer; padding: 2px 6px; border-radius: 6px; line-height: 1; }
+        .cal-nav-btn:hover { background: rgba(255,255,255,0.08); }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; }
+        .cal-ds { font-size: 0.65rem; font-weight: 700; color: rgba(255,255,255,0.4); text-align: center; padding-bottom: 4px; }
+        .cal-d { font-size: 0.75rem; text-align: center; padding: 4px 1px; border-radius: 5px; color: rgba(255,255,255,0.75); }
+        .cal-d.hoje { background: #FB7D29; color: #fff; font-weight: 700; }
+        .cal-d.marcado { background: rgba(251,125,41,0.25); color: #FB7D29; font-weight: 600; }
+        .cal-d.vazio { visibility: hidden; }
+
+        .datas-imp { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        .datas-imp h4 { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.4px; }
+        .data-item { display: flex; flex-direction: column; gap: 3px; }
+        .data-item label { font-size: 0.75rem; color: rgba(255,255,255,0.5); font-weight: 600; }
+        .data-item input[type="date"] { background: #2b2b2b; border: none; border-radius: 8px; padding: 7px 10px; color: #fff; font-size: 0.85rem; cursor: pointer; width: 100%; outline: none; }
+        .data-item input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7); cursor: pointer; }
+
+        .btn-salvar { align-self: flex-end; height: 38px; padding: 0 24px; border: none; border-radius: 10px; background: #FB7D29; color: #fff; font-size: 0.92rem; font-weight: 700; cursor: pointer; }
+        .btn-salvar:hover { filter: brightness(1.08); }
+
+        .alerta-sucesso { background: rgba(77,255,150,0.12); border: 1px solid #4dff96; border-radius: 8px; padding: 9px 14px; color: #d0ffe8; font-size: 0.85rem; }
+        .alerta-negocio { background: rgba(255,77,77,0.15); border: 1px solid #ff4d4d; border-radius: 8px; padding: 9px 14px; color: #ffe0e0; font-size: 0.85rem; }
+
+        /* Coluna direita */
+        .col-dir { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 16px; gap: 12px; min-width: 0; }
+
+        .abas { display: flex; border-bottom: 2px solid rgba(255,255,255,0.1); flex-shrink: 0; }
+        .aba { padding: 10px 24px; font-size: 0.92rem; font-weight: 600; color: rgba(255,255,255,0.5); border-bottom: 2px solid transparent; margin-bottom: -2px; }
+        .aba:hover { color: #fff; }
+        .aba.ativa { color: #fff; border-bottom-color: #FB7D29; background: rgba(255,255,255,0.05); border-radius: 8px 8px 0 0; }
+
+        .add-bloco { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+        .add-label { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+        .add-row { display: flex; gap: 8px; }
+        .add-input { flex: 1; background: #3a3a3a; border: none; border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 0.9rem; resize: none; min-height: 42px; outline: none; }
+        .add-input::placeholder { color: rgba(255,255,255,0.3); }
+        .add-input:focus { outline: 2px solid #FB7D29; }
+        .btn-add { height: 42px; padding: 0 18px; border: none; border-radius: 10px; background: #FB7D29; color: #fff; font-size: 0.88rem; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+
+        .hist-bloco { flex: 1; display: flex; flex-direction: column; gap: 0; overflow-y: auto; min-height: 0; }
+        .hist-bloco::-webkit-scrollbar { width: 4px; }
+        .hist-bloco::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 999px; }
+
+        .hist-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; flex-shrink: 0; }
+        .hist-titulo { font-size: 0.9rem; font-weight: 700; }
+        .hist-filtros { display: flex; gap: 6px; flex-wrap: wrap; }
+        .filtro { background: transparent; border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; padding: 3px 10px; color: rgba(255,255,255,0.55); font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+        .filtro:hover, .filtro.ativo { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.35); }
+
+        .hist-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 4px; border-bottom: 1px solid rgba(255,255,255,0.06); gap: 12px; }
+        .hist-item-desc { font-size: 0.9rem; color: rgba(255,255,255,0.85); flex: 1; }
+        .hist-item-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+        .hist-item-data { font-size: 0.82rem; color: rgba(255,255,255,0.45); min-width: 80px; text-align: right; }
+        .hist-acoes { display: flex; gap: 10px; }
+        .acao { background: transparent; border: none; color: rgba(255,255,255,0.45); font-size: 1.1rem; cursor: pointer; padding: 2px; }
+        .acao:hover { color: #fff; }
+        .hist-vazio { text-align: center; color: rgba(255,255,255,0.3); font-size: 0.88rem; padding: 32px 0; }
+    </style>
 </head>
 <body>
-
 <div class="layout">
-    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar-mini">
+        <div class="mini-logo"><img th:src="@{/img/logo-up.png}" alt="UP"></div>
+        <nav class="mini-nav">
+            <a href="/dashboard" class="mini-item">
+                <div class="mini-icon-box"><img th:src="@{/img/icon-home.png}" alt="Início"></div>
+                <span>Início</span>
+            </a>
+            <a href="/empresas" class="mini-item">
+                <div class="mini-icon-box"><img th:src="@{/img/icon-company.png}" alt="Empresas"></div>
+                <span>Empresas</span>
+            </a>
+            <a href="/usuarios" class="mini-item">
+                <div class="mini-icon-box"><img th:src="@{/img/icon-users.png}" alt="Usuários"></div>
+                <span>Usuários</span>
+            </a>
+        </nav>
+    </div>
 
     <div class="main">
-        <div th:replace="~{fragments/header :: header}"></div>
-
-        <!-- Barra laranja -->
-        <div class="orange-bar">
-            <div class="titulo-laranja">
-                Detalhes <span class="btn-mais-laranja">+</span>
+        <!-- Header -->
+        <div class="header">
+            <form action="/dashboard" method="get" class="search-box">
+                <img th:src="@{/img/icon-search.png}" alt="Pesquisar" class="search-icon">
+                <input type="text" name="filtro" placeholder="Pesquisar tarefa">
+            </form>
+            <div class="header-icons">
+                <button type="button" class="header-btn"><img th:src="@{/img/icon-menu.png}" alt="Menu"></button>
+                <button type="button" class="header-btn"><img th:src="@{/img/icon-bell.png}" alt="Notificações"></button>
+                <button type="button" class="header-btn"><img th:src="@{/img/icon-gear.png}" alt="Config"></button>
+                <div class="avatar"><img th:src="@{/img/icon-avatar.png}" alt="Avatar"></div>
             </div>
         </div>
 
-        <!-- Conteúdo principal -->
+        <!-- Orange bar -->
+        <div class="orange-bar">
+            <div class="titulo-laranja">Detalhes</div>
+        </div>
+
         <div class="detalhes-content">
 
-            <!-- ── Coluna esquerda: formulário ── -->
-            <form class="col-formulario"
-                  th:action="@{/tarefas/{id}(id=${tarefa.id})}"
-                  method="post">
+            <!-- Coluna esquerda -->
+            <form class="col-esq" th:action="@{/tarefas/{id}(id=${tarefa.id})}" method="post">
 
-                <!-- Alertas -->
-                <div class="alerta-sucesso"   th:if="${sucesso}"      th:text="${sucesso}"></div>
-                <div class="alerta-negocio"   th:if="${erroNegocio}"  th:text="${erroNegocio}"></div>
+                <div th:if="${sucesso}" class="alerta-sucesso" th:text="${sucesso}"></div>
+                <div th:if="${erroNegocio}" class="alerta-negocio" th:text="${erroNegocio}"></div>
 
-                <!-- Título -->
-                <div class="tarefa-titulo-row">
-                    <input class="tarefa-titulo-input"
-                           type="text"
-                           name="titulo"
-                           maxlength="100"
-                           placeholder="Título da tarefa"
-                           th:value="${tarefa.titulo}"
-                           required>
-                    <button type="button" class="btn-mais">+</button>
-                </div>
+                <input class="titulo-input" type="text" name="titulo" maxlength="100" required th:value="${tarefa.titulo}" placeholder="Título da tarefa">
 
-                <!-- Empresa (informativo — vinculada via espaço) -->
-                <div class="campo-detalhe">
-                    <label>Empresa</label>
-                    <select name="empresaId" disabled>
-                        <option th:each="emp : ${empresas}"
-                                th:value="${emp.id}"
-                                th:text="${emp.nome}"
-                                th:selected="${tarefa.espaco != null
-                                    and tarefa.espaco.empresa != null
-                                    and tarefa.espaco.empresa.id == emp.id}">
-                        </option>
+                <div class="campo">
+                    <label>Empresa:</label>
+                    <select disabled>
+                        <option value="">Nenhuma</option>
+                        <option th:each="emp : ${empresas}" th:value="${emp.id}" th:text="${emp.nome}"
+                                th:selected="${tarefa.espaco != null and tarefa.espaco.empresa != null and tarefa.espaco.empresa.id == emp.id}"></option>
                     </select>
                 </div>
 
-                <!-- Espaço -->
-                <div class="campo-detalhe">
-                    <label>Espaço</label>
-                    <select name="espacoId" required>
-                        <option value="">Selecione</option>
-                        <option th:each="esp : ${espacos}"
-                                th:value="${esp.id}"
-                                th:text="${esp.nome}"
-                                th:selected="${tarefa.espaco != null and tarefa.espaco.id == esp.id}">
-                        </option>
-                    </select>
-                </div>
-
-                <!-- Responsável (informativo) -->
-                <div class="campo-detalhe">
-                    <label>Responsável</label>
+                <div class="campo">
+                    <label>Responsável:</label>
                     <select disabled>
                         <option value="">Nenhum atribuído</option>
-                        <option th:each="u : ${responsaveis}"
-                                th:value="${u.id}"
-                                th:text="${u.nome}"
-                                selected>
-                        </option>
+                        <option th:each="u : ${responsaveis}" th:value="${u.id}" th:text="${u.nome}" selected></option>
                     </select>
                 </div>
 
-                <!-- Status -->
-                <div class="campo-detalhe">
-                    <label>Status</label>
+                <div class="campo">
+                    <label>Filtros:</label>
                     <select name="status" required>
-                        <option th:each="s : ${statusOpcoes}"
-                                th:value="${s.name()}"
+                        <option th:each="s : ${statusOpcoes}" th:value="${s.name()}"
                                 th:text="${s.name().replace('_',' ')}"
-                                th:selected="${tarefa.status == s}">
-                        </option>
+                                th:selected="${tarefa.status == s}"></option>
                     </select>
                 </div>
 
-                <!-- Prioridade -->
-                <div class="campo-detalhe">
-                    <label>Prioridade</label>
-                    <select name="prioridade" required>
-                        <option th:each="p : ${prioridadeOpcoes}"
-                                th:value="${p.name()}"
-                                th:text="${p.name()}"
-                                th:selected="${tarefa.prioridade == p}">
-                        </option>
-                    </select>
-                </div>
+                <input type="hidden" name="espacoId" th:value="${tarefa.espaco != null ? tarefa.espaco.id : ''}">
 
                 <!-- Progresso -->
-                <div class="campo-detalhe">
-                    <label>Progresso: <span th:text="${tarefa.progresso != null ? tarefa.progresso.intValue() + '%' : '0%'}"></span></label>
-                    <input type="range"
-                           name="progresso"
-                           min="0" max="100" step="1"
+                <div class="progresso-bloco">
+                    <div class="progresso-label">
+                        <span>Progresso</span>
+                        <span id="progressoValor" th:text="${tarefa.progresso != null ? tarefa.progresso.intValue() + '%' : '0%'}"></span>
+                    </div>
+                    <input type="range" name="progresso" min="0" max="100" step="1"
                            th:value="${tarefa.progresso != null ? tarefa.progresso.intValue() : 0}"
-                           oninput="this.previousElementSibling.querySelector('span').textContent = this.value + '%'">
+                           oninput="document.getElementById('progressoValor').textContent = this.value + '%'">
                 </div>
 
                 <!-- Descrição -->
-                <textarea class="descricao-textarea"
-                          name="descricao"
-                          maxlength="500"
-                          placeholder="Informações sobre a tarefa..."
-                          th:text="${tarefa.descricao}"></textarea>
+                <div class="descricao-bloco">
+                    <div class="desc-label">Descrição</div>
+                    <textarea name="descricao" maxlength="500" placeholder="Informações sobre a tarefa..." th:text="${tarefa.descricao}"></textarea>
+                </div>
 
-                <!-- Calendário + Datas importantes -->
-                <div class="calendario-bloco">
-
-                    <!-- Calendário navegável -->
+                <!-- Calendário -->
+                <div class="cal-section-label">Calendário de Entrega</div>
+                <div class="cal-bloco">
                     <div class="calendario">
                         <div class="cal-header">
-                            <!-- navegação: mês anterior -->
-                            <a th:href="@{/tarefas/{id}(id=${tarefa.id},
-                                calMes=${calMesAtual.monthValue == 1 ? 12 : calMesAtual.monthValue - 1},
-                                calAno=${calMesAtual.monthValue == 1 ? calMesAtual.year - 1 : calMesAtual.year})}"
-                               class="cal-nav">&lt;</a>
-
-                            <span class="cal-titulo"
-                                  th:text="${#temporals.format(calMesAtual.atDay(1), 'MMMM yyyy', new java.util.Locale('pt','BR'))}">
-                            </span>
-
-                            <!-- navegação: próximo mês -->
-                            <a th:href="@{/tarefas/{id}(id=${tarefa.id},
-                                calMes=${calMesAtual.monthValue == 12 ? 1 : calMesAtual.monthValue + 1},
-                                calAno=${calMesAtual.monthValue == 12 ? calMesAtual.year + 1 : calMesAtual.year})}"
-                               class="cal-nav">&gt;</a>
+                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, calMes=${calMesAtual.monthValue == 1 ? 12 : calMesAtual.monthValue - 1}, calAno=${calMesAtual.monthValue == 1 ? calMesAtual.year - 1 : calMesAtual.year})}" class="cal-nav-btn">&#8249;</a>
+                            <span class="cal-mes" th:text="${calMesAtual.month.getDisplayName(T(java.time.format.TextStyle).FULL, new java.util.Locale('pt','BR'))} + ' ' + ${calMesAtual.year}"></span>
+                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, calMes=${calMesAtual.monthValue == 12 ? 1 : calMesAtual.monthValue + 1}, calAno=${calMesAtual.monthValue == 12 ? calMesAtual.year + 1 : calMesAtual.year})}" class="cal-nav-btn">&#8250;</a>
                         </div>
-
                         <div class="cal-grid">
-                            <!-- cabeçalho dias da semana -->
-                            <div class="cal-dia-semana">D</div>
-                            <div class="cal-dia-semana">S</div>
-                            <div class="cal-dia-semana">T</div>
-                            <div class="cal-dia-semana">Q</div>
-                            <div class="cal-dia-semana">Q</div>
-                            <div class="cal-dia-semana">S</div>
-                            <div class="cal-dia-semana">S</div>
-
-                            <!-- células vazias antes do primeiro dia -->
-                            <div class="cal-dia vazio"
-                                 th:each="v : ${#numbers.sequence(1, calPrimeiroDia == 0 ? 0 : calPrimeiroDia)}">
-                            </div>
-
-                            <!-- dias do mês -->
+                            <div class="cal-ds">seg</div><div class="cal-ds">ter</div><div class="cal-ds">qua</div>
+                            <div class="cal-ds">qui</div><div class="cal-ds">sex</div><div class="cal-ds">sáb</div><div class="cal-ds">dom</div>
+                            <th:block th:if="${calPrimeiroDia > 0}" th:each="v : ${#numbers.sequence(1, calPrimeiroDia)}">
+                                <div class="cal-d vazio">0</div>
+                            </th:block>
                             <div th:each="d : ${#numbers.sequence(1, calDiasNoMes)}"
                                  th:with="diaAtual=${calMesAtual.atDay(d)}"
-                                 th:classappend="${diaAtual == hoje} ? 'hoje'
-                                              : (${tarefa.dataInicio != null and diaAtual == tarefa.dataInicio}
-                                                 or ${tarefa.dataEntrega != null and diaAtual == tarefa.dataEntrega}) ? 'marcado'"
-                                 class="cal-dia"
-                                 th:text="${d}">
-                            </div>
+                                 th:classappend="${diaAtual == hoje} ? ' hoje' : (${tarefa.dataInicio != null and diaAtual == tarefa.dataInicio} or ${tarefa.dataEntrega != null and diaAtual == tarefa.dataEntrega}) ? ' marcado'"
+                                 class="cal-d" th:text="${d}"></div>
                         </div>
                     </div>
-
-                    <!-- Datas importantes -->
-                    <div class="datas-importantes">
+                    <div class="datas-imp">
                         <h4>Datas Importantes</h4>
-
-                        <div class="data-campo">
-                            <label for="dataInicio">Data de Início</label>
-                            <input type="date"
-                                   id="dataInicio"
-                                   name="dataInicio"
-                                   th:value="${tarefa.dataInicio}">
+                        <div class="data-item">
+                            <label>Data de Início:</label>
+                            <input type="date" name="dataInicio" th:value="${tarefa.dataInicio}">
                         </div>
-
-                        <div class="data-campo">
-                            <label for="dataEntrega">Data de Entrega</label>
-                            <input type="date"
-                                   id="dataEntrega"
-                                   name="dataEntrega"
-                                   th:value="${tarefa.dataEntrega}">
+                        <div class="data-item">
+                            <label>Data de Entrega:</label>
+                            <input type="date" name="dataEntrega" th:value="${tarefa.dataEntrega}">
                         </div>
                     </div>
                 </div>
 
-                <!-- Botão salvar -->
                 <button type="submit" class="btn-salvar">Salvar</button>
-
             </form>
 
-            <!-- ── Coluna direita: abas e histórico ── -->
-            <div class="col-historico">
-
-                <!-- Abas -->
+            <!-- Coluna direita -->
+            <div class="col-dir">
                 <div class="abas">
-                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='NOTA')}"
-                       th:classappend="${abaAtiva == 'NOTA'} ? ' ativa'"
-                       class="aba-btn">
-                        Notas
-                        <span class="aba-badge" th:text="${totalNotas}"></span>
-                    </a>
-                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ATIVIDADE')}"
-                       th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativa'"
-                       class="aba-btn">
-                        Atividade
-                        <span class="aba-badge" th:text="${totalAtividades}"></span>
-                    </a>
-                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ARQUIVO')}"
-                       th:classappend="${abaAtiva == 'ARQUIVO'} ? ' ativa'"
-                       class="aba-btn">
-                        Arquivos
-                        <span class="aba-badge" th:text="${totalArquivos}"></span>
-                    </a>
+                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='NOTA')}" th:classappend="${abaAtiva == 'NOTA'} ? ' ativa'" class="aba">Notas</a>
+                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ATIVIDADE')}" th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativa'" class="aba">Atividade</a>
+                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ARQUIVO')}" th:classappend="${abaAtiva == 'ARQUIVO'} ? ' ativa'" class="aba">Arquivos</a>
                 </div>
 
-                <!-- Campo adicionar atividade -->
-                <form class="adicionar-bloco"
-                      th:action="@{/tarefas/{id}/atividades(id=${tarefa.id})}"
-                      method="post">
-
+                <form class="add-bloco" th:action="@{/tarefas/{id}/atividades(id=${tarefa.id})}" method="post">
                     <input type="hidden" name="tipo" th:value="${abaAtiva}">
-
-                    <label>Documentos</label>
-                    <div class="adicionar-row">
-                        <textarea class="adicionar-input"
-                                  name="descricao"
-                                  maxlength="255"
-                                  th:placeholder="'* Adicione uma ' + ${abaAtiva.toLowerCase()} + ' aqui...'"></textarea>
-                        <button type="submit" class="btn-adicionar">Adicionar</button>
+                    <div class="add-label">Documentos</div>
+                    <div class="add-row">
+                        <textarea class="add-input" name="descricao" maxlength="255"
+                                  th:placeholder="'*Adicione uma ' + ${abaAtiva.toLowerCase()} + ' aqui...'"></textarea>
+                        <button type="submit" class="btn-add">Adicionar</button>
                     </div>
                 </form>
 
-                <!-- Histórico -->
-                <div class="historico-bloco">
-                    <div class="historico-header">
-                        <span class="historico-titulo">Histórico</span>
-                        <div class="historico-filtros">
-                            <a th:href="@{/tarefas/{id}(id=${tarefa.id})}"
-                               th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativo'"
-                               class="filtro-btn">Todos</a>
-                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='NOTA')}"
-                               th:classappend="${abaAtiva == 'NOTA'} ? ' ativo'"
-                               class="filtro-btn"
-                               th:text="'Notas (' + ${totalNotas} + ')'"></a>
-                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ATIVIDADE')}"
-                               th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativo'"
-                               class="filtro-btn"
-                               th:text="'Atividades (' + ${totalAtividades} + ')'"></a>
-                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ARQUIVO')}"
-                               th:classappend="${abaAtiva == 'ARQUIVO'} ? ' ativo'"
-                               class="filtro-btn"
-                               th:text="'Arquivos (' + ${totalArquivos} + ')'"></a>
+                <div class="hist-bloco">
+                    <div class="hist-header">
+                        <span class="hist-titulo">Histórico</span>
+                        <div class="hist-filtros">
+                            <a th:href="@{/tarefas/{id}(id=${tarefa.id})}" class="filtro" th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativo'">Todos</a>
+                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='NOTA')}" class="filtro" th:classappend="${abaAtiva == 'NOTA'} ? ' ativo'" th:text="'Notas(' + ${totalNotas} + ')'"></a>
+                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ATIVIDADE')}" class="filtro" th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativo'" th:text="'Atividades(' + ${totalAtividades} + ')'"></a>
+                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ARQUIVO')}" class="filtro" th:classappend="${abaAtiva == 'ARQUIVO'} ? ' ativo'" th:text="'Arquivos(' + ${totalArquivos} + ')'"></a>
                         </div>
                     </div>
 
-                    <!-- Lista de entradas -->
-                    <div th:if="${historico.isEmpty()}" class="historico-vazio">
-                        Nenhuma entrada no histórico ainda.
-                    </div>
+                    <div th:if="${historico.isEmpty()}" class="hist-vazio">Nenhuma entrada no histórico ainda.</div>
 
-                    <div th:each="item : ${historico}" class="historico-item">
-                        <div class="historico-item-info">
-                            <span class="historico-item-tipo" th:text="${item.tipo}"></span>
-                            <span class="historico-item-descricao" th:text="${item.descricao}"></span>
-                            <span class="historico-item-data"
-                                  th:text="${#temporals.format(item.dataTime, 'yyyy/MM/dd HH:mm')}"></span>
-                        </div>
-                        <div class="historico-item-acoes">
-                            <button type="button" class="acao-btn" title="Visualizar">👁</button>
-                            <button type="button" class="acao-btn" title="Documento">📄</button>
-                            <button type="button" class="acao-btn" title="Favoritar">☆</button>
+                    <div th:each="item : ${historico}" class="hist-item">
+                        <span class="hist-item-desc" th:text="${item.descricao}"></span>
+                        <div class="hist-item-right">
+                            <span class="hist-item-data" th:text="${item.dataTime.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy/MM/dd'))}"></span>
+                            <div class="hist-acoes">
+                                <button type="button" class="acao">&#128065;</button>
+                                <button type="button" class="acao">&#128196;</button>
+                                <button type="button" class="acao">&#9734;</button>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>
-
-<script th:src="@{/js/sidebar.js}"></script>
-
 </body>
+<script th:src="@{/js/detalhes.js}"></script>
 </html>

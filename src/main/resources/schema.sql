@@ -3,13 +3,13 @@
 CREATE TABLE IF NOT EXISTS empresa (
     id_empresa  INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nome        VARCHAR(45)  NOT NULL,
-    cep         CHAR(15)     NOT NULL,
-    endereco    VARCHAR(45)  NOT NULL,
+    cep         CHAR(15),
+    endereco    VARCHAR(45),
     complemento VARCHAR(45),
-    numero      CHAR(4)      NOT NULL,
-    bairro      VARCHAR(45)  NOT NULL,
-    cidade      VARCHAR(45)  NOT NULL,
-    estado      VARCHAR(45)  NOT NULL
+    numero      CHAR(4),
+    bairro      VARCHAR(45),
+    cidade      VARCHAR(45),
+    estado      VARCHAR(45)
 );
 
 CREATE TABLE IF NOT EXISTS espaco (
@@ -29,17 +29,11 @@ CREATE TABLE IF NOT EXISTS tarefa (
     progresso    REAL         NOT NULL DEFAULT 0,
     data_inicio  DATE,
     data_entrega DATE,
+    prioridade   VARCHAR(10)  NOT NULL DEFAULT 'BAIXA',
     espaco_id    INT          NOT NULL,
     CONSTRAINT fk_tarefa_espaco
         FOREIGN KEY (espaco_id) REFERENCES espaco(id_espaco) ON DELETE CASCADE
 );
-
-/* Migração segura: adiciona colunas novas se a tabela já existia */
-ALTER TABLE tarefa ADD COLUMN IF NOT EXISTS titulo       VARCHAR(100);
-ALTER TABLE tarefa ADD COLUMN IF NOT EXISTS status       VARCHAR(30) NOT NULL DEFAULT 'A_INICIAR';
-ALTER TABLE tarefa ADD COLUMN IF NOT EXISTS data_inicio  DATE;
-ALTER TABLE tarefa ADD COLUMN IF NOT EXISTS data_entrega DATE;
-ALTER TABLE tarefa ADD COLUMN IF NOT EXISTS prioridade VARCHAR(10) NOT NULL DEFAULT 'BAIXA';
 
 CREATE TABLE IF NOT EXISTS cargo (
     id_cargo   INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -89,9 +83,6 @@ CREATE TABLE IF NOT EXISTS atualizacoes (
         FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE SET NULL
 );
 
-/* Migração segura: adiciona coluna tipo se a tabela já existia */
-ALTER TABLE atualizacoes ADD COLUMN IF NOT EXISTS tipo VARCHAR(20) NOT NULL DEFAULT 'ATIVIDADE';
-
 /* ── Índices ─────────────────────────────────────────────── */
 
 CREATE INDEX IF NOT EXISTS idx_espaco_empresa_id          ON espaco       (empresa_id);
@@ -102,28 +93,24 @@ CREATE INDEX IF NOT EXISTS idx_tarefa_usuario_usuario_id  ON tarefa_usuario (usu
 CREATE INDEX IF NOT EXISTS idx_atualizacoes_tarefa_id     ON atualizacoes (tarefa_id);
 CREATE INDEX IF NOT EXISTS idx_atualizacoes_usuario_id    ON atualizacoes (usuario_id);
 
-/* ── Trigger de log de atualização de tarefa ─────────────── */
+/* ── Trigger de log ─────────────────────────────────────────
+   Executar manualmente no pgAdmin após o primeiro startup:
 
-CREATE OR REPLACE FUNCTION fn_log_update_tarefa()
-RETURNS TRIGGER AS $$
-BEGIN
-    INSERT INTO atualizacoes (tarefa_id, tipo, descricao, data_time)
-    VALUES (
-        NEW.id_tarefa,
-        'ATIVIDADE',
-        'Tarefa atualizada. Título: '
-            || COALESCE(OLD.titulo, '')
-            || ' -> '
-            || COALESCE(NEW.titulo, ''),
-        CURRENT_TIMESTAMP
-    );
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+   CREATE OR REPLACE FUNCTION fn_log_update_tarefa()
+   RETURNS TRIGGER AS $$
+   BEGIN
+       INSERT INTO atualizacoes (tarefa_id, tipo, descricao, data_time)
+       VALUES (
+           NEW.id_tarefa, 'ATIVIDADE',
+           'Tarefa atualizada: ' || COALESCE(OLD.titulo,'') || ' -> ' || COALESCE(NEW.titulo,''),
+           CURRENT_TIMESTAMP
+       );
+       RETURN NEW;
+   END;
+   $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS trg_log_update_tarefa ON tarefa;
-
-CREATE TRIGGER trg_log_update_tarefa
-    AFTER UPDATE ON tarefa
-    FOR EACH ROW
-    EXECUTE FUNCTION fn_log_update_tarefa();
+   DROP TRIGGER IF EXISTS trg_log_update_tarefa ON tarefa;
+   CREATE TRIGGER trg_log_update_tarefa
+       AFTER UPDATE ON tarefa FOR EACH ROW
+       EXECUTE FUNCTION fn_log_update_tarefa();
+── */

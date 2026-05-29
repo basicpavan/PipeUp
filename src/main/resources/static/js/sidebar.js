@@ -22,6 +22,13 @@ function toggleNovoEspacoForm() {
     }
 }
 
+function toggleNovaEmpresaForm() {
+    const form = document.getElementById('novaEmpresaForm');
+    if (form) {
+        form.classList.toggle('show');
+    }
+}
+
 function abrirNovoEspacoParaEmpresa(button) {
     const empresaId = button.getAttribute('data-empresa-id');
     const form = document.getElementById('novoEspacoForm');
