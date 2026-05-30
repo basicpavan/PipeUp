@@ -24,7 +24,14 @@ function initDragAndDrop() {
         cartao.draggable = true;
         
         cartao.addEventListener('dragstart', function(e) {
-            e.dataTransfer.setData('text/plain', this.href);
+            const tarefaId = this.href.split('/').pop();
+            const titulo = this.dataset.titulo;
+            const espacoId = this.dataset.espacoId;
+
+            e.dataTransfer.setData('text/plain', tarefaId); // Only transfer ID for simplicity
+            e.dataTransfer.setData('text/titulo', titulo);
+            e.dataTransfer.setData('text/espacoId', espacoId);
+            
             this.style.opacity = '0.5';
         });
         
@@ -47,42 +54,47 @@ function initDragAndDrop() {
             e.preventDefault();
             this.style.background = '';
             
-            const url = e.dataTransfer.getData('text/plain');
-            const tarefaId = url.split('/').pop();
+            const tarefaId = e.dataTransfer.getData('text/plain');
+            const titulo = e.dataTransfer.getData('text/titulo');
+            const espacoId = e.dataTransfer.getData('text/espacoId');
             const novoStatus = getStatusFromColumn(this);
             
-            if (novoStatus) {
-                updateTaskStatus(tarefaId, novoStatus);
+            if (novoStatus && tarefaId && titulo && espacoId) {
+                updateTaskStatus(tarefaId, titulo, espacoId, novoStatus);
             }
         });
     });
 }
 
 function getStatusFromColumn(coluna) {
-    const titulo = coluna.parentElement.querySelector('.coluna-topo span').textContent;
+    const tituloColuna = coluna.parentElement.querySelector('.coluna-topo span').textContent;
     const statusMap = {
         'Em Atraso': 'EM_ATRASO',
         'Em Andamento': 'EM_ANDAMENTO', 
         'A Iniciar': 'A_INICIAR',
         'Concluído': 'CONCLUIDO'
     };
-    return statusMap[titulo];
+    return statusMap[tituloColuna];
 }
 
-function updateTaskStatus(tarefaId, novoStatus) {
+function updateTaskStatus(tarefaId, titulo, espacoId, novoStatus) {
     fetch(`/tarefas/${tarefaId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `status=${novoStatus}&titulo=temp&espacoId=1`
+        body: `titulo=${encodeURIComponent(titulo)}&espacoId=${espacoId}&status=${novoStatus}`
     })
     .then(response => {
         if (response.ok) {
             location.reload();
+        } else {
+            // Handle errors, e.g., show a message to the user
+            response.text().then(text => console.error('Erro ao atualizar tarefa:', text));
+            alert('Erro ao atualizar o status da tarefa.');
         }
     })
-    .catch(error => console.error('Erro:', error));
+    .catch(error => console.error('Erro na requisição:', error));
 }
 
 // ── Pesquisa em tempo real ──
@@ -101,7 +113,7 @@ function initSearch() {
 }
 
 function filterTasks(filtro) {
-    const cartoes = document.querySelectorAll('.cartao');
+    const cartoes = document.querySelectorAll('.coluna-cartoes .cartao'); // Select only cards within columns
     
     cartoes.forEach(cartao => {
         const titulo = cartao.querySelector('.cartao-titulo').textContent.toLowerCase();

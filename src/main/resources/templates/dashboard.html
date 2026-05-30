@@ -114,7 +114,10 @@
                     </div>
                     <div class="coluna-cartoes">
                         <a th:each="t : ${tarefas}" th:if="${t.status == status}"
-                           class="cartao" th:href="@{/tarefas/{id}(id=${t.id})}">
+                           class="cartao"
+                           th:href="@{/tarefas/{id}(id=${t.id})}"
+                           th:data-titulo="${t.titulo}"
+                           th:data-espaco-id="${t.espaco.id}">
                             <div class="cartao-topo">
                                 <span class="cartao-titulo" th:text="${t.titulo}"></span>
                                 <img src="https://i.pravatar.cc/150?img=11" class="cartao-avatar" alt="avatar">
