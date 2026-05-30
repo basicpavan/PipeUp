@@ -15,10 +15,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import org.slf4j.Logger; // Importar Logger
+import org.slf4j.LoggerFactory; // Importar LoggerFactory
 
 @Controller
 @RequestMapping("/tarefas")
 public class TarefaController {
+
+    private static final Logger logger = LoggerFactory.getLogger(TarefaController.class); // Adicionar logger
 
     @Autowired
     private TarefaService tarefaService;
@@ -50,20 +54,24 @@ public class TarefaController {
                            @RequestParam(required = false) Integer calMes,
                            @RequestParam(required = false) Integer calAno,
                            Model model) {
+        logger.info("Requisição GET para /tarefas/{} recebida.", id);
 
         Tarefa tarefa = tarefaService.buscarPorId(id)
                 .orElse(null);
 
         if (tarefa == null) {
+            logger.warn("Tarefa com ID {} não encontrada.", id);
             adicionarDadosSidebar(model);
             model.addAttribute("erroNegocio", "Tarefa não encontrada.");
             return "erroNegocio";
         }
+        logger.debug("Tarefa ID {} encontrada: {}", id, tarefa.getTitulo());
 
         /* calendário: mês/ano navegável, padrão = mês atual */
         YearMonth mesAtual = (calMes != null && calAno != null)
                 ? YearMonth.of(calAno, calMes)
                 : YearMonth.now();
+        logger.debug("Mês/Ano do calendário: {}", mesAtual);
 
         /* ── dados do modelo ── */
         adicionarDadosSidebar(model);
@@ -72,22 +80,27 @@ public class TarefaController {
         model.addAttribute("responsaveis",  usuarioRepository.findUsuariosByTarefaId(id));
         model.addAttribute("statusOpcoes",     Tarefa.Status.values());
         model.addAttribute("prioridadeOpcoes", Tarefa.Prioridade.values());
+        logger.debug("Dados básicos da tarefa e opções adicionados ao modelo.");
 
         /* histórico e contadores */
         model.addAttribute("historico",     atualizacaoService.listarPorTarefa(id));
         model.addAttribute("totalNotas",    atualizacaoService.contarPorTipo(id, Atualizacao.Tipo.NOTA));
         model.addAttribute("totalAtividades", atualizacaoService.contarPorTipo(id, Atualizacao.Tipo.ATIVIDADE));
         model.addAttribute("totalArquivos", atualizacaoService.contarPorTipo(id, Atualizacao.Tipo.ARQUIVO));
+        logger.debug("Histórico e contadores adicionados ao modelo.");
 
         /* aba ativa (padrão: ATIVIDADE) */
         model.addAttribute("abaAtiva", abaAtiva != null ? abaAtiva : "ATIVIDADE");
+        logger.debug("Aba ativa: {}", model.getAttribute("abaAtiva"));
 
         /* calendário — semana começa na segunda (DayOfWeek.MONDAY = 1, então offset = valor - 1) */
         model.addAttribute("calMesAtual",   mesAtual);
         model.addAttribute("calDiasNoMes",  mesAtual.lengthOfMonth());
         model.addAttribute("calPrimeiroDia", mesAtual.atDay(1).getDayOfWeek().getValue() - 1);
         model.addAttribute("hoje",          LocalDate.now());
+        logger.debug("Dados do calendário adicionados ao modelo.");
 
+        logger.info("Retornando view 'detalhesTarefa' para tarefa ID {}.", id);
         return "detalhesTarefa";
     }
 
@@ -104,6 +117,8 @@ public class TarefaController {
                             @RequestParam(required = false) String prioridade,
                             @RequestParam(required = false) Float progresso,
                             RedirectAttributes redirect) {
+        logger.info("Recebida requisição para atualizar tarefa ID: {}", id);
+        logger.info("Dados recebidos: titulo={}, status={}, espacoId={}", titulo, status, espacoId);
         try {
             Tarefa dados = new Tarefa();
             dados.setTitulo(titulo);
@@ -121,8 +136,10 @@ public class TarefaController {
 
             tarefaService.atualizar(id, dados, espacoId);
             redirect.addFlashAttribute("sucesso", "Tarefa atualizada com sucesso.");
+            logger.info("Tarefa ID {} atualizada com sucesso.", id);
 
         } catch (IllegalArgumentException e) {
+            logger.error("Erro ao atualizar tarefa ID {}: {}", id, e.getMessage());
             redirect.addFlashAttribute("erroNegocio", e.getMessage());
         }
 
@@ -153,6 +170,7 @@ public class TarefaController {
                               @RequestParam(required = false) String prioridade,
                               @RequestParam(required = false) Float progresso,
                               RedirectAttributes redirect) {
+        logger.info("Recebida requisição para criar nova tarefa: titulo={}, status={}, espacoId={}", titulo, status, espacoId);
         try {
             Tarefa tarefa = new Tarefa();
             tarefa.setTitulo(titulo);
@@ -170,9 +188,11 @@ public class TarefaController {
 
             Tarefa novaTarefa = tarefaService.criar(tarefa, espacoId);
             redirect.addFlashAttribute("sucesso", "Tarefa criada com sucesso.");
+            logger.info("Nova tarefa ID {} criada com sucesso.", novaTarefa.getId());
             return "redirect:/tarefas/" + novaTarefa.getId();
 
         } catch (IllegalArgumentException e) {
+            logger.error("Erro ao criar nova tarefa: {}", e.getMessage());
             redirect.addFlashAttribute("erroNegocio", e.getMessage());
             return "redirect:/tarefas/nova";
         }
@@ -183,11 +203,14 @@ public class TarefaController {
                                      @RequestParam String descricao,
                                      @RequestParam(required = false, defaultValue = "ATIVIDADE") String tipo,
                                      RedirectAttributes redirect) {
+        logger.info("Recebida requisição para adicionar atividade à tarefa ID {}: descricao={}, tipo={}", id, descricao, tipo);
         try {
             atualizacaoService.adicionar(id, descricao, Atualizacao.Tipo.valueOf(tipo));
             redirect.addFlashAttribute("sucesso", "Atividade registrada.");
+            logger.info("Atividade adicionada à tarefa ID {}.", id);
 
         } catch (IllegalArgumentException e) {
+            logger.error("Erro ao adicionar atividade à tarefa ID {}: {}", id, e.getMessage());
             redirect.addFlashAttribute("erroNegocio", e.getMessage());
         }
 

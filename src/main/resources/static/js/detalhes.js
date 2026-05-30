@@ -55,10 +55,14 @@ function saveForm() {
         if (response.ok) {
             hasUnsavedChanges = false;
             showNotification('Alterações salvas automaticamente', 'success');
+        } else {
+            showNotification('Erro ao salvar automaticamente', 'error');
+            console.error('Erro no auto-save:', response.status, response.statusText);
         }
     })
     .catch(error => {
         console.error('Erro no auto-save:', error);
+        showNotification('Erro de rede no auto-save', 'error');
     });
 }
 
@@ -141,6 +145,8 @@ function initKeyboardShortcuts() {
             const saveBtn = document.querySelector('.btn-salvar');
             if (saveBtn) {
                 saveBtn.click();
+            } else {
+                console.warn('Atalho Ctrl+S: Botão "Salvar" não encontrado.');
             }
         }
         

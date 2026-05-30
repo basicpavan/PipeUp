@@ -31,139 +31,6 @@
         .main { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
 
         /* Header */
-        .header { height: 56px; background: #1a1a1a; display: flex; align-items: center; justify-content: flex-end; padding: 0 18px; position: relative; flex-shrink: 0; }
-        .search-box { position: absolute; left: 50%; transform: translateX(-50%); width: 365px; height: 36px; background: #2b2b2b; border-radius: 999px; display: flex; align-items: center; padding: 0 14px; gap: 10px; }
-        .search-box input { border: none; outline: none; background: transparent; color: #fff; font-size: 0.95rem; width: 100%; }
-        .search-box input::placeholder { color: #aaa; }
-        .search-icon { width: 18px; height: 18px; opacity: 0.8; display: block; }
-        .header-icons { display: flex; align-items: center; gap: 10px; }
-        .header-btn { width: 38px; height: 38px; border: none; background: transparent; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .header-btn img { width: 24px; height: 24px; opacity: 0.9; display: block; }
-        .avatar { width: 40px; height: 40px; border-radius: 50%; background: #9d9d9d; overflow: hidden; border: 2px solid rgba(255,255,255,0.15); }
-        .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        /* Orange bar */
-        .orange-bar { height: 40px; background: linear-gradient(180deg,#FB7D29,#f07020); display: flex; align-items: center; padding: 0 20px; flex-shrink: 0; }
-        .titulo-laranja { font-size: 1rem; font-weight: 700; color: #fff; }
-
-        /* Content */
-        .detalhes-content { flex: 1; display: flex; overflow: hidden; min-height: 0; }
-
-        /* Coluna esquerda */
-        .col-esq {
-            width: 440px; min-width: 440px; overflow-y: auto; padding: 16px;
-            display: flex; flex-direction: column; gap: 12px;
-            border-right: 1px solid rgba(255,255,255,0.07);
-            height: 100%;
-        }
-        .col-esq::-webkit-scrollbar { width: 4px; }
-        .col-esq::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 999px; }
-
-        .titulo-input { width: 100%; background: #2b2b2b; border: none; border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 1rem; font-weight: 700; outline: none; }
-        .titulo-input:focus { outline: 2px solid #FB7D29; }
-
-        .campo { background: #3a3a3a; border-radius: 10px; padding: 11px 16px; display: flex; align-items: center; gap: 10px; }
-        .campo label { font-size: 0.88rem; font-weight: 700; color: #fff; white-space: nowrap; min-width: 100px; }
-        .campo select { flex: 1; background: transparent; border: none; outline: none; color: rgba(255,255,255,0.75); font-size: 0.88rem; cursor: pointer; }
-        .campo select option { color: #111; }
-
-        .progresso-bloco { background: #3a3a3a; border-radius: 10px; padding: 11px 16px; display: flex; flex-direction: column; gap: 8px; }
-        .progresso-label { font-size: 0.88rem; font-weight: 700; color: #fff; display: flex; justify-content: space-between; }
-        .progresso-bloco input[type="range"] { width: 100%; accent-color: #FB7D29; cursor: pointer; }
-
-        .descricao-bloco { background: #3a3a3a; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
-        .desc-label { font-size: 0.88rem; font-weight: 700; }
-        .descricao-bloco textarea { width: 100%; min-height: 110px; background: transparent; border: none; outline: none; color: rgba(255,255,255,0.7); font-size: 0.88rem; resize: vertical; }
-        .descricao-bloco textarea::placeholder { color: rgba(255,255,255,0.3); }
-
-        .cal-section-label { font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.6); }
-        .cal-bloco { display: flex; gap: 16px; align-items: flex-start; }
-
-        .calendario { background: #3a3a3a; border-radius: 12px; padding: 12px; flex: 0 0 210px; }
-        .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-        .cal-mes { font-size: 0.85rem; font-weight: 700; }
-        .cal-nav-btn { background: transparent; border: none; color: rgba(255,255,255,0.7); font-size: 1.1rem; cursor: pointer; padding: 2px 6px; border-radius: 6px; line-height: 1; }
-        .cal-nav-btn:hover { background: rgba(255,255,255,0.08); }
-        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; }
-        .cal-ds { font-size: 0.65rem; font-weight: 700; color: rgba(255,255,255,0.4); text-align: center; padding-bottom: 4px; }
-        .cal-d { font-size: 0.75rem; text-align: center; padding: 4px 1px; border-radius: 5px; color: rgba(255,255,255,0.75); }
-        .cal-d.hoje { background: #FB7D29; color: #fff; font-weight: 700; }
-        .cal-d.marcado { background: rgba(251,125,41,0.25); color: #FB7D29; font-weight: 600; }
-        .cal-d.vazio { visibility: hidden; }
-
-        .datas-imp { flex: 1; display: flex; flex-direction: column; gap: 10px; }
-        .datas-imp h4 { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.4px; }
-        .data-item { display: flex; flex-direction: column; gap: 3px; }
-        .data-item label { font-size: 0.75rem; color: rgba(255,255,255,0.5); font-weight: 600; }
-        .data-item input[type="date"] { background: #2b2b2b; border: none; border-radius: 8px; padding: 7px 10px; color: #fff; font-size: 0.85rem; cursor: pointer; width: 100%; outline: none; }
-        .data-item input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7); cursor: pointer; }
-
-        .btn-salvar { align-self: flex-end; height: 38px; padding: 0 24px; border: none; border-radius: 10px; background: #FB7D29; color: #fff; font-size: 0.92rem; font-weight: 700; cursor: pointer; }
-        .btn-salvar:hover { filter: brightness(1.08); }
-
-        .alerta-sucesso { background: rgba(77,255,150,0.12); border: 1px solid #4dff96; border-radius: 8px; padding: 9px 14px; color: #d0ffe8; font-size: 0.85rem; }
-        .alerta-negocio { background: rgba(255,77,77,0.15); border: 1px solid #ff4d4d; border-radius: 8px; padding: 9px 14px; color: #ffe0e0; font-size: 0.85rem; }
-
-        /* Coluna direita */
-        .col-dir { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 16px; gap: 12px; min-width: 0; }
-
-        .abas { display: flex; border-bottom: 2px solid rgba(255,255,255,0.1); flex-shrink: 0; }
-        .aba { padding: 10px 24px; font-size: 0.92rem; font-weight: 600; color: rgba(255,255,255,0.5); border-bottom: 2px solid transparent; margin-bottom: -2px; }
-        .aba:hover { color: #fff; }
-        .aba.ativa { color: #fff; border-bottom-color: #FB7D29; background: rgba(255,255,255,0.05); border-radius: 8px 8px 0 0; }
-
-        .add-bloco { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
-        .add-label { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; }
-        .add-row { display: flex; gap: 8px; }
-        .add-input { flex: 1; background: #3a3a3a; border: none; border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 0.9rem; resize: none; min-height: 42px; outline: none; }
-        .add-input::placeholder { color: rgba(255,255,255,0.3); }
-        .add-input:focus { outline: 2px solid #FB7D29; }
-        .btn-add { height: 42px; padding: 0 18px; border: none; border-radius: 10px; background: #FB7D29; color: #fff; font-size: 0.88rem; font-weight: 700; cursor: pointer; flex-shrink: 0; }
-
-        .hist-bloco { flex: 1; display: flex; flex-direction: column; gap: 0; overflow-y: auto; min-height: 0; }
-        .hist-bloco::-webkit-scrollbar { width: 4px; }
-        .hist-bloco::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 999px; }
-
-        .hist-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; flex-shrink: 0; }
-        .hist-titulo { font-size: 0.9rem; font-weight: 700; }
-        .hist-filtros { display: flex; gap: 6px; flex-wrap: wrap; }
-        .filtro { background: transparent; border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; padding: 3px 10px; color: rgba(255,255,255,0.55); font-size: 0.75rem; font-weight: 600; cursor: pointer; }
-        .filtro:hover, .filtro.ativo { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.35); }
-
-        .hist-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 4px; border-bottom: 1px solid rgba(255,255,255,0.06); gap: 12px; }
-        .hist-item-desc { font-size: 0.9rem; color: rgba(255,255,255,0.85); flex: 1; }
-        .hist-item-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
-        .hist-item-data { font-size: 0.82rem; color: rgba(255,255,255,0.45); min-width: 80px; text-align: right; }
-        .hist-acoes { display: flex; gap: 10px; }
-        .acao { background: transparent; border: none; color: rgba(255,255,255,0.45); font-size: 1.1rem; cursor: pointer; padding: 2px; }
-        .acao:hover { color: #fff; }
-        .hist-vazio { text-align: center; color: rgba(255,255,255,0.3); font-size: 0.88rem; padding: 32px 0; }
-    </style>
-</head>
-<body>
-<div class="layout">
-
-    <!-- Sidebar -->
-    <div class="sidebar-mini">
-        <div class="mini-logo"><img th:src="@{/img/logo-up.png}" alt="UP"></div>
-        <nav class="mini-nav">
-            <a href="/dashboard" class="mini-item">
-                <div class="mini-icon-box"><img th:src="@{/img/icon-home.png}" alt="Início"></div>
-                <span>Início</span>
-            </a>
-            <a href="/empresas" class="mini-item">
-                <div class="mini-icon-box"><img th:src="@{/img/icon-company.png}" alt="Empresas"></div>
-                <span>Empresas</span>
-            </a>
-            <a href="/usuarios" class="mini-item">
-                <div class="mini-icon-box"><img th:src="@{/img/icon-users.png}" alt="Usuários"></div>
-                <span>Usuários</span>
-            </a>
-        </nav>
-    </div>
-
-    <div class="main">
-        <!-- Header -->
         <div class="header">
             <form action="/dashboard" method="get" class="search-box">
                 <img th:src="@{/img/icon-search.png}" alt="Pesquisar" class="search-icon">
@@ -254,7 +121,7 @@
                             </th:block>
                             <div th:each="d : ${#numbers.sequence(1, calDiasNoMes)}"
                                  th:with="diaAtual=${calMesAtual.atDay(d)}"
-                                 th:classappend="${diaAtual == hoje} ? ' hoje' : (${tarefa.dataInicio != null and diaAtual == tarefa.dataInicio} or ${tarefa.dataEntrega != null and diaAtual == tarefa.dataEntrega}) ? ' marcado'"
+                                 th:classappend="${diaAtual == hoje} ? ' hoje' : (${tarefa.dataInicio != null && diaAtual == tarefa.dataInicio} || ${tarefa.dataEntrega != null && diaAtual == tarefa.dataEntrega}) ? ' marcado'"
                                  class="cal-d" th:text="${d}"></div>
                         </div>
                     </div>

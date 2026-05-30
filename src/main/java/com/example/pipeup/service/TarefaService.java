@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import org.slf4j.Logger; // Importar Logger
+import org.slf4j.LoggerFactory; // Importar LoggerFactory
 
 @Service
 public class TarefaService {
+
+    private static final Logger logger = LoggerFactory.getLogger(TarefaService.class); // Adicionar logger
 
     @Autowired
     private TarefaRepository tarefaRepository;
@@ -21,47 +25,82 @@ public class TarefaService {
     /* ── Busca ── */
 
     public Optional<Tarefa> buscarPorId(Integer id) {
+        logger.debug("Buscando tarefa por ID: {}", id);
         return tarefaRepository.findById(id);
     }
 
     /* ── Salvar / Atualizar ── */
 
     public Tarefa salvar(Tarefa tarefa) {
+        logger.debug("Salvando tarefa: {}", tarefa.getTitulo());
         validar(tarefa);
         return tarefaRepository.save(tarefa);
     }
 
     public Tarefa criar(Tarefa tarefa, Integer espacoId) {
+        logger.info("Criando nova tarefa para espaço ID: {}", espacoId);
         Espaco espaco = espacoRepository.findById(espacoId)
                 .orElseThrow(() -> new IllegalArgumentException("Espaço não encontrado."));
         
         tarefa.setEspaco(espaco);
         validar(tarefa);
-        return tarefaRepository.save(tarefa);
+        Tarefa novaTarefa = tarefaRepository.save(tarefa);
+        logger.info("Tarefa criada com ID: {}", novaTarefa.getId());
+        return novaTarefa;
     }
 
     public Tarefa atualizar(Integer id, Tarefa dados, Integer espacoId) {
+        logger.info("Iniciando atualização da tarefa ID: {}", id);
+        logger.debug("Dados recebidos para atualização: titulo={}, status={}, espacoId={}", dados.getTitulo(), dados.getStatus(), espacoId);
+
         Tarefa tarefa = tarefaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Tarefa não encontrada."));
+                .orElseThrow(() -> {
+                    logger.error("Tarefa com ID {} não encontrada para atualização.", id);
+                    return new IllegalArgumentException("Tarefa não encontrada.");
+                });
 
         Espaco espaco = espacoRepository.findById(espacoId)
-                .orElseThrow(() -> new IllegalArgumentException("Espaço não encontrado."));
+                .orElseThrow(() -> {
+                    logger.error("Espaço com ID {} não encontrado para atualização da tarefa ID {}.", espacoId, id);
+                    return new IllegalArgumentException("Espaço não encontrado.");
+                });
 
-        tarefa.setTitulo(dados.getTitulo());
-        tarefa.setDescricao(dados.getDescricao());
-        tarefa.setStatus(dados.getStatus());
-        tarefa.setDataInicio(dados.getDataInicio());
-        tarefa.setDataEntrega(dados.getDataEntrega());
+        // Atualiza apenas os campos que foram fornecidos (não são nulos)
+        if (dados.getTitulo() != null && !dados.getTitulo().trim().isEmpty()) {
+            logger.debug("Atualizando título da tarefa ID {} de '{}' para '{}'.", id, tarefa.getTitulo(), dados.getTitulo());
+            tarefa.setTitulo(dados.getTitulo());
+        }
+        if (dados.getDescricao() != null) {
+            logger.debug("Atualizando descrição da tarefa ID {}.", id);
+            tarefa.setDescricao(dados.getDescricao());
+        }
+        if (dados.getStatus() != null) {
+            logger.debug("Atualizando status da tarefa ID {} de '{}' para '{}'.", id, tarefa.getStatus(), dados.getStatus());
+            tarefa.setStatus(dados.getStatus());
+        }
+        if (dados.getDataInicio() != null) {
+            logger.debug("Atualizando data de início da tarefa ID {}.", id);
+            tarefa.setDataInicio(dados.getDataInicio());
+        }
+        if (dados.getDataEntrega() != null) {
+            logger.debug("Atualizando data de entrega da tarefa ID {}.", id);
+            tarefa.setDataEntrega(dados.getDataEntrega());
+        }
         if (dados.getPrioridade() != null) {
+            logger.debug("Atualizando prioridade da tarefa ID {}.", id);
             tarefa.setPrioridade(dados.getPrioridade());
         }
         if (dados.getProgresso() != null) {
+            logger.debug("Atualizando progresso da tarefa ID {}.", id);
             tarefa.setProgresso(dados.getProgresso());
         }
+        logger.debug("Atualizando espaço da tarefa ID {} para ID {}.", id, espacoId);
         tarefa.setEspaco(espaco);
 
         validar(tarefa);
-        return tarefaRepository.save(tarefa);
+        Tarefa tarefaAtualizada = tarefaRepository.save(tarefa);
+        logger.info("Tarefa ID {} atualizada e salva com sucesso.", id);
+        return tarefaAtualizada;
     }
 
     /* ── Validações ── */

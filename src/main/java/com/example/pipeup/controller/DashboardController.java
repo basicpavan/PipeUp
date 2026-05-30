@@ -12,9 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List; // Importar List
+import org.slf4j.Logger; // Importar Logger
+import org.slf4j.LoggerFactory; // Importar LoggerFactory
 
 @Controller
 public class DashboardController {
+
+    private static final Logger logger = LoggerFactory.getLogger(DashboardController.class); // Adicionar logger
 
     @Autowired
     private EmpresaRepository empresaRepository;
@@ -39,13 +44,16 @@ public class DashboardController {
         model.addAttribute("espacos", espacoRepository.findAll());
         model.addAttribute("statusOpcoes", Tarefa.Status.values()); // Add task statuses to the model
 
+        List<Tarefa> tarefas;
         if (filtro != null && !filtro.isBlank()) {
-            model.addAttribute("tarefas",
-                    tarefaRepository.findByDescricaoContaining(filtro));
+            logger.info("Buscando tarefas com filtro: {}", filtro);
+            tarefas = tarefaRepository.findByDescricaoContaining(filtro);
         } else {
-            model.addAttribute("tarefas",
-                    tarefaRepository.findAll());
+            logger.info("Buscando todas as tarefas.");
+            tarefas = tarefaRepository.findAll();
         }
+        logger.info("Encontradas {} tarefas para o dashboard.", tarefas.size());
+        model.addAttribute("tarefas", tarefas);
 
         return "dashboard";
     }
