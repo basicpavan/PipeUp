@@ -2,6 +2,8 @@ package com.example.pipeup.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tarefa")
@@ -60,6 +62,17 @@ public class Tarefa {
     @ManyToOne
     @JoinColumn(name = "espaco_id")
     private Espaco espaco;
+
+    @ManyToMany
+    @JoinTable(
+        name = "tarefa_usuario",
+        joinColumns = @JoinColumn(name = "tarefa_id"),
+        inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    private List<Usuario> responsaveis = new ArrayList<>();
+
+    public List<Usuario> getResponsaveis() { return responsaveis; }
+    public void setResponsaveis(List<Usuario> responsaveis) { this.responsaveis = responsaveis; }
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }

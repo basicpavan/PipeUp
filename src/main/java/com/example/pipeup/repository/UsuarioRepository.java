@@ -8,11 +8,6 @@ import java.util.List;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-    @Query(value = """
-        SELECT u.*
-        FROM usuario u
-        INNER JOIN tarefa_usuario tu ON tu.usuario_id = u.id_usuario
-        WHERE tu.tarefa_id = :tarefaId
-        """, nativeQuery = true)
+    @Query("SELECT u FROM Tarefa t JOIN t.responsaveis u WHERE t.id = :tarefaId")
     List<Usuario> findUsuariosByTarefaId(Integer tarefaId);
 }

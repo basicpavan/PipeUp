@@ -13,7 +13,6 @@
 
         .layout { display: flex; height: 100vh; width: 100%; }
 
-        /* Sidebar */
         .sidebar-mini {
             width: 80px; min-width: 80px; background: linear-gradient(180deg,#1b1b1b,#101010);
             display: flex; flex-direction: column; align-items: center; padding: 10px 8px;
@@ -27,10 +26,147 @@
         .mini-icon-box img { width: 28px; height: 28px; object-fit: contain; display: block; }
         .mini-item span { font-size: 0.72rem; font-weight: 700; }
 
-        /* Main */
         .main { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
 
-        /* Header */
+        .header { height: 56px; background: #1a1a1a; display: flex; align-items: center; justify-content: flex-end; padding: 0 18px; position: relative; flex-shrink: 0; }
+        .search-box { position: absolute; left: 50%; transform: translateX(-50%); width: 365px; height: 36px; background: #2b2b2b; border-radius: 999px; display: flex; align-items: center; padding: 0 14px; gap: 10px; }
+        .search-box input { border: none; outline: none; background: transparent; color: #fff; font-size: 0.95rem; width: 100%; }
+        .search-box input::placeholder { color: #aaa; }
+        .search-icon { width: 18px; height: 18px; opacity: 0.8; display: block; }
+        .header-icons { display: flex; align-items: center; gap: 10px; }
+        .header-btn { width: 38px; height: 38px; border: none; background: transparent; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .header-btn img { width: 24px; height: 24px; opacity: 0.9; display: block; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; background: #9d9d9d; overflow: hidden; border: 2px solid rgba(255,255,255,0.15); }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .orange-bar { height: 40px; background: linear-gradient(180deg,#FB7D29,#f07020); display: flex; align-items: center; padding: 0 20px; flex-shrink: 0; }
+        .titulo-laranja { font-size: 1rem; font-weight: 700; color: #fff; }
+
+        .detalhes-content { flex: 1; display: flex; overflow: hidden; min-height: 0; }
+
+        .col-esq {
+            width: 440px; min-width: 440px; padding: 16px;
+            display: flex; flex-direction: column; gap: 0;
+            border-right: 1px solid rgba(255,255,255,0.07);
+            overflow: hidden;
+        }
+        .col-esq::-webkit-scrollbar { width: 4px; }
+        .col-esq::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 999px; }
+
+        .form-header {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-shrink: 0; padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .form-titulo { font-size: 0.88rem; font-weight: 700; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-salvar { height: 36px; padding: 0 22px; border: none; border-radius: 8px; background: #FB7D29; color: #fff; font-size: 0.88rem; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+        .btn-salvar:hover { filter: brightness(1.1); }
+
+        .form-scroll { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; padding-bottom: 12px; }
+        .form-scroll::-webkit-scrollbar { width: 4px; }
+        .form-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 999px; }
+        .col-esq form { display: flex; flex-direction: column; gap: 10px; height: 100%; overflow: hidden; }
+
+        .titulo-input { width: 100%; background: #2b2b2b; border: none; border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 1rem; font-weight: 700; outline: none; }
+        .titulo-input:focus { outline: 2px solid #FB7D29; }
+
+        .campo { background: #3a3a3a; border-radius: 10px; padding: 11px 16px; display: flex; align-items: center; gap: 10px; }
+        .campo label { font-size: 0.88rem; font-weight: 700; color: #fff; white-space: nowrap; min-width: 100px; }
+        .campo select { flex: 1; background: transparent; border: none; outline: none; color: rgba(255,255,255,0.75); font-size: 0.88rem; cursor: pointer; }
+        .campo select option { color: #111; }
+
+        .progresso-bloco { background: #3a3a3a; border-radius: 10px; padding: 11px 16px; display: flex; flex-direction: column; gap: 8px; }
+        .progresso-label { font-size: 0.88rem; font-weight: 700; color: #fff; display: flex; justify-content: space-between; }
+        .progresso-bloco input[type="range"] { width: 100%; accent-color: #FB7D29; cursor: pointer; }
+
+        .descricao-bloco { background: #3a3a3a; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+        .desc-label { font-size: 0.88rem; font-weight: 700; }
+        .descricao-bloco textarea { width: 100%; min-height: 110px; background: transparent; border: none; outline: none; color: rgba(255,255,255,0.7); font-size: 0.88rem; resize: vertical; }
+        .descricao-bloco textarea::placeholder { color: rgba(255,255,255,0.3); }
+
+        .cal-section-label { font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.6); }
+        .cal-bloco { display: flex; gap: 16px; align-items: flex-start; }
+
+        .calendario { background: #3a3a3a; border-radius: 12px; padding: 12px; flex: 0 0 210px; }
+        .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+        .cal-mes { font-size: 0.85rem; font-weight: 700; }
+        .cal-nav-btn { background: transparent; border: none; color: rgba(255,255,255,0.7); font-size: 1.1rem; cursor: pointer; padding: 2px 6px; border-radius: 6px; line-height: 1; }
+        .cal-nav-btn:hover { background: rgba(255,255,255,0.08); }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; }
+        .cal-ds { font-size: 0.65rem; font-weight: 700; color: rgba(255,255,255,0.4); text-align: center; padding-bottom: 4px; }
+        .cal-d { font-size: 0.75rem; text-align: center; padding: 4px 1px; border-radius: 5px; color: rgba(255,255,255,0.75); }
+        .cal-d.hoje { background: #FB7D29; color: #fff; font-weight: 700; }
+        .cal-d.marcado { background: rgba(251,125,41,0.25); color: #FB7D29; font-weight: 600; }
+        .cal-d.vazio { visibility: hidden; }
+
+        .datas-imp { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        .datas-imp h4 { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.4px; }
+        .data-item { display: flex; flex-direction: column; gap: 3px; }
+        .data-item label { font-size: 0.75rem; color: rgba(255,255,255,0.5); font-weight: 600; }
+        .data-item input[type="date"] { background: #2b2b2b; border: none; border-radius: 8px; padding: 7px 10px; color: #fff; font-size: 0.85rem; cursor: pointer; width: 100%; outline: none; }
+        .data-item input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7); cursor: pointer; }
+
+        .btn-add { height: 42px; padding: 0 18px; border: none; border-radius: 10px; background: #FB7D29; color: #fff; font-size: 0.88rem; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+
+        .alerta-sucesso { background: rgba(77,255,150,0.12); border: 1px solid #4dff96; border-radius: 8px; padding: 9px 14px; color: #d0ffe8; font-size: 0.85rem; }
+        .alerta-negocio { background: rgba(255,77,77,0.15); border: 1px solid #ff4d4d; border-radius: 8px; padding: 9px 14px; color: #ffe0e0; font-size: 0.85rem; }
+
+        .col-dir { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 16px; gap: 12px; min-width: 0; }
+
+        .abas { display: flex; border-bottom: 2px solid rgba(255,255,255,0.1); flex-shrink: 0; }
+        .aba { padding: 10px 24px; font-size: 0.92rem; font-weight: 600; color: rgba(255,255,255,0.5); border-bottom: 2px solid transparent; margin-bottom: -2px; }
+        .aba:hover { color: #fff; }
+        .aba.ativa { color: #fff; border-bottom-color: #FB7D29; background: rgba(255,255,255,0.05); border-radius: 8px 8px 0 0; }
+
+        .add-bloco { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+        .add-label { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+        .add-row { display: flex; gap: 8px; }
+        .add-input { flex: 1; background: #3a3a3a; border: none; border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 0.9rem; resize: none; min-height: 42px; outline: none; }
+        .add-input::placeholder { color: rgba(255,255,255,0.3); }
+        .add-input:focus { outline: 2px solid #FB7D29; }
+
+        .hist-bloco { flex: 1; display: flex; flex-direction: column; overflow-y: auto; min-height: 0; }
+        .hist-bloco::-webkit-scrollbar { width: 4px; }
+        .hist-bloco::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 999px; }
+
+        .hist-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; flex-shrink: 0; }
+        .hist-titulo { font-size: 0.9rem; font-weight: 700; }
+        .hist-filtros { display: flex; gap: 6px; flex-wrap: wrap; }
+        .filtro { background: transparent; border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; padding: 3px 10px; color: rgba(255,255,255,0.55); font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+        .filtro:hover, .filtro.ativo { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.35); }
+
+        .hist-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 4px; border-bottom: 1px solid rgba(255,255,255,0.06); gap: 12px; }
+        .hist-item-desc { font-size: 0.9rem; color: rgba(255,255,255,0.85); flex: 1; }
+        .hist-item-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+        .hist-item-data { font-size: 0.82rem; color: rgba(255,255,255,0.45); min-width: 80px; text-align: right; }
+        .hist-acoes { display: flex; gap: 10px; }
+        .acao { background: transparent; border: none; color: rgba(255,255,255,0.45); font-size: 1.1rem; cursor: pointer; padding: 2px; }
+        .acao:hover { color: #fff; }
+        .hist-vazio { text-align: center; color: rgba(255,255,255,0.3); font-size: 0.88rem; padding: 32px 0; }
+    </style>
+</head>
+<body>
+<div class="layout">
+
+    <div class="sidebar-mini">
+        <div class="mini-logo"><img th:src="@{/img/logo-up.png}" alt="UP"></div>
+        <nav class="mini-nav">
+            <a href="/dashboard" class="mini-item">
+                <div class="mini-icon-box"><img th:src="@{/img/icon-home.png}" alt="Início"></div>
+                <span>Início</span>
+            </a>
+            <a href="/empresas" class="mini-item">
+                <div class="mini-icon-box"><img th:src="@{/img/icon-company.png}" alt="Empresas"></div>
+                <span>Empresas</span>
+            </a>
+            <a href="/usuarios" class="mini-item">
+                <div class="mini-icon-box"><img th:src="@{/img/icon-users.png}" alt="Usuários"></div>
+                <span>Usuários</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="main">
         <div class="header">
             <form action="/dashboard" method="get" class="search-box">
                 <img th:src="@{/img/icon-search.png}" alt="Pesquisar" class="search-icon">
@@ -44,20 +180,28 @@
             </div>
         </div>
 
-        <!-- Orange bar -->
         <div class="orange-bar">
-            <div class="titulo-laranja">Detalhes</div>
+            <div class="titulo-laranja" th:text="${tarefa.titulo}">Detalhes da Tarefa</div>
         </div>
 
         <div class="detalhes-content">
 
-            <!-- Coluna esquerda -->
             <form class="col-esq" th:action="@{/tarefas/{id}(id=${tarefa.id})}" method="post">
+
+                <!-- Cabeçalho fixo com botão salvar sempre visível -->
+                <div class="form-header">
+                    <span class="form-titulo">Editar Tarefa</span>
+                    <button type="submit" class="btn-salvar">Salvar</button>
+                </div>
 
                 <div th:if="${sucesso}" class="alerta-sucesso" th:text="${sucesso}"></div>
                 <div th:if="${erroNegocio}" class="alerta-negocio" th:text="${erroNegocio}"></div>
 
-                <input class="titulo-input" type="text" name="titulo" maxlength="100" required th:value="${tarefa.titulo}" placeholder="Título da tarefa">
+                <!-- Conteúdo scrollável -->
+                <div class="form-scroll">
+
+                <input class="titulo-input" type="text" name="titulo" maxlength="100" required
+                       th:value="${tarefa.titulo}" placeholder="Título da tarefa">
 
                 <div class="campo">
                     <label>Empresa:</label>
@@ -77,7 +221,7 @@
                 </div>
 
                 <div class="campo">
-                    <label>Filtros:</label>
+                    <label>Status:</label>
                     <select name="status" required>
                         <option th:each="s : ${statusOpcoes}" th:value="${s.name()}"
                                 th:text="${s.name().replace('_',' ')}"
@@ -85,9 +229,24 @@
                     </select>
                 </div>
 
-                <input type="hidden" name="espacoId" th:value="${tarefa.espaco != null ? tarefa.espaco.id : ''}">
+                <div class="campo">
+                    <label>Prioridade:</label>
+                    <select name="prioridade">
+                        <option th:each="p : ${prioridadeOpcoes}" th:value="${p.name()}"
+                                th:text="${p.name()}"
+                                th:selected="${tarefa.prioridade == p}"></option>
+                    </select>
+                </div>
 
-                <!-- Progresso -->
+                <div class="campo">
+                    <label>Espaço:</label>
+                    <select name="espacoId" required>
+                        <option th:each="esp : ${espacos}" th:value="${esp.id}"
+                                th:text="${esp.nome}"
+                                th:selected="${tarefa.espaco != null and tarefa.espaco.id == esp.id}"></option>
+                    </select>
+                </div>
+
                 <div class="progresso-bloco">
                     <div class="progresso-label">
                         <span>Progresso</span>
@@ -98,19 +257,19 @@
                            oninput="document.getElementById('progressoValor').textContent = this.value + '%'">
                 </div>
 
-                <!-- Descrição -->
                 <div class="descricao-bloco">
                     <div class="desc-label">Descrição</div>
-                    <textarea name="descricao" maxlength="500" placeholder="Informações sobre a tarefa..." th:text="${tarefa.descricao}"></textarea>
+                    <textarea name="descricao" maxlength="500"
+                              placeholder="Informações sobre a tarefa..."
+                              th:text="${tarefa.descricao}"></textarea>
                 </div>
 
-                <!-- Calendário -->
                 <div class="cal-section-label">Calendário de Entrega</div>
                 <div class="cal-bloco">
                     <div class="calendario">
                         <div class="cal-header">
                             <a th:href="@{/tarefas/{id}(id=${tarefa.id}, calMes=${calMesAtual.monthValue == 1 ? 12 : calMesAtual.monthValue - 1}, calAno=${calMesAtual.monthValue == 1 ? calMesAtual.year - 1 : calMesAtual.year})}" class="cal-nav-btn">&#8249;</a>
-                            <span class="cal-mes" th:text="${calMesAtual.month.getDisplayName(T(java.time.format.TextStyle).FULL, new java.util.Locale('pt','BR'))} + ' ' + ${calMesAtual.year}"></span>
+                            <span class="cal-mes" th:text="${calMesAtual.month.getDisplayName(T(java.time.format.TextStyle).FULL, new java.util.Locale('pt','BR')) + ' ' + calMesAtual.year}"></span>
                             <a th:href="@{/tarefas/{id}(id=${tarefa.id}, calMes=${calMesAtual.monthValue == 12 ? 1 : calMesAtual.monthValue + 1}, calAno=${calMesAtual.monthValue == 12 ? calMesAtual.year + 1 : calMesAtual.year})}" class="cal-nav-btn">&#8250;</a>
                         </div>
                         <div class="cal-grid">
@@ -121,7 +280,7 @@
                             </th:block>
                             <div th:each="d : ${#numbers.sequence(1, calDiasNoMes)}"
                                  th:with="diaAtual=${calMesAtual.atDay(d)}"
-                                 th:classappend="${diaAtual == hoje} ? ' hoje' : (${tarefa.dataInicio != null && diaAtual == tarefa.dataInicio} || ${tarefa.dataEntrega != null && diaAtual == tarefa.dataEntrega}) ? ' marcado'"
+                                 th:classappend="${diaAtual == hoje} ? ' hoje' : (${tarefa.dataInicio != null and diaAtual == tarefa.dataInicio} or ${tarefa.dataEntrega != null and diaAtual == tarefa.dataEntrega}) ? ' marcado'"
                                  class="cal-d" th:text="${d}"></div>
                         </div>
                     </div>
@@ -138,23 +297,25 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-salvar">Salvar</button>
+                </div><!-- fim form-scroll -->
             </form>
 
-            <!-- Coluna direita -->
             <div class="col-dir">
                 <div class="abas">
-                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='NOTA')}" th:classappend="${abaAtiva == 'NOTA'} ? ' ativa'" class="aba">Notas</a>
-                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ATIVIDADE')}" th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativa'" class="aba">Atividade</a>
-                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ARQUIVO')}" th:classappend="${abaAtiva == 'ARQUIVO'} ? ' ativa'" class="aba">Arquivos</a>
+                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='NOTA')}"
+                       th:classappend="${abaAtiva == 'NOTA'} ? ' ativa'" class="aba">Notas</a>
+                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ATIVIDADE')}"
+                       th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativa'" class="aba">Atividade</a>
+                    <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ARQUIVO')}"
+                       th:classappend="${abaAtiva == 'ARQUIVO'} ? ' ativa'" class="aba">Arquivos</a>
                 </div>
 
                 <form class="add-bloco" th:action="@{/tarefas/{id}/atividades(id=${tarefa.id})}" method="post">
                     <input type="hidden" name="tipo" th:value="${abaAtiva}">
-                    <div class="add-label">Documentos</div>
+                    <div class="add-label">Adicionar</div>
                     <div class="add-row">
                         <textarea class="add-input" name="descricao" maxlength="255"
-                                  th:placeholder="'*Adicione uma ' + ${abaAtiva.toLowerCase()} + ' aqui...'"></textarea>
+                                  th:placeholder="'Adicione uma ' + ${abaAtiva.toLowerCase()} + ' aqui...'"></textarea>
                         <button type="submit" class="btn-add">Adicionar</button>
                     </div>
                 </form>
@@ -163,10 +324,17 @@
                     <div class="hist-header">
                         <span class="hist-titulo">Histórico</span>
                         <div class="hist-filtros">
-                            <a th:href="@{/tarefas/{id}(id=${tarefa.id})}" class="filtro" th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativo'">Todos</a>
-                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='NOTA')}" class="filtro" th:classappend="${abaAtiva == 'NOTA'} ? ' ativo'" th:text="'Notas(' + ${totalNotas} + ')'"></a>
-                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ATIVIDADE')}" class="filtro" th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativo'" th:text="'Atividades(' + ${totalAtividades} + ')'"></a>
-                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ARQUIVO')}" class="filtro" th:classappend="${abaAtiva == 'ARQUIVO'} ? ' ativo'" th:text="'Arquivos(' + ${totalArquivos} + ')'"></a>
+                            <a th:href="@{/tarefas/{id}(id=${tarefa.id})}" class="filtro"
+                               th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativo'">Todos</a>
+                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='NOTA')}" class="filtro"
+                               th:classappend="${abaAtiva == 'NOTA'} ? ' ativo'"
+                               th:text="'Notas (' + ${totalNotas} + ')'"></a>
+                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ATIVIDADE')}" class="filtro"
+                               th:classappend="${abaAtiva == 'ATIVIDADE'} ? ' ativo'"
+                               th:text="'Atividades (' + ${totalAtividades} + ')'"></a>
+                            <a th:href="@{/tarefas/{id}(id=${tarefa.id}, abaAtiva='ARQUIVO')}" class="filtro"
+                               th:classappend="${abaAtiva == 'ARQUIVO'} ? ' ativo'"
+                               th:text="'Arquivos (' + ${totalArquivos} + ')'"></a>
                         </div>
                     </div>
 
@@ -175,11 +343,11 @@
                     <div th:each="item : ${historico}" class="hist-item">
                         <span class="hist-item-desc" th:text="${item.descricao}"></span>
                         <div class="hist-item-right">
-                            <span class="hist-item-data" th:text="${item.dataTime.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy/MM/dd'))}"></span>
+                            <span class="hist-item-data"
+                                  th:text="${item.dataTime.format(T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy'))}"></span>
                             <div class="hist-acoes">
-                                <button type="button" class="acao">&#128065;</button>
-                                <button type="button" class="acao">&#128196;</button>
-                                <button type="button" class="acao">&#9734;</button>
+                                <button type="button" class="acao" title="Ver">&#128065;</button>
+                                <button type="button" class="acao" title="Copiar">&#128196;</button>
                             </div>
                         </div>
                     </div>
@@ -188,6 +356,6 @@
         </div>
     </div>
 </div>
-</body>
 <script th:src="@{/js/detalhes.js}"></script>
+</body>
 </html>
