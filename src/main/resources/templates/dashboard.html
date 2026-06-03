@@ -1,27 +1,180 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PipeUp - Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/formulario-tarefa.css}">
+    <link rel="stylesheet" th:href="@{/css/formulario-usuario.css}">
 </head>
+
 <body>
 
 <div class="layout">
+
+    <!-- SIDEBAR -->
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
+    <!-- MAIN -->
     <div class="main">
+
+        <!-- HEADER -->
         <div th:replace="~{fragments/header :: header}"></div>
+
         <div class="orange-bar"></div>
 
+        <!-- CONTENT -->
         <div class="content">
-            <div class="kanban-placeholder"></div>
+
+            <div class="kanban-board">
+
+                <!-- EM ATRASO -->
+                <div class="kanban-column">
+
+                    <div class="kanban-header">
+
+                        <h3>Em atraso</h3>
+
+                        <button
+                                class="btn-add"
+                                onclick="abrirModal('Em atraso')">
+                            +
+                        </button>
+
+                    </div>
+
+                    <div id="Em atraso" class="kanban-cards"></div>
+
+                </div>
+
+                <!-- EM ANDAMENTO -->
+                <div class="kanban-column">
+
+                    <div class="kanban-header">
+
+                        <h3>Em andamento</h3>
+
+                        <button
+                                class="btn-add"
+                                onclick="abrirModal('Em andamento')">
+                            +
+                        </button>
+
+                    </div>
+
+                    <div id="Em andamento" class="kanban-cards"></div>
+
+                </div>
+
+                <!-- A INICIAR -->
+                <div class="kanban-column">
+
+                    <div class="kanban-header">
+
+                        <h3>A iniciar</h3>
+
+                        <button
+                                class="btn-add"
+                                onclick="abrirModal('A iniciar')">
+                            +
+                        </button>
+
+                    </div>
+
+                    <div id="A iniciar" class="kanban-cards"></div>
+
+                </div>
+
+            </div>
+
         </div>
+
     </div>
+
 </div>
 
+<!-- MODAL -->
+<div id="modalTarefa" class="modal-overlay">
+
+    <div class="modal-tarefa">
+
+        <!-- TOPO -->
+        <div class="modal-header-custom">
+
+            <span class="modal-titulo">
+                Tarefa
+            </span>
+
+            <button
+                    class="modal-fechar"
+                    onclick="fecharModal()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <!-- FORM -->
+        <div class="modal-form">
+
+            <!-- NOME -->
+            <div class="campo-grupo">
+
+                <label class="campo-label">
+                    Nome:
+                </label>
+
+                <input
+                        class="campo-input"
+                        type="text"
+                        id="nome">
+
+            </div>
+
+            <!-- DESCRIÇÃO -->
+            <div class="campo-grupo">
+
+                <label class="campo-label">
+                    Descrição:
+                </label>
+
+                <textarea
+                        class="campo-input textarea-custom"
+                        id="descricao">
+                </textarea>
+
+            </div>
+
+            <!-- BOTÃO -->
+            <div class="modal-rodape">
+
+                <button
+                        class="btn-criar"
+                        onclick="cadastrarTarefa()">
+
+                    Criar Tarefa
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- JS -->
+<script th:src="@{/js/tarefa-modal.js}"></script>
 <script th:src="@{/js/sidebar.js}"></script>
+
+
 </body>
 </html>

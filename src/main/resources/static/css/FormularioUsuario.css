@@ -1,0 +1,219 @@
+/* ============================================================
+   UP PipeUp — formulario-usuario.css
+   ============================================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #1c1c24;
+    --modal-bg: #5558e3;
+    --orange: #f47c20;
+    --orange-h: #d96a10;
+    --text: #ffffff;
+    --r-sm: 8px;
+    --r-lg: 18px;
+    --t: 0.17s cubic-bezier(.4, 0, .2, 1);
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---- OVERLAY ---- */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 8, 18, .78);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+/* ---- MODAL ---- */
+.modal {
+    background: var(--modal-bg);
+    border-radius: var(--r-lg);
+    padding: 26px 28px 28px;
+    width: 520px;
+    max-width: calc(100vw - 32px);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, .65);
+}
+
+/* ---- CABEÇALHO ---- */
+.modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.modal-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.modal-close {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, .18);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--t);
+}
+
+.modal-close svg {
+    width: 13px;
+    height: 13px;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, .3);
+}
+
+/* ---- FORM LAYOUT ---- */
+.form-row {
+    display: flex;
+    gap: 9px;
+    margin-bottom: 9px;
+}
+
+.fg {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.fg-full {
+    margin-bottom: 9px;
+}
+
+/* ---- INPUTS ---- */
+.inp {
+    width: 100%;
+    height: 44px;
+    background: #fff;
+    border: 2px solid transparent;
+    border-radius: 40px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 500;
+    color: #111;
+    outline: none;
+    transition: border-color var(--t), box-shadow var(--t);
+}
+
+.inp::placeholder {
+    color: #999;
+    font-weight: 400;
+}
+
+.inp:focus {
+    border-color: rgba(85, 88, 227, .7);
+    box-shadow: 0 0 0 3px rgba(85, 88, 227, .15);
+}
+
+.inp.err {
+    border-color: #e05252;
+}
+
+/* ---- CAMPO COM ÍCONE DE DATA ---- */
+.date-wrap {
+    position: relative;
+    flex: 1;
+}
+
+.date-wrap .inp {
+    padding-right: 42px;
+}
+
+.date-ico {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: #999;
+    pointer-events: none;
+}
+
+/* ---- ERRO ---- */
+.ferr {
+    font-size: 11px;
+    color: #fca5a5;
+    padding-left: 14px;
+    min-height: 14px;
+    display: block;
+    margin-top: 2px;
+}
+
+/* ---- ALERTAS ---- */
+.alerta-sucesso {
+    background: rgba(64, 192, 128, .15);
+    border: 1px solid #40c080;
+    border-radius: var(--r-sm);
+    padding: 10px 16px;
+    color: #d0ffe8;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.alerta-negocio {
+    background: rgba(255, 77, 77, .2);
+    border: 1px solid #ff4d4d;
+    border-radius: var(--r-sm);
+    padding: 10px 16px;
+    color: #ffe0e0;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+/* ---- BOTÃO ---- */
+.form-acts {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+}
+
+.btn-cadastrar {
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+    padding: 12px 52px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: .3px;
+    transition: background var(--t), transform var(--t), box-shadow var(--t);
+}
+
+.btn-cadastrar:hover {
+    background: var(--orange-h);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(244, 124, 32, .38);
+}
+
+.btn-cadastrar:active {
+    transform: translateY(0);
+}
