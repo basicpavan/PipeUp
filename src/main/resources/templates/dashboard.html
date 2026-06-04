@@ -201,7 +201,7 @@
                 <div th:each="status : ${statusOpcoes}" class="board-coluna">
                     <div class="coluna-topo">
                         <span th:text="${status.displayName}"></span>
-                        <a href="/tarefas/nova" class="coluna-btn" style="text-decoration: none; color: inherit;">+</a>
+                        <a th:href="@{/tarefas/nova(status=${status.name()})}" class="coluna-btn" style="text-decoration: none; color: inherit;">+</a>
                     </div>
                     <div class="coluna-cartoes">
                         <a th:each="t : ${tarefas}" th:if="${t.status == status}"
