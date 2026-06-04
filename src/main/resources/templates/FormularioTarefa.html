@@ -2,12 +2,174 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
 <head>
     <meta charset="UTF-8">
+<<<<<<< HEAD
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UP — Nova Tarefa</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+=======
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PipeUp - Nova Tarefa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Instrument Sans', sans-serif;
+            background: #111;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .modal {
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 28px 32px 32px;
+            width: 520px;
+            max-width: calc(100vw - 32px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .modal-titulo {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .modal-fechar {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            width: 26px; height: 26px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            transition: background .15s;
+        }
+        .modal-fechar:hover { background: rgba(255,255,255,0.2); }
+
+        .alerta-sucesso {
+            background: rgba(77,255,150,0.15);
+            border: 1px solid #4dff96;
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: #d0ffe8;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+        .alerta-negocio {
+            background: rgba(255,77,77,0.2);
+            border: 1px solid #ff4d4d;
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: #ffe0e0;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .modal-form { display: flex; flex-direction: column; gap: 12px; }
+
+        .campo-grupo {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .campo-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .campo-input, .campo-select, .campo-textarea {
+            background: #2b2b2b;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #fff;
+            font-size: 14px;
+            font-family: 'Instrument Sans', sans-serif;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+        
+        .campo-input:focus, .campo-select:focus, .campo-textarea:focus {
+            border-color: #FB7D29;
+        }
+        
+        .campo-input::placeholder, .campo-textarea::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .campo-select option {
+            background: #2b2b2b;
+            color: #fff;
+        }
+        
+        .campo-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .campo-linha { display: flex; gap: 12px; }
+        .campo-metade { flex: 1; }
+
+        .modal-rodape { 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px; 
+        }
+        
+        .btn-voltar {
+            background: transparent;
+            color: rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Instrument Sans', sans-serif;
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+        
+        .btn-voltar:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        
+        .btn-criar {
+            background: #FB7D29;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Instrument Sans', sans-serif;
+            transition: filter 0.15s;
+        }
+        .btn-criar:hover { filter: brightness(1.1); }
+    </style>
+>>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
 </head>
 <body class="page-form">
 
+<<<<<<< HEAD
 <div class="overlay open">
     <div class="modal">
 
@@ -103,6 +265,90 @@
 
         </form>
     </div>
+=======
+<div class="modal">
+    <div class="modal-header">
+        <span class="modal-titulo">Nova Tarefa</span>
+        <a class="modal-fechar" href="/dashboard" title="Fechar">✕</a>
+    </div>
+
+    <div class="alerta-sucesso" th:if="${sucesso}" th:text="${sucesso}"></div>
+    <div class="alerta-negocio" th:if="${erroNegocio}" th:text="${erroNegocio}"></div>
+
+    <form th:action="@{/tarefas/nova}" method="post" class="modal-form">
+        
+        <div class="campo-grupo">
+            <label class="campo-label" for="titulo">Título da Tarefa</label>
+            <input class="campo-input" type="text" id="titulo" name="titulo" 
+                   placeholder="Digite o título da tarefa" maxlength="100" required />
+        </div>
+
+        <div class="campo-grupo">
+            <label class="campo-label" for="descricao">Descrição</label>
+            <textarea class="campo-textarea" id="descricao" name="descricao" 
+                      placeholder="Descreva os detalhes da tarefa" maxlength="500"></textarea>
+        </div>
+
+        <div class="campo-linha">
+            <div class="campo-metade">
+                <div class="campo-grupo">
+                    <label class="campo-label" for="status">Status</label>
+                    <select class="campo-select" id="status" name="status" required>
+                        <option th:each="s : ${statusOpcoes}" th:value="${s.name()}" 
+                                th:text="${s.name().replace('_',' ')}" 
+                                th:selected="${s.name() == 'A_INICIAR'}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="campo-metade">
+                <div class="campo-grupo">
+                    <label class="campo-label" for="prioridade">Prioridade</label>
+                    <select class="campo-select" id="prioridade" name="prioridade">
+                        <option th:each="p : ${prioridadeOpcoes}" th:value="${p.name()}" 
+                                th:text="${p.name()}" 
+                                th:selected="${p.name() == 'MEDIA'}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="campo-grupo">
+            <label class="campo-label" for="espacoId">Espaço</label>
+            <select class="campo-select" id="espacoId" name="espacoId" required>
+                <option value="">Selecione um espaço</option>
+                <option th:each="esp : ${espacos}" th:value="${esp.id}" 
+                        th:text="${esp.nome + ' (' + esp.empresa.nome + ')'}"></option>
+            </select>
+        </div>
+
+        <div class="campo-linha">
+            <div class="campo-metade">
+                <div class="campo-grupo">
+                    <label class="campo-label" for="dataInicio">Data de Início</label>
+                    <input class="campo-input" type="date" id="dataInicio" name="dataInicio" />
+                </div>
+            </div>
+            <div class="campo-metade">
+                <div class="campo-grupo">
+                    <label class="campo-label" for="dataEntrega">Data de Entrega</label>
+                    <input class="campo-input" type="date" id="dataEntrega" name="dataEntrega" />
+                </div>
+            </div>
+        </div>
+
+        <div class="campo-grupo">
+            <label class="campo-label" for="progresso">Progresso (%)</label>
+            <input class="campo-input" type="number" id="progresso" name="progresso" 
+                   min="0" max="100" value="0" />
+        </div>
+
+        <div class="modal-rodape">
+            <a class="btn-voltar" href="/dashboard">Cancelar</a>
+            <button class="btn-criar" type="submit">Criar Tarefa</button>
+        </div>
+
+    </form>
+>>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
 </div>
 
 <script th:src="@{/js/app.js}"></script>

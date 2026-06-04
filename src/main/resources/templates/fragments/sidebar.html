@@ -42,10 +42,19 @@
         <section class="spaces-block">
             <div class="spaces-title-row">
                 <span>Espaços</span>
-                <button type="button" class="plain-icon-btn" onclick="toggleNovoEspacoForm()">
+                <button type="button" class="plain-icon-btn" onclick="toggleNovaEmpresaForm()" title="Nova empresa">
                     <img th:src="@{/img/icon-plus.png}" alt="Adicionar">
                 </button>
             </div>
+
+            <!-- Formulário nova empresa -->
+            <form action="/empresas" method="post" class="novo-espaco-form" id="novaEmpresaForm">
+                <label class="novo-espaco-label">Nova Empresa</label>
+                <input type="text" name="nome" placeholder="Nome da empresa" required>
+                <div class="novo-espaco-actions">
+                    <button type="submit" class="novo-espaco-btn">Criar empresa</button>
+                </div>
+            </form>
 
             <form action="/espacos" method="post" class="novo-espaco-form" id="novoEspacoForm">
                 <label class="novo-espaco-label">Empresa</label>
@@ -135,7 +144,8 @@
 
                 <button type="button"
                         class="space-subitem add-space-subitem add-space-button"
-                        onclick="toggleNovoEspacoForm()">
+                        th:attr="data-empresa-id=${empresa.id}"
+                        onclick="abrirNovoEspacoParaEmpresa(this)">
                     + Novo Espaço
                 </button>
             </div>

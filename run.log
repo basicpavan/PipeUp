@@ -1,0 +1,134 @@
+[INFO] Scanning for projects...
+Downloading from central: https://repo.maven.apache.org/maven2/io/github/git-commit-id/maven-metadata.xml
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/maven-metadata.xml
+Downloading from central: https://repo.maven.apache.org/maven2/org/jooq/maven-metadata.xml
+Downloading from central: https://repo.maven.apache.org/maven2/org/flywaydb/maven-metadata.xml
+Progress (1): 255 BProgress (2): 255 B | 249 BProgress (3): 255 B | 249 B | 234 BProgress (4): 255 B | 249 B | 234 B | 398 B                                           Downloaded from central: https://repo.maven.apache.org/maven2/org/jooq/maven-metadata.xml (398 B at 676 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/maven-metadata.xml (249 B at 423 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/io/github/git-commit-id/maven-metadata.xml (255 B at 432 B/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/flywaydb/maven-metadata.xml (234 B at 396 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/maven-metadata.xml
+Downloading from central: https://repo.maven.apache.org/maven2/org/liquibase/maven-metadata.xml
+Downloading from central: https://repo.maven.apache.org/maven2/org/graalvm/buildtools/maven-metadata.xml
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-metadata.xml
+Progress (1): 375 BProgress (2): 375 B | 394 BProgress (3): 375 B | 394 B | 3.9 kBProgress (3): 375 B | 394 B | 7.7 kBProgress (3): 375 B | 394 B | 10 kB Progress (4): 375 B | 394 B | 10 kB | 242 B                                           Downloaded from central: https://repo.maven.apache.org/maven2/org/liquibase/maven-metadata.xml (394 B at 7.4 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/maven-metadata.xml (375 B at 6.8 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/maven-metadata.xml
+Downloaded from central: https://repo.maven.apache.org/maven2/org/graalvm/buildtools/maven-metadata.xml (242 B at 4.1 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-metadata.xml (10 kB at 177 kB/s)
+Progress (1): 3.1 kBProgress (1): 7.7 kBProgress (1): 12 kB Progress (1): 17 kBProgress (1): 20 kBProgress (1): 21 kB                   Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/maven-metadata.xml (21 kB at 154 kB/s)
+[INFO] 
+[INFO] -------------------------< com.example:PipeUp >-------------------------
+[INFO] Building PipeUp 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ PipeUp >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ PipeUp ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 24 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ PipeUp ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 24 source files with javac [debug release 17] to target\classes
+[INFO] /c:/Users/engel/OneDrive/Faculdade - 3° Sem/Projeto Integrador - Matéria - Willian/Projeto/src/main/java/com/example/pipeup/config/SecurityConfig.java: c:\Users\engel\OneDrive\Faculdade - 3° Sem\Projeto Integrador - Matéria - Willian\Projeto\src\main\java\com\example\pipeup\config\SecurityConfig.java uses or overrides a deprecated API.
+[INFO] /c:/Users/engel/OneDrive/Faculdade - 3° Sem/Projeto Integrador - Matéria - Willian/Projeto/src/main/java/com/example/pipeup/config/SecurityConfig.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ PipeUp ---
+[INFO] skip non existing resourceDirectory c:\Users\engel\OneDrive\Faculdade - 3° Sem\Projeto Integrador - Matéria - Willian\Projeto\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ PipeUp ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 1 source file with javac [debug release 17] to target\test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ PipeUp <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.0:run (default-cli) @ PipeUp ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2026-06-02T19:56:04.623-03:00  INFO 28612 --- [           main] com.example.pipeup.PipeUpApplication     : Starting PipeUpApplication using Java 25.0.2 with PID 28612 (C:\Users\engel\OneDrive\Faculdade - 3Â° Sem\Projeto Integrador - MatÃ©ria - Willian\Projeto\target\classes started by engel in c:\Users\engel\OneDrive\Faculdade - 3Â° Sem\Projeto Integrador - MatÃ©ria - Willian\Projeto)
+2026-06-02T19:56:04.625-03:00  INFO 28612 --- [           main] com.example.pipeup.PipeUpApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-06-02T19:56:05.609-03:00  INFO 28612 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-02T19:56:05.711-03:00  INFO 28612 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 87 ms. Found 7 JPA repository interfaces.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (file:/C:/Users/engel/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.16/tomcat-embed-core-10.1.16.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+2026-06-02T19:56:06.498-03:00  INFO 28612 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-06-02T19:56:06.513-03:00  INFO 28612 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-02T19:56:06.514-03:00  INFO 28612 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-06-02T19:56:06.611-03:00  INFO 28612 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-02T19:56:06.611-03:00  INFO 28612 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1919 ms
+2026-06-02T19:56:06.842-03:00  INFO 28612 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-02T19:56:06.960-03:00  INFO 28612 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2026-06-02T19:56:07.022-03:00  INFO 28612 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-02T19:56:07.416-03:00  INFO 28612 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-02T19:56:07.457-03:00  INFO 28612 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-02T19:56:07.731-03:00  INFO 28612 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@23121d14
+2026-06-02T19:56:07.733-03:00  INFO 28612 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-02T19:56:07.796-03:00  WARN 28612 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-02T19:56:09.214-03:00  INFO 28612 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    alter table if exists tarefa_usuario 
+       add constraint FKbw794cfn447iopiy62wcdt4wc 
+       foreign key (usuario_id) 
+       references usuario
+Hibernate: 
+    alter table if exists tarefa_usuario 
+       add constraint FKo6etbnr36q2fc8pid75097em9 
+       foreign key (tarefa_id) 
+       references tarefa
+2026-06-02T19:56:09.468-03:00  INFO 28612 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-02T19:56:09.969-03:00  INFO 28612 --- [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-02T19:56:10.484-03:00  WARN 28612 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-02T19:56:10.501-03:00  INFO 28612 --- [           main] c.example.pipeup.config.SecurityConfig   : Configurando UserDetailsService com usuÃ¡rio 'user' e senha '12345'.
+2026-06-02T19:56:10.629-03:00  INFO 28612 --- [           main] c.example.pipeup.config.SecurityConfig   : Configurando SecurityFilterChain...
+2026-06-02T19:56:10.651-03:00  INFO 28612 --- [           main] c.example.pipeup.config.SecurityConfig   : SecurityFilterChain configurado.
+2026-06-02T19:56:10.892-03:00  INFO 28612 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1f832df0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@47184859, org.springframework.security.web.context.SecurityContextHolderFilter@6b9f5dcf, org.springframework.security.web.header.HeaderWriterFilter@7a59780b, org.springframework.web.filter.CorsFilter@22781286, org.springframework.security.web.csrf.CsrfFilter@59bf79f3, org.springframework.security.web.authentication.logout.LogoutFilter@49467fc6, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5f7dbdfa, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2552cb80, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1b3b5252, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@11564455, org.springframework.security.web.access.ExceptionTranslationFilter@118d7e0e, org.springframework.security.web.access.intercept.AuthorizationFilter@7b186fb8]
+2026-06-02T19:56:11.239-03:00  WARN 28612 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-06-02T19:56:11.241-03:00  INFO 28612 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-02T19:56:11.243-03:00  INFO 28612 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-02T19:56:11.249-03:00  INFO 28612 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-02T19:56:11.270-03:00  INFO 28612 --- [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-02T19:56:11.290-03:00 ERROR 28612 --- [           main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.237 s
+[INFO] Finished at: 2026-06-02T19:56:11-03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.0:run (default-cli) on project PipeUp: Process terminated with exit code: 1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+
+c:\Users\engel\OneDrive\Faculdade - 3ø Sem\Projeto Integrador - Mat‚ria - Willian\Projeto>
