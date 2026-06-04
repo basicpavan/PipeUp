@@ -1,68 +1,20 @@
 package com.example.pipeup.service;
 
-<<<<<<< HEAD
-import com.example.pipeup.model.Tarefa;
-=======
 import com.example.pipeup.model.Espaco;
 import com.example.pipeup.model.Tarefa;
 import com.example.pipeup.repository.EspacoRepository;
->>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
 import com.example.pipeup.repository.TarefaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-<<<<<<< HEAD
-import java.util.List;
 import java.util.Optional;
-=======
-import java.util.Optional;
-import org.slf4j.Logger; // Importar Logger
-import org.slf4j.LoggerFactory; // Importar LoggerFactory
->>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
 
 @Service
 public class TarefaService {
 
-<<<<<<< HEAD
-    @Autowired
-    private TarefaRepository repo;
-
-    public Tarefa criar(Tarefa tarefa) {
-        return repo.save(tarefa);
-    }
-
-    public List<Tarefa> listarTodas() {
-        return repo.findAllByOrderByCriadoEmDesc();
-    }
-
-    public List<Tarefa> listarPorEtapa(Tarefa.Etapa etapa) {
-        return repo.findByEtapa(etapa);
-    }
-
-    public Optional<Tarefa> buscarPorId(Long id) {
-        return repo.findById(id);
-    }
-
-    public Tarefa atualizar(Long id, Tarefa dados) {
-        Tarefa t = repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada: " + id));
-        t.setNome(dados.getNome());
-        t.setDescricao(dados.getDescricao());
-        t.setEtapa(dados.getEtapa());
-        t.setTipo(dados.getTipo());
-        t.setEmpresa(dados.getEmpresa());
-        t.setEquipe(dados.getEquipe());
-        t.setResponsavel(dados.getResponsavel());
-        t.setEspaco(dados.getEspaco());
-        return repo.save(t);
-    }
-
-    public void deletar(Long id) {
-        repo.deleteById(id);
-    }
-}
-=======
-    private static final Logger logger = LoggerFactory.getLogger(TarefaService.class); // Adicionar logger
+    private static final Logger logger = LoggerFactory.getLogger(TarefaService.class);
 
     @Autowired
     private TarefaRepository tarefaRepository;
@@ -77,19 +29,13 @@ public class TarefaService {
         return tarefaRepository.findById(id);
     }
 
-    /* ── Salvar / Atualizar ── */
-
-    public Tarefa salvar(Tarefa tarefa) {
-        logger.debug("Salvando tarefa: {}", tarefa.getTitulo());
-        validar(tarefa);
-        return tarefaRepository.save(tarefa);
-    }
+    /* ── Criar ── */
 
     public Tarefa criar(Tarefa tarefa, Integer espacoId) {
         logger.info("Criando nova tarefa para espaço ID: {}", espacoId);
         Espaco espaco = espacoRepository.findById(espacoId)
                 .orElseThrow(() -> new IllegalArgumentException("Espaço não encontrado."));
-        
+
         tarefa.setEspaco(espaco);
         validar(tarefa);
         Tarefa novaTarefa = tarefaRepository.save(tarefa);
@@ -97,9 +43,10 @@ public class TarefaService {
         return novaTarefa;
     }
 
+    /* ── Atualizar ── */
+
     public Tarefa atualizar(Integer id, Tarefa dados, Integer espacoId) {
         logger.info("Iniciando atualização da tarefa ID: {}", id);
-        logger.debug("Dados recebidos para atualização: titulo={}, status={}, espacoId={}", dados.getTitulo(), dados.getStatus(), espacoId);
 
         Tarefa tarefa = tarefaRepository.findById(id)
                 .orElseThrow(() -> {
@@ -109,45 +56,36 @@ public class TarefaService {
 
         Espaco espaco = espacoRepository.findById(espacoId)
                 .orElseThrow(() -> {
-                    logger.error("Espaço com ID {} não encontrado para atualização da tarefa ID {}.", espacoId, id);
+                    logger.error("Espaço com ID {} não encontrado.", espacoId);
                     return new IllegalArgumentException("Espaço não encontrado.");
                 });
 
-        // Atualiza apenas os campos que foram fornecidos (não são nulos)
         if (dados.getTitulo() != null && !dados.getTitulo().trim().isEmpty()) {
-            logger.debug("Atualizando título da tarefa ID {} de '{}' para '{}'.", id, tarefa.getTitulo(), dados.getTitulo());
             tarefa.setTitulo(dados.getTitulo());
         }
         if (dados.getDescricao() != null) {
-            logger.debug("Atualizando descrição da tarefa ID {}.", id);
             tarefa.setDescricao(dados.getDescricao());
         }
         if (dados.getStatus() != null) {
-            logger.debug("Atualizando status da tarefa ID {} de '{}' para '{}'.", id, tarefa.getStatus(), dados.getStatus());
             tarefa.setStatus(dados.getStatus());
         }
         if (dados.getDataInicio() != null) {
-            logger.debug("Atualizando data de início da tarefa ID {}.", id);
             tarefa.setDataInicio(dados.getDataInicio());
         }
         if (dados.getDataEntrega() != null) {
-            logger.debug("Atualizando data de entrega da tarefa ID {}.", id);
             tarefa.setDataEntrega(dados.getDataEntrega());
         }
         if (dados.getPrioridade() != null) {
-            logger.debug("Atualizando prioridade da tarefa ID {}.", id);
             tarefa.setPrioridade(dados.getPrioridade());
         }
         if (dados.getProgresso() != null) {
-            logger.debug("Atualizando progresso da tarefa ID {}.", id);
             tarefa.setProgresso(dados.getProgresso());
         }
-        logger.debug("Atualizando espaço da tarefa ID {} para ID {}.", id, espacoId);
         tarefa.setEspaco(espaco);
 
         validar(tarefa);
         Tarefa tarefaAtualizada = tarefaRepository.save(tarefa);
-        logger.info("Tarefa ID {} atualizada e salva com sucesso.", id);
+        logger.info("Tarefa ID {} atualizada com sucesso.", id);
         return tarefaAtualizada;
     }
 
@@ -174,11 +112,9 @@ public class TarefaService {
             throw new IllegalArgumentException("A tarefa deve estar vinculada a um espaço.");
         }
 
-        /* sanitização */
         tarefa.setTitulo(tarefa.getTitulo().trim());
         if (tarefa.getDescricao() != null) {
             tarefa.setDescricao(tarefa.getDescricao().trim());
         }
     }
 }
->>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
