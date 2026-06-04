@@ -1,27 +1,5 @@
 package com.example.pipeup.controller;
 
-<<<<<<< HEAD
-import com.example.pipeup.model.Tarefa;
-import com.example.pipeup.service.TarefaService;
-import com.example.pipeup.service.UsuarioService;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
-import java.util.Map;
-
-@Controller
-@RequestMapping("/tarefa")
-public class TarefaController {
-
-=======
 import com.example.pipeup.model.Atualizacao;
 import com.example.pipeup.model.Tarefa;
 import com.example.pipeup.repository.EmpresaRepository;
@@ -34,106 +12,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
-import org.slf4j.Logger; // Importar Logger
-import org.slf4j.LoggerFactory; // Importar LoggerFactory
 
 @Controller
 @RequestMapping("/tarefas")
 public class TarefaController {
 
-    private static final Logger logger = LoggerFactory.getLogger(TarefaController.class); // Adicionar logger
+    private static final Logger logger = LoggerFactory.getLogger(TarefaController.class);
 
->>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
     @Autowired
     private TarefaService tarefaService;
 
     @Autowired
-<<<<<<< HEAD
-    private UsuarioService usuarioService;
-
-    /* ── GET /tarefas/nova — formulário de nova tarefa ── */
-
-    @GetMapping("/nova")
-    public String novaTarefa(
-            @RequestParam(required = false) String status, // ← NOVO: recebe o status da coluna
-            Model model) {
-
-        adicionarDadosSidebar(model);
-
-        Tarefa tarefa = new Tarefa();
-
-        // ← NOVO: pré-seleciona o status se foi passado como parâmetro
-        if (status != null && !status.isBlank()) {
-            try {
-                tarefa.setStatus(Tarefa.Status.valueOf(status));
-            } catch (IllegalArgumentException ignored) {
-                tarefa.setStatus(Tarefa.Status.A_INICIAR); // fallback seguro
-            }
-        }
-
-        model.addAttribute("tarefa", tarefa);
-        model.addAttribute("usuarios", usuarioRepository.findAll());
-        model.addAttribute("statusOpcoes", Tarefa.Status.values());
-        model.addAttribute("prioridadeOpcoes", Tarefa.Prioridade.values());
-        return "FormularioTarefa";
-    }
-
-    // ── Processa o formulário Thymeleaf ──
-    @PostMapping("/criar")
-    public String criar(@Valid @ModelAttribute("tarefa") Tarefa tarefa,
-                        BindingResult result,
-                        Model model,
-                        RedirectAttributes redirect) {
-        if (result.hasErrors()) {
-            model.addAttribute("etapas", Tarefa.Etapa.values());
-            model.addAttribute("tipos", Tarefa.TipoTarefa.values());
-            model.addAttribute("usuarios", usuarioService.listarTodos());
-            return "FormularioTarefa";
-        }
-        tarefaService.criar(tarefa);
-        redirect.addFlashAttribute("sucesso", "Tarefa criada com sucesso!");
-        return "redirect:/dashboard";
-    }
-
-    // ── REST: listar todas ──
-    @GetMapping(produces = "application/json")
-    @ResponseBody
-    public List<Tarefa> listar() {
-        return tarefaService.listarTodas();
-    }
-
-    // ── REST: criar (usado pelo JS do dashboard) ──
-    @PostMapping(consumes = "application/json", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> criarRest(@RequestBody Tarefa tarefa) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(tarefaService.criar(tarefa));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("erro", e.getMessage()));
-        }
-    }
-
-    // ── REST: atualizar ──
-    @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Tarefa dados) {
-        try {
-            return ResponseEntity.ok(tarefaService.atualizar(id, dados));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("erro", e.getMessage()));
-        }
-    }
-
-    // ── REST: deletar ──
-    @DeleteMapping("/{id}")
-    @ResponseBody
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        tarefaService.deletar(id);
-        return ResponseEntity.noContent().build();
-=======
     private AtualizacaoService atualizacaoService;
 
     @Autowired
@@ -149,7 +43,7 @@ public class TarefaController {
 
     private void adicionarDadosSidebar(Model model) {
         model.addAttribute("empresas", empresaRepository.findAll());
-        model.addAttribute("espacos",  espacoRepository.findAll());
+        model.addAttribute("espacos", espacoRepository.findAll());
     }
 
     /* ── GET /tarefas/{id} — exibe a tela de detalhes ── */
@@ -162,8 +56,7 @@ public class TarefaController {
                            Model model) {
         logger.info("Requisição GET para /tarefas/{} recebida.", id);
 
-        Tarefa tarefa = tarefaService.buscarPorId(id)
-                .orElse(null);
+        Tarefa tarefa = tarefaService.buscarPorId(id).orElse(null);
 
         if (tarefa == null) {
             logger.warn("Tarefa com ID {} não encontrada.", id);
@@ -173,38 +66,27 @@ public class TarefaController {
         }
         logger.debug("Tarefa ID {} encontrada: {}", id, tarefa.getTitulo());
 
-        /* calendário: mês/ano navegável, padrão = mês atual */
         YearMonth mesAtual = (calMes != null && calAno != null)
                 ? YearMonth.of(calAno, calMes)
                 : YearMonth.now();
-        logger.debug("Mês/Ano do calendário: {}", mesAtual);
 
-        /* ── dados do modelo ── */
         adicionarDadosSidebar(model);
-        model.addAttribute("tarefa",    tarefa);
+        model.addAttribute("tarefa", tarefa);
         model.addAttribute("usuarios", usuarioRepository.findAll());
-        model.addAttribute("responsaveis",  usuarioRepository.findUsuariosByTarefaId(id));
-        model.addAttribute("statusOpcoes",     Tarefa.Status.values());
+        model.addAttribute("responsaveis", usuarioRepository.findUsuariosByTarefaId(id));
+        model.addAttribute("statusOpcoes", Tarefa.Status.values());
         model.addAttribute("prioridadeOpcoes", Tarefa.Prioridade.values());
-        logger.debug("Dados básicos da tarefa e opções adicionados ao modelo.");
 
-        /* histórico e contadores */
-        model.addAttribute("historico",     atualizacaoService.listarPorTarefa(id));
-        model.addAttribute("totalNotas",    atualizacaoService.contarPorTipo(id, Atualizacao.Tipo.NOTA));
+        model.addAttribute("historico", atualizacaoService.listarPorTarefa(id));
+        model.addAttribute("totalNotas", atualizacaoService.contarPorTipo(id, Atualizacao.Tipo.NOTA));
         model.addAttribute("totalAtividades", atualizacaoService.contarPorTipo(id, Atualizacao.Tipo.ATIVIDADE));
         model.addAttribute("totalArquivos", atualizacaoService.contarPorTipo(id, Atualizacao.Tipo.ARQUIVO));
-        logger.debug("Histórico e contadores adicionados ao modelo.");
 
-        /* aba ativa (padrão: ATIVIDADE) */
         model.addAttribute("abaAtiva", abaAtiva != null ? abaAtiva : "ATIVIDADE");
-        logger.debug("Aba ativa: {}", model.getAttribute("abaAtiva"));
-
-        /* calendário — semana começa na segunda (DayOfWeek.MONDAY = 1, então offset = valor - 1) */
-        model.addAttribute("calMesAtual",   mesAtual);
-        model.addAttribute("calDiasNoMes",  mesAtual.lengthOfMonth());
+        model.addAttribute("calMesAtual", mesAtual);
+        model.addAttribute("calDiasNoMes", mesAtual.lengthOfMonth());
         model.addAttribute("calPrimeiroDia", mesAtual.atDay(1).getDayOfWeek().getValue() - 1);
-        model.addAttribute("hoje",          LocalDate.now());
-        logger.debug("Dados do calendário adicionados ao modelo.");
+        model.addAttribute("hoje", LocalDate.now());
 
         logger.info("Retornando view 'detalhesTarefa' para tarefa ID {}.", id);
         return "detalhesTarefa";
@@ -224,13 +106,12 @@ public class TarefaController {
                             @RequestParam(required = false) Float progresso,
                             RedirectAttributes redirect) {
         logger.info("Recebida requisição para atualizar tarefa ID: {}", id);
-        logger.info("Dados recebidos: titulo={}, status={}, espacoId={}", titulo, status, espacoId);
         try {
             Tarefa dados = new Tarefa();
             dados.setTitulo(titulo);
             dados.setDescricao(descricao);
             dados.setStatus(Tarefa.Status.valueOf(status));
-            dados.setDataInicio(dataInicio  != null && !dataInicio.isBlank()  ? LocalDate.parse(dataInicio)  : null);
+            dados.setDataInicio(dataInicio != null && !dataInicio.isBlank() ? LocalDate.parse(dataInicio) : null);
             dados.setDataEntrega(dataEntrega != null && !dataEntrega.isBlank() ? LocalDate.parse(dataEntrega) : null);
 
             if (prioridade != null && !prioridade.isBlank()) {
@@ -255,9 +136,24 @@ public class TarefaController {
     /* ── GET /tarefas/nova — formulário de nova tarefa ── */
 
     @GetMapping("/nova")
-    public String novaTarefa(Model model) {
+    public String novaTarefa(
+            @RequestParam(required = false) String status, // ← recebe status da coluna Kanban
+            Model model) {
+
         adicionarDadosSidebar(model);
-        model.addAttribute("tarefa", new Tarefa());
+
+        Tarefa tarefa = new Tarefa();
+
+        // Pré-seleciona o status se veio como parâmetro (ex: ?status=EM_ANDAMENTO)
+        if (status != null && !status.isBlank()) {
+            try {
+                tarefa.setStatus(Tarefa.Status.valueOf(status));
+            } catch (IllegalArgumentException ignored) {
+                tarefa.setStatus(Tarefa.Status.A_INICIAR); // fallback seguro
+            }
+        }
+
+        model.addAttribute("tarefa", tarefa);
         model.addAttribute("usuarios", usuarioRepository.findAll());
         model.addAttribute("statusOpcoes", Tarefa.Status.values());
         model.addAttribute("prioridadeOpcoes", Tarefa.Prioridade.values());
@@ -276,7 +172,7 @@ public class TarefaController {
                               @RequestParam(required = false) String prioridade,
                               @RequestParam(required = false) Float progresso,
                               RedirectAttributes redirect) {
-        logger.info("Recebida requisição para criar nova tarefa: titulo={}, status={}, espacoId={}", titulo, status, espacoId);
+        logger.info("Criando nova tarefa: titulo={}, status={}, espacoId={}", titulo, status, espacoId);
         try {
             Tarefa tarefa = new Tarefa();
             tarefa.setTitulo(titulo);
@@ -284,7 +180,7 @@ public class TarefaController {
             tarefa.setStatus(Tarefa.Status.valueOf(status));
             tarefa.setDataInicio(dataInicio != null && !dataInicio.isBlank() ? LocalDate.parse(dataInicio) : null);
             tarefa.setDataEntrega(dataEntrega != null && !dataEntrega.isBlank() ? LocalDate.parse(dataEntrega) : null);
-            
+
             if (prioridade != null && !prioridade.isBlank()) {
                 tarefa.setPrioridade(Tarefa.Prioridade.valueOf(prioridade));
             }
@@ -304,23 +200,22 @@ public class TarefaController {
         }
     }
 
+    /* ── POST /tarefas/{id}/atividades — adiciona atividade ao histórico ── */
+
     @PostMapping("/{id}/atividades")
     public String adicionarAtividade(@PathVariable Integer id,
                                      @RequestParam String descricao,
                                      @RequestParam(required = false, defaultValue = "ATIVIDADE") String tipo,
                                      RedirectAttributes redirect) {
-        logger.info("Recebida requisição para adicionar atividade à tarefa ID {}: descricao={}, tipo={}", id, descricao, tipo);
+        logger.info("Adicionando atividade à tarefa ID {}: tipo={}", id, tipo);
         try {
             atualizacaoService.adicionar(id, descricao, Atualizacao.Tipo.valueOf(tipo));
             redirect.addFlashAttribute("sucesso", "Atividade registrada.");
-            logger.info("Atividade adicionada à tarefa ID {}.", id);
-
         } catch (IllegalArgumentException e) {
             logger.error("Erro ao adicionar atividade à tarefa ID {}: {}", id, e.getMessage());
             redirect.addFlashAttribute("erroNegocio", e.getMessage());
         }
 
         return "redirect:/tarefas/" + id + "?abaAtiva=" + tipo;
->>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
     }
 }
