@@ -1,17 +1,8 @@
 package com.example.pipeup.controller;
 
-<<<<<<< HEAD
-import com.example.pipeup.model.Tarefa;
-import com.example.pipeup.service.TarefaService;
-import com.example.pipeup.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-=======
 import com.example.pipeup.model.Empresa;
 import com.example.pipeup.model.Espaco;
-import com.example.pipeup.model.Tarefa; // Import Tarefa to access its Status enum
+import com.example.pipeup.model.Tarefa;
 import com.example.pipeup.repository.EmpresaRepository;
 import com.example.pipeup.repository.EspacoRepository;
 import com.example.pipeup.repository.TarefaRepository;
@@ -19,34 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.util.List; // Importar List
-import org.slf4j.Logger; // Importar Logger
-import org.slf4j.LoggerFactory; // Importar LoggerFactory
->>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
+import java.util.List;
 
 @Controller
 public class DashboardController {
 
-<<<<<<< HEAD
-    @Autowired
-    private TarefaService tarefaService;
-
-    @Autowired
-    private UsuarioService usuarioService;
-
-    @GetMapping({"/", "/dashboard"})
-    public String dashboard(Model model) {
-        model.addAttribute("etapa1", tarefaService.listarPorEtapa(Tarefa.Etapa.ETAPA_1));
-        model.addAttribute("etapa2", tarefaService.listarPorEtapa(Tarefa.Etapa.ETAPA_2));
-        model.addAttribute("etapa3", tarefaService.listarPorEtapa(Tarefa.Etapa.ETAPA_3));
-        model.addAttribute("etapa4", tarefaService.listarPorEtapa(Tarefa.Etapa.ETAPA_4));
-        model.addAttribute("usuarios", usuarioService.listarTodos());
-        return "dashboard";
-    }
-=======
-    private static final Logger logger = LoggerFactory.getLogger(DashboardController.class); // Adicionar logger
+    private static final Logger logger = LoggerFactory.getLogger(DashboardController.class);
 
     @Autowired
     private EmpresaRepository empresaRepository;
@@ -69,7 +42,7 @@ public class DashboardController {
 
         model.addAttribute("empresas", empresaRepository.findAll());
         model.addAttribute("espacos", espacoRepository.findAll());
-        model.addAttribute("statusOpcoes", Tarefa.Status.values()); // Add task statuses to the model
+        model.addAttribute("statusOpcoes", Tarefa.Status.values());
 
         List<Tarefa> tarefas;
         if (filtro != null && !filtro.isBlank()) {
@@ -160,5 +133,4 @@ public class DashboardController {
     public String usuarios() {
         return "redirect:/dashboard";
     }
->>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
 }
