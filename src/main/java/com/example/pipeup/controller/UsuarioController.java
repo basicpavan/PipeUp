@@ -71,7 +71,7 @@ public class UsuarioController {
     @ResponseBody
     public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Usuario dados) {
         try {
-            return ResponseEntity.ok(usuarioService.atualizar(id, dados));
+            return ResponseEntity.ok(usuarioService.atualizar(Math.toIntExact(id), dados));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("erro", e.getMessage()));
         }
@@ -81,7 +81,7 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        usuarioService.deletar(id);
+        usuarioService.deletar(Math.toIntExact(id));
         return ResponseEntity.noContent().build();
     }
 }

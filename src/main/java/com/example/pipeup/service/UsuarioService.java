@@ -15,21 +15,18 @@ public class UsuarioService {
     private UsuarioRepository repo;
 
     public Usuario criar(Usuario usuario) {
-        if (repo.findByEmail(usuario.getEmail()).isPresent()) {
-            throw new RuntimeException("E-mail já cadastrado");
-        }
         return repo.save(usuario);
     }
 
     public List<Usuario> listarTodos() {
-        return repo.findAllByOrderByCriadoEmDesc();
+        return repo.findAll();
     }
 
-    public Optional<Usuario> buscarPorId(Long id) {
+    public Optional<Usuario> buscarPorId(Integer id) {
         return repo.findById(id);
     }
 
-    public Usuario atualizar(Long id, Usuario dados) {
+    public Usuario atualizar(Integer id, Usuario dados) {
         Usuario u = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado: " + id));
         u.setNome(dados.getNome());
@@ -44,9 +41,7 @@ public class UsuarioService {
         return repo.save(u);
     }
 
-    public void deletar(Long id) {
+    public void deletar(Integer id) {
         repo.deleteById(id);
     }
-}//package com.example.pipeup.service;
-//public class UsuarioService git {
-//}
+}
