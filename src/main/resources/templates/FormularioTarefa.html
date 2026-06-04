@@ -294,9 +294,10 @@
                 <div class="campo-grupo">
                     <label class="campo-label" for="status">Status</label>
                     <select class="campo-select" id="status" name="status" required>
-                        <option th:each="s : ${statusOpcoes}" th:value="${s.name()}" 
-                                th:text="${s.name().replace('_',' ')}" 
-                                th:selected="${s.name() == 'A_INICIAR'}"></option>
+                        <option th:each="s : ${statusOpcoes}"
+                                th:value="${s.name()}"
+                                th:text="${s.displayName}"
+                                th:selected="${s == tarefa.status}"></option>
                     </select>
                 </div>
             </div>
