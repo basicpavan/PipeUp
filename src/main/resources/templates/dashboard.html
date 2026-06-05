@@ -13,10 +13,8 @@
 <body>
 <div class="layout">
 
-    <!-- SIDEBAR (fragment completo com mini + expandida) -->
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
-    <!-- MAIN -->
     <div class="main">
 
         <!-- HEADER -->
@@ -35,20 +33,26 @@
         </div>
 
         <!-- ORANGE BAR -->
+        <!-- O botão + aqui é apenas decorativo (exibe o nome do espaço ativo) -->
+        <!-- A criação de tarefas ocorre pelo + de cada coluna Kanban abaixo   -->
         <div class="orange-bar">
-            <div class="titulo-laranja">Recrutamento
-                <a href="/tarefas/nova" class="btn-mais-laranja" style="text-decoration: none; color: inherit;">+</a>
+            <div class="titulo-laranja">
+                Recrutamento
+                <span class="btn-mais-laranja">+</span>
             </div>
         </div>
 
-        <!-- CONTENT -->
+        <!-- CONTENT — Kanban board -->
         <div class="content">
             <div class="board-container">
 
                 <div th:each="status : ${statusOpcoes}" class="board-coluna">
                     <div class="coluna-topo">
                         <span th:text="${status.displayName}"></span>
-                        <!-- Passa o status para pré-selecionar no formulário -->
+                        <!--
+                            Botão + de cada coluna: abre o formulário de nova tarefa
+                            com o status da coluna pré-selecionado.
+                        -->
                         <a th:href="@{/tarefas/nova(status=${status.name()})}"
                            class="coluna-btn"
                            style="text-decoration: none; color: inherit;">+</a>
@@ -57,9 +61,7 @@
                         <a th:each="t : ${tarefas}"
                            th:if="${t.status == status}"
                            class="cartao"
-                           th:href="@{/tarefas/{id}(id=${t.id})}"
-                           th:data-titulo="${t.titulo}"
-                           th:data-espaco-id="${t.espaco.id}">
+                           th:href="@{/tarefas/{id}(id=${t.id})}">
                             <div class="cartao-topo">
                                 <span class="cartao-titulo" th:text="${t.titulo}"></span>
                                 <img src="https://i.pravatar.cc/150?img=11" class="cartao-avatar" alt="avatar">
