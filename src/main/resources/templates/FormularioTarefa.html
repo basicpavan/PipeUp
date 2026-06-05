@@ -23,7 +23,6 @@
             color: #fff;
         }
 
-        /* ── Caixa azul ── */
         .modal-box {
             background: #4d6ef5;
             border-radius: 18px;
@@ -37,7 +36,6 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
         }
 
-        /* ── Botão fechar ── */
         .modal-fechar {
             position: absolute;
             top: 16px;
@@ -61,10 +59,8 @@
             background: rgba(255, 255, 255, 0.32);
         }
 
-        /* ── Abas ── */
         .modal-tabs {
             display: flex;
-            gap: 0;
             border-bottom: 2px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 4px;
         }
@@ -88,7 +84,6 @@
             border-bottom-color: #fff;
         }
 
-        /* ── Seletores de contexto (Recrutamento / Tarefa 1) ── */
         .tag-selectors {
             display: flex;
             gap: 8px;
@@ -130,7 +125,6 @@
             opacity: 0.8;
         }
 
-        /* ── Alertas ── */
         .alerta-sucesso {
             background: rgba(77, 255, 150, 0.2);
             border: 1px solid #4dff96;
@@ -149,14 +143,12 @@
             font-size: 13px;
         }
 
-        /* ── Form ── */
         .modal-form {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        /* Linha com dois campos lado a lado */
         .campo-row {
             display: flex;
             gap: 10px;
@@ -167,7 +159,6 @@
             min-width: 0;
         }
 
-        /* Input texto branco arredondado */
         .campo-input {
             width: 100%;
             height: 44px;
@@ -186,7 +177,6 @@
             color: #666;
         }
 
-        /* Select branco arredondado */
         .campo-select {
             width: 100%;
             height: 44px;
@@ -211,7 +201,6 @@
             color: #111;
         }
 
-        /* Textarea descrição */
         .campo-textarea {
             width: 100%;
             border: none;
@@ -230,7 +219,6 @@
             color: #888;
         }
 
-        /* ── Rodapé / Botão ── */
         .modal-rodape {
             display: flex;
             justify-content: center;
@@ -261,7 +249,6 @@
             transform: translateY(0);
         }
 
-        /* ── Abas ocultas ── */
         .tab-content {
             display: none;
             flex-direction: column;
@@ -277,30 +264,24 @@
 
 <div class="modal-box">
 
-    <!-- Fechar -->
     <a class="modal-fechar" href="/dashboard" title="Fechar">✕</a>
 
-    <!-- Abas -->
     <div class="modal-tabs">
         <button type="button" class="tab-btn active" onclick="trocarAba(this,'tab-tarefa')">Tarefa</button>
         <button type="button" class="tab-btn" onclick="trocarAba(this,'tab-documento')">Documento</button>
         <button type="button" class="tab-btn" onclick="trocarAba(this,'tab-lembrete')">Lembrete</button>
     </div>
 
-    <!-- Alertas flash -->
     <div class="alerta-sucesso" th:if="${sucesso}" th:text="${sucesso}"></div>
     <div class="alerta-negocio" th:if="${erroNegocio}" th:text="${erroNegocio}"></div>
 
-    <!-- ═══ ABA TAREFA ═══ -->
+    <!-- ABA TAREFA -->
     <div id="tab-tarefa" class="tab-content active">
 
-        <!-- Seletores de contexto -->
         <div class="tag-selectors">
+            <div class="tag-sel">Recrutamento <span class="tag-arrow">▾</span></div>
             <div class="tag-sel">
-                Recrutamento <span class="tag-arrow">▾</span>
-            </div>
-            <div class="tag-sel">
-                <select id="espacoCtx" name="espacoCtxDisplay">
+                <select id="espacoCtx">
                     <option value="">Tarefa 1</option>
                     <option th:each="esp : ${espacos}"
                             th:value="${esp.id}"
@@ -310,17 +291,18 @@
             </div>
         </div>
 
-        <!-- Formulário principal -->
         <form th:action="@{/tarefas/nova}" method="post" class="modal-form" id="formTarefa">
 
-            <!-- Campo oculto: status vindo da coluna Kanban -->
+            <!-- Status pré-selecionado pela coluna Kanban (obrigatório no backend) -->
             <input type="hidden" name="status"
                    th:value="${tarefa.status != null ? tarefa.status.name() : 'A_INICIAR'}">
 
-            <!-- Espaço oculto (sincronizado com o selector acima via JS) -->
+            <!--
+                espacoId: opcional — o backend aceita null.
+                Sincronizado com o selector acima via JS, mas sem bloquear o envio.
+            -->
             <input type="hidden" name="espacoId" id="espacoIdHidden" value="">
 
-            <!-- Nome + Empresa -->
             <div class="campo-row">
                 <input class="campo-input" type="text" name="titulo"
                        placeholder="Nome:" maxlength="100" required>
@@ -333,7 +315,6 @@
                 </select>
             </div>
 
-            <!-- Equipe + Responsável -->
             <div class="campo-row">
                 <select class="campo-select" name="equipeDisplay">
                     <option value="">Equipe:</option>
@@ -351,28 +332,26 @@
                 </select>
             </div>
 
-            <!-- Descrição -->
             <textarea class="campo-textarea" name="descricao"
                       placeholder="Descrição:" maxlength="500"></textarea>
 
-            <!-- Botão -->
             <div class="modal-rodape">
                 <button class="btn-cadastrar" type="submit">Cadastrar</button>
             </div>
 
         </form>
-    </div><!-- /tab-tarefa -->
+    </div>
 
-    <!-- ═══ ABA DOCUMENTO ═══ -->
+    <!-- ABA DOCUMENTO -->
     <div id="tab-documento" class="tab-content">
-        <p style="color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 12px 0;">
+        <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;padding:12px 0;">
             Conteúdo da aba Documento em desenvolvimento.
         </p>
     </div>
 
-    <!-- ═══ ABA LEMBRETE ═══ -->
+    <!-- ABA LEMBRETE -->
     <div id="tab-lembrete" class="tab-content">
-        <p style="color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 12px 0;">
+        <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;padding:12px 0;">
             Conteúdo da aba Lembrete em desenvolvimento.
         </p>
     </div>
@@ -380,7 +359,6 @@
 </div>
 
 <script>
-    /* Troca de abas */
     function trocarAba(btn, tabId) {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -388,7 +366,6 @@
         document.getElementById(tabId).classList.add('active');
     }
 
-    /* Sincroniza o select de contexto com o campo hidden espacoId */
     const espacoCtx = document.getElementById('espacoCtx');
     const espacoIdHidden = document.getElementById('espacoIdHidden');
 
@@ -398,19 +375,13 @@
 
     espacoCtx.addEventListener('change', sincronizarEspaco);
 
-    /* Pré-seleciona o primeiro espaço disponível para o form não falhar */
+    // Pré-seleciona o primeiro espaço disponível, mas sem bloquear o envio
     if (espacoCtx.options.length > 1) {
         espacoCtx.selectedIndex = 1;
         sincronizarEspaco();
     }
 
-    /* Valida antes de submeter */
-    document.getElementById('formTarefa').addEventListener('submit', function (e) {
-        if (!espacoIdHidden.value) {
-            e.preventDefault();
-            alert('Selecione um espaço antes de cadastrar.');
-        }
-    });
+    // SEM validação de espaço obrigatório — o campo é opcional
 </script>
 </body>
 </html>
