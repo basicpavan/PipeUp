@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.http.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,10 +27,13 @@ public class SecurityConfig {
         logger.info("Configurando SecurityFilterChain...");
         http
                 .authorizeHttpRequests(authorize -> authorize
+                        // Recursos estáticos — sem autenticação
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/css/**")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/js/**")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/img/**")).permitAll()
+                        // Login — sem autenticação
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/login")).permitAll()
+                        // Tudo o mais exige login
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -37,10 +41,27 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/dashboard", true)
                         .permitAll()
                 )
+                // CSRF: desabilitado apenas para os POST internos de form
+                // que o Thymeleaf não inclui token automaticamente
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(
+                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/empresas"),
+                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/empresas/editar"),
+                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/empresas/excluir"),
+                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/espacos"),
+                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/espacos/editar"),
+                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/espacos/excluir"),
+                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/tarefas/nova"),
+                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/tarefas/*"),
+                                AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/tarefas/*/atividades")
+                        )
+                )
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/login?logout")
-                        .permitAll());
+                        .permitAll()
+                );
+
         logger.info("SecurityFilterChain configurado.");
         return http.build();
     }
