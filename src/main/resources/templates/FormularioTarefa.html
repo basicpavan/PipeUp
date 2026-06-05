@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Instrument Sans', sans-serif;
-            background: #111;
+            background: rgba(0, 0, 0, 0.55);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -23,57 +23,121 @@
             color: #fff;
         }
 
-        .modal {
-            background: #1a1a1a;
-            border-radius: 16px;
-            padding: 28px 32px 32px;
-            width: 520px;
+        /* ── Caixa azul ── */
+        .modal-box {
+            background: #4d6ef5;
+            border-radius: 18px;
+            width: 560px;
             max-width: calc(100vw - 32px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .modal-header {
+            padding: 24px 24px 28px;
+            position: relative;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
         }
 
-        .modal-titulo {
-            font-size: 18px;
-            font-weight: 600;
-            color: #fff;
-        }
-
+        /* ── Botão fechar ── */
         .modal-fechar {
-            background: rgba(255, 255, 255, 0.1);
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 28px;
+            height: 28px;
             border: none;
             border-radius: 50%;
-            width: 26px;
-            height: 26px;
-            font-size: 13px;
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            cursor: pointer;
             text-decoration: none;
-            transition: background .15s;
+            transition: background 0.2s;
         }
 
         .modal-fechar:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.32);
         }
 
+        /* ── Abas ── */
+        .modal-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 4px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            padding: 8px 20px 10px;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.55);
+            cursor: pointer;
+            transition: color 0.18s, border-color 0.18s;
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        /* ── Seletores de contexto (Recrutamento / Tarefa 1) ── */
+        .tag-selectors {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag-sel {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+            padding: 6px 14px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .tag-sel select {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .tag-sel select option {
+            color: #111;
+        }
+
+        .tag-arrow {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        /* ── Alertas ── */
         .alerta-sucesso {
-            background: rgba(77, 255, 150, 0.15);
+            background: rgba(77, 255, 150, 0.2);
             border: 1px solid #4dff96;
             border-radius: 8px;
             padding: 10px 16px;
             color: #d0ffe8;
             font-size: 13px;
-            margin-bottom: 12px;
         }
 
         .alerta-negocio {
@@ -83,200 +147,270 @@
             padding: 10px 16px;
             color: #ffe0e0;
             font-size: 13px;
-            margin-bottom: 12px;
         }
 
+        /* ── Form ── */
         .modal-form {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .campo-grupo {
+        /* Linha com dois campos lado a lado */
+        .campo-row {
             display: flex;
-            flex-direction: column;
-            gap: 4px;
+            gap: 10px;
         }
 
-        .campo-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.7);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .campo-row > * {
+            flex: 1;
+            min-width: 0;
         }
 
-        .campo-input, .campo-select, .campo-textarea {
-            background: #2b2b2b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 10px 14px;
-            color: #fff;
-            font-size: 14px;
-            font-family: 'Instrument Sans', sans-serif;
+        /* Input texto branco arredondado */
+        .campo-input {
+            width: 100%;
+            height: 44px;
+            border: none;
             outline: none;
-            transition: border-color 0.15s;
+            border-radius: 999px;
+            padding: 0 18px;
+            background: #fff;
+            color: #222;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        .campo-input:focus, .campo-select:focus, .campo-textarea:focus {
-            border-color: #FB7D29;
+        .campo-input::placeholder {
+            color: #666;
         }
 
-        .campo-input::placeholder, .campo-textarea::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+        /* Select branco arredondado */
+        .campo-select {
+            width: 100%;
+            height: 44px;
+            border: none;
+            outline: none;
+            border-radius: 999px;
+            padding: 0 36px 0 18px;
+            background: #fff;
+            color: #666;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
         }
 
         .campo-select option {
-            background: #2b2b2b;
-            color: #fff;
+            color: #111;
         }
 
+        /* Textarea descrição */
         .campo-textarea {
-            min-height: 80px;
-            resize: vertical;
+            width: 100%;
+            border: none;
+            outline: none;
+            border-radius: 14px;
+            padding: 12px 18px;
+            background: #fff;
+            color: #222;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.9rem;
+            min-height: 90px;
+            resize: none;
         }
 
-        .campo-linha {
-            display: flex;
-            gap: 12px;
+        .campo-textarea::placeholder {
+            color: #888;
         }
 
-        .campo-metade {
-            flex: 1;
-        }
-
+        /* ── Rodapé / Botão ── */
         .modal-rodape {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 16px;
+            justify-content: center;
+            margin-top: 6px;
         }
 
-        .btn-voltar {
-            background: transparent;
-            color: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: 'Instrument Sans', sans-serif;
-            text-decoration: none;
-            transition: all 0.15s;
-        }
-
-        .btn-voltar:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        .btn-criar {
+        .btn-cadastrar {
+            height: 42px;
+            padding: 0 48px;
+            border: none;
+            border-radius: 999px;
             background: #FB7D29;
             color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 24px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
             font-family: 'Instrument Sans', sans-serif;
-            transition: filter 0.15s;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: filter 0.2s, transform 0.15s;
+            letter-spacing: 0.2px;
         }
 
-        .btn-criar:hover {
-            filter: brightness(1.1);
+        .btn-cadastrar:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+
+        .btn-cadastrar:active {
+            transform: translateY(0);
+        }
+
+        /* ── Abas ocultas ── */
+        .tab-content {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tab-content.active {
+            display: flex;
         }
     </style>
 </head>
 <body>
 
-<div class="modal">
-    <div class="modal-header">
-        <span class="modal-titulo">Nova Tarefa</span>
-        <a class="modal-fechar" href="/dashboard" title="Fechar">✕</a>
+<div class="modal-box">
+
+    <!-- Fechar -->
+    <a class="modal-fechar" href="/dashboard" title="Fechar">✕</a>
+
+    <!-- Abas -->
+    <div class="modal-tabs">
+        <button type="button" class="tab-btn active" onclick="trocarAba(this,'tab-tarefa')">Tarefa</button>
+        <button type="button" class="tab-btn" onclick="trocarAba(this,'tab-documento')">Documento</button>
+        <button type="button" class="tab-btn" onclick="trocarAba(this,'tab-lembrete')">Lembrete</button>
     </div>
 
+    <!-- Alertas flash -->
     <div class="alerta-sucesso" th:if="${sucesso}" th:text="${sucesso}"></div>
     <div class="alerta-negocio" th:if="${erroNegocio}" th:text="${erroNegocio}"></div>
 
-    <form th:action="@{/tarefas/nova}" method="post" class="modal-form">
+    <!-- ═══ ABA TAREFA ═══ -->
+    <div id="tab-tarefa" class="tab-content active">
 
-        <div class="campo-grupo">
-            <label class="campo-label" for="titulo">Título da Tarefa</label>
-            <input class="campo-input" type="text" id="titulo" name="titulo"
-                   placeholder="Digite o título da tarefa" maxlength="100" required/>
-        </div>
-
-        <div class="campo-grupo">
-            <label class="campo-label" for="descricao">Descrição</label>
-            <textarea class="campo-textarea" id="descricao" name="descricao"
-                      placeholder="Descreva os detalhes da tarefa" maxlength="500"></textarea>
-        </div>
-
-        <div class="campo-linha">
-            <div class="campo-metade">
-                <div class="campo-grupo">
-                    <label class="campo-label" for="status">Status</label>
-                    <select class="campo-select" id="status" name="status" required>
-                        <option th:each="s : ${statusOpcoes}"
-                                th:value="${s.name()}"
-                                th:text="${s.displayName}"
-                                th:selected="${s == tarefa.status}"></option>
-                    </select>
-                </div>
+        <!-- Seletores de contexto -->
+        <div class="tag-selectors">
+            <div class="tag-sel">
+                Recrutamento <span class="tag-arrow">▾</span>
             </div>
-            <div class="campo-metade">
-                <div class="campo-grupo">
-                    <label class="campo-label" for="prioridade">Prioridade</label>
-                    <select class="campo-select" id="prioridade" name="prioridade">
-                        <option th:each="p : ${prioridadeOpcoes}"
-                                th:value="${p.name()}"
-                                th:text="${p.name()}"
-                                th:selected="${p.name() == 'MEDIA'}"></option>
-                    </select>
-                </div>
+            <div class="tag-sel">
+                <select id="espacoCtx" name="espacoCtxDisplay">
+                    <option value="">Tarefa 1</option>
+                    <option th:each="esp : ${espacos}"
+                            th:value="${esp.id}"
+                            th:text="${esp.nome}"></option>
+                </select>
+                <span class="tag-arrow">▾</span>
             </div>
         </div>
 
-        <div class="campo-grupo">
-            <label class="campo-label" for="espacoId">Espaço</label>
-            <select class="campo-select" id="espacoId" name="espacoId" required>
-                <option value="">Selecione um espaço</option>
-                <option th:each="esp : ${espacos}"
-                        th:value="${esp.id}"
-                        th:text="${esp.nome + ' (' + esp.empresa.nome + ')'}"></option>
-            </select>
-        </div>
+        <!-- Formulário principal -->
+        <form th:action="@{/tarefas/nova}" method="post" class="modal-form" id="formTarefa">
 
-        <div class="campo-linha">
-            <div class="campo-metade">
-                <div class="campo-grupo">
-                    <label class="campo-label" for="dataInicio">Data de Início</label>
-                    <input class="campo-input" type="date" id="dataInicio" name="dataInicio"/>
-                </div>
+            <!-- Campo oculto: status vindo da coluna Kanban -->
+            <input type="hidden" name="status"
+                   th:value="${tarefa.status != null ? tarefa.status.name() : 'A_INICIAR'}">
+
+            <!-- Espaço oculto (sincronizado com o selector acima via JS) -->
+            <input type="hidden" name="espacoId" id="espacoIdHidden" value="">
+
+            <!-- Nome + Empresa -->
+            <div class="campo-row">
+                <input class="campo-input" type="text" name="titulo"
+                       placeholder="Nome:" maxlength="100" required>
+
+                <select class="campo-select" name="empresaDisplay">
+                    <option value="">Empresa:</option>
+                    <option th:each="esp : ${espacos}"
+                            th:value="${esp.empresa.id}"
+                            th:text="${esp.empresa.nome}"></option>
+                </select>
             </div>
-            <div class="campo-metade">
-                <div class="campo-grupo">
-                    <label class="campo-label" for="dataEntrega">Data de Entrega</label>
-                    <input class="campo-input" type="date" id="dataEntrega" name="dataEntrega"/>
-                </div>
+
+            <!-- Equipe + Responsável -->
+            <div class="campo-row">
+                <select class="campo-select" name="equipeDisplay">
+                    <option value="">Equipe:</option>
+                    <option value="Design">Design</option>
+                    <option value="Desenvolvimento">Desenvolvimento</option>
+                    <option value="RH">RH</option>
+                    <option value="Marketing">Marketing</option>
+                </select>
+
+                <select class="campo-select" name="responsavelDisplay">
+                    <option value="">Responsável:</option>
+                    <option th:each="u : ${usuarios}"
+                            th:value="${u.id}"
+                            th:text="${u.nome}"></option>
+                </select>
             </div>
-        </div>
 
-        <div class="campo-grupo">
-            <label class="campo-label" for="progresso">Progresso (%)</label>
-            <input class="campo-input" type="number" id="progresso" name="progresso"
-                   min="0" max="100" value="0"/>
-        </div>
+            <!-- Descrição -->
+            <textarea class="campo-textarea" name="descricao"
+                      placeholder="Descrição:" maxlength="500"></textarea>
 
-        <div class="modal-rodape">
-            <a class="btn-voltar" href="/dashboard">Cancelar</a>
-            <button class="btn-criar" type="submit">Criar Tarefa</button>
-        </div>
+            <!-- Botão -->
+            <div class="modal-rodape">
+                <button class="btn-cadastrar" type="submit">Cadastrar</button>
+            </div>
 
-    </form>
+        </form>
+    </div><!-- /tab-tarefa -->
+
+    <!-- ═══ ABA DOCUMENTO ═══ -->
+    <div id="tab-documento" class="tab-content">
+        <p style="color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 12px 0;">
+            Conteúdo da aba Documento em desenvolvimento.
+        </p>
+    </div>
+
+    <!-- ═══ ABA LEMBRETE ═══ -->
+    <div id="tab-lembrete" class="tab-content">
+        <p style="color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 12px 0;">
+            Conteúdo da aba Lembrete em desenvolvimento.
+        </p>
+    </div>
+
 </div>
 
+<script>
+    /* Troca de abas */
+    function trocarAba(btn, tabId) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    /* Sincroniza o select de contexto com o campo hidden espacoId */
+    const espacoCtx = document.getElementById('espacoCtx');
+    const espacoIdHidden = document.getElementById('espacoIdHidden');
+
+    function sincronizarEspaco() {
+        espacoIdHidden.value = espacoCtx.value;
+    }
+
+    espacoCtx.addEventListener('change', sincronizarEspaco);
+
+    /* Pré-seleciona o primeiro espaço disponível para o form não falhar */
+    if (espacoCtx.options.length > 1) {
+        espacoCtx.selectedIndex = 1;
+        sincronizarEspaco();
+    }
+
+    /* Valida antes de submeter */
+    document.getElementById('formTarefa').addEventListener('submit', function (e) {
+        if (!espacoIdHidden.value) {
+            e.preventDefault();
+            alert('Selecione um espaço antes de cadastrar.');
+        }
+    });
+</script>
 </body>
 </html>
