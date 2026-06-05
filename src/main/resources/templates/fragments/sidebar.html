@@ -42,46 +42,48 @@
         <section class="spaces-block">
             <div class="spaces-title-row">
                 <span>Espaços</span>
-                <button type="button" class="plain-icon-btn" onclick="toggleNovaEmpresaForm()" title="Nova empresa">
+                <!--
+                    CORRIGIDO: o botão + de Espaços agora abre o formulário
+                    de NOVO ESPAÇO (novoEspacoForm), não o de empresa.
+                    A criação de empresas é feita pelo menu "Empresas" na mini-sidebar.
+                -->
+                <button type="button"
+                        class="plain-icon-btn"
+                        onclick="toggleNovoEspacoForm()"
+                        title="Novo espaço">
                     <img th:src="@{/img/icon-plus.png}" alt="Adicionar">
                 </button>
             </div>
 
-            <!-- Formulário nova empresa -->
-            <form action="/empresas" method="post" class="novo-espaco-form" id="novaEmpresaForm">
-                <label class="novo-espaco-label">Nova Empresa</label>
-                <input type="text" name="nome" placeholder="Nome da empresa" required>
-                <div class="novo-espaco-actions">
-                    <button type="submit" class="novo-espaco-btn">Criar empresa</button>
-                </div>
-            </form>
-
+            <!-- Formulário novo espaço (abre pelo botão + de Espaços) -->
             <form action="/espacos" method="post" class="novo-espaco-form" id="novoEspacoForm">
                 <label class="novo-espaco-label">Empresa</label>
                 <select name="empresaId" required>
-                    <option value="">Selecione a empresa cadastrada</option>
+                    <option value="">Selecione a empresa</option>
                     <option th:each="empresa : ${empresas}"
                             th:value="${empresa.id}"
                             th:text="${empresa.nome}">
                     </option>
                 </select>
 
-                <label class="novo-espaco-label">Micro espaço</label>
+                <label class="novo-espaco-label">Nome do Espaço</label>
                 <input type="text" name="nome" placeholder="Ex.: Recrutamento RH" required>
 
                 <div class="novo-espaco-actions">
-                    <button type="submit" class="novo-espaco-btn">Criar micro espaço</button>
+                    <button type="submit" class="novo-espaco-btn">Criar Espaço</button>
                 </div>
             </form>
 
+            <!-- Lista de empresas e seus espaços -->
             <div th:each="empresa : ${empresas}" class="space-entry empresa-group">
                 <div class="space-header empresa-header">
                     <div class="space-name-wrap">
-                        <div class="space-badge">E1</div>
+                        <div class="space-badge">E</div>
                         <span class="space-name" th:text="${empresa.nome}"></span>
                     </div>
 
                     <div class="space-controls empresa-controls">
+                        <!-- Menu ⋯ de editar/excluir empresa -->
                         <div class="empresa-menu-wrapper">
                             <button type="button"
                                     class="plain-icon-btn small"
@@ -104,6 +106,7 @@
                             </div>
                         </div>
 
+                        <!-- Botão + rápido para adicionar espaço a esta empresa -->
                         <button type="button"
                                 class="plain-icon-btn small"
                                 th:attr="data-empresa-id=${empresa.id}"
@@ -113,6 +116,7 @@
                     </div>
                 </div>
 
+                <!-- Espaços da empresa -->
                 <div th:each="espaco : ${espacos}"
                      th:if="${espaco.empresa != null and espaco.empresa.id == empresa.id}"
                      class="space-subitem-row">
@@ -142,6 +146,7 @@
                     </div>
                 </div>
 
+                <!-- Botão + Novo Espaço inline da empresa -->
                 <button type="button"
                         class="space-subitem add-space-subitem add-space-button"
                         th:attr="data-empresa-id=${empresa.id}"
