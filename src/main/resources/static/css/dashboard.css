@@ -13,8 +13,8 @@
     --bg-hover: rgba(255, 255, 255, 0.08);
     --bg-active: rgba(255, 255, 255, 0.12);
     --text-white: #ffffff;
-    --text-soft: rgba(255,255,255,0.92);
-    --text-muted: rgba(255,255,255,0.78);
+    --text-soft: rgba(255, 255, 255, 0.92);
+    --text-muted: rgba(255, 255, 255, 0.78);
     --accent: #FB7D29;
     --shadow-soft: 0 8px 18px rgba(0, 0, 0, 0.22);
 
@@ -167,6 +167,7 @@ img {
     overflow-x: visible;
     position: relative;
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.15);
+    border-top-left-radius: 18px;
 }
 
 .sidebar-full::-webkit-scrollbar {
@@ -174,7 +175,7 @@ img {
 }
 
 .sidebar-full::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.22);
+    background: rgba(0, 0, 0, 0.22);
     border-radius: 999px;
 }
 
@@ -202,7 +203,7 @@ img {
 }
 
 .collapse-button:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 /* MENU SUPERIOR */
@@ -215,7 +216,6 @@ img {
     z-index: 1;
 }
 
-
 .full-link {
     padding: 11px 12px;
     border-radius: 12px;
@@ -226,17 +226,18 @@ img {
 }
 
 .full-link:hover {
-    background: rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.06);
 }
+
 .full-link:hover,
 .space-subitem-row:hover {
-    background: rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.06);
     border-radius: 8px;
 }
 
 .full-link.selected {
-    background: rgba(255,255,255,0.18);
-        font-weight: 600;
+    background: rgba(255, 255, 255, 0.18);
+    font-weight: 600;
 }
 
 /* BLOCO ESPAÇOS */
@@ -280,7 +281,7 @@ img {
 }
 
 .plain-icon-btn:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .plain-icon-btn.small {
@@ -307,7 +308,7 @@ img {
 .novo-espaco-label {
     font-size: 0.82rem;
     font-weight: 600;
-    color: rgba(255,255,255,0.88);
+    color: rgba(255, 255, 255, 0.88);
     margin-bottom: -2px;
 }
 
@@ -319,14 +320,14 @@ img {
     outline: none;
     border-radius: 10px;
     padding: 0 12px;
-    background: rgba(255,255,255,0.10);
+    background: rgba(255, 255, 255, 0.10);
     color: #ffffff;
     font-family: 'Instrument Sans', sans-serif;
     font-size: 0.92rem;
 }
 
 .novo-espaco-form input::placeholder {
-    color: rgba(255,255,255,0.72);
+    color: rgba(255, 255, 255, 0.72);
 }
 
 .novo-espaco-form select {
@@ -394,7 +395,7 @@ img {
     width: 24px;
     height: 24px;
     border-radius: 4px;
-    background: rgba(255,255,255,0.15);
+    background: rgba(255, 255, 255, 0.15);
     color: #ffffff;
     font-size: 0.76rem;
     font-weight: 700;
@@ -448,7 +449,7 @@ img {
     margin-top: 2px;
     padding-left: 14px;
     cursor: pointer;
-    color: rgba(255,255,255,0.86);
+    color: rgba(255, 255, 255, 0.86);
 }
 
 .add-space-button {
@@ -500,7 +501,7 @@ img {
     outline: none;
     border-radius: 8px;
     padding: 0 10px;
-    background: rgba(255,255,255,0.10);
+    background: rgba(255, 255, 255, 0.10);
     color: #ffffff;
     font-family: 'Instrument Sans', sans-serif;
     font-size: 0.88rem;
@@ -570,8 +571,8 @@ img {
     align-items: center;
     padding: 0 14px;
     gap: 10px;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.6),
-                    0 2px 6px rgba(0,0,0,0.25);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6),
+    0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .search-icon {
@@ -616,12 +617,12 @@ img {
 
 .header-btn img {
     width: 26px;
-        height: 26px;
-        opacity: 0.92;
+    height: 26px;
+    opacity: 0.92;
 }
 
 .header-btn:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .avatar {
@@ -631,7 +632,7 @@ img {
     background: #9d9d9d;
     overflow: hidden;
     flex-shrink: 0;
-     border: 2px solid rgba(255,255,255,0.15);
+    border: 2px solid rgba(255, 255, 255, 0.15);
 }
 
 .avatar img {
@@ -657,7 +658,7 @@ img {
 .kanban-placeholder {
     width: 100%;
     height: 100%;
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     background: #0d0d0d;
 }
 
@@ -684,141 +685,121 @@ img {
     content: "";
     display: block;
     height: 1px;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     margin: 10px 0 4px;
 }
 
-/* =========================
-   KANBAN
-========================= */
+/* =========================================================
+   ADICIONADO: CONTEÚDO DA BARRA LARANJA E KANBAN
+   ========================================================= */
 
-.kanban-board {
-
+.titulo-laranja {
     display: flex;
-
-    gap: 20px;
-
-    height: 100%;
-}
-
-.kanban-column {
-
-    width: 320px;
-
-    background: #1a1a1a;
-
-    border-radius: 16px;
-
-    padding: 16px;
-
-    display: flex;
-
-    flex-direction: column;
-}
-
-.kanban-header {
-
-    display: flex;
-
-    justify-content: space-between;
-
     align-items: center;
-
-    margin-bottom: 16px;
+    height: 100%;
+    padding: 0 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    gap: 8px;
+    color: var(--text-white);
 }
 
-.kanban-header h3 {
-
-    font-size: 18px;
-
-    font-weight: 600;
-}
-
-.btn-add {
-
-    width: 30px;
-
-    height: 30px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: #FB7D29;
-
-    color: white;
-
-    font-size: 20px;
-
+.btn-mais-laranja {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
     cursor: pointer;
 }
 
-.kanban-cards {
-
+.board-container {
     display: flex;
+    gap: 16px;
+    width: 100%;
+    height: calc(100vh - var(--header-height) - var(--orange-bar-height) - 24px);
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
 
+.board-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.board-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+}
+
+.board-coluna {
+    flex: 0 0 280px;
+    background-color: var(--bg-sidebar-full);
+    border-radius: 8px;
+    display: flex;
     flex-direction: column;
+    height: 100%;
+}
 
+.coluna-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-white);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.coluna-btn {
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    background: rgba(0, 0, 0, 0.15);
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.coluna-cartoes {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
     gap: 12px;
 }
 
-.card-tarefa {
-
-    background: #262626;
-
-    padding: 14px;
-
-    border-radius: 12px;
-
-    color: white;
+.cartao {
+    background-color: #554F4F;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    cursor: grab;
+    color: var(--text-white);
 }
 
-/* =========================
-   MODAL
-========================= */
-
-.modal-overlay {
-
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0,0,0,0.55);
-
-    display: none;
-
-    justify-content: center;
-
-    align-items: center;
-
-    z-index: 999;
-}
-
-.modal-tarefa {
-
-    background: #4d6ef5;
-
-    border-radius: 20px;
-
-    width: 520px;
-
-    padding: 28px;
-}
-
-.modal-header-custom {
-
+.cartao-topo {
     display: flex;
-
     justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 20px;
+    align-items: flex-start;
+    margin-bottom: 12px;
 }
 
-.textarea-custom {
+.cartao-titulo {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
 
-    min-height: 120px;
+.cartao-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
-    resize: none;
+.cartao-rodape {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
