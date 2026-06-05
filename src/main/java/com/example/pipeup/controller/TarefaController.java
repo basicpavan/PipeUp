@@ -168,7 +168,7 @@ public class TarefaController {
                               @RequestParam String status,
                               @RequestParam(required = false) String dataInicio,
                               @RequestParam(required = false) String dataEntrega,
-                              @RequestParam Integer espacoId,
+                              @RequestParam(required = false) Integer espacoId,  // ← opcional
                               @RequestParam(required = false) String prioridade,
                               @RequestParam(required = false) Float progresso,
                               RedirectAttributes redirect) {

@@ -31,34 +31,44 @@ public class TarefaService {
 
     /* ── Criar ── */
 
+    /**
+     * Cria uma nova tarefa.
+     * espacoId é opcional: se nulo ou não encontrado, a tarefa é salva sem espaço.
+     */
     public Tarefa criar(Tarefa tarefa, Integer espacoId) {
-        logger.info("Criando nova tarefa para espaço ID: {}", espacoId);
-        Espaco espaco = espacoRepository.findById(espacoId)
-                .orElseThrow(() -> new IllegalArgumentException("Espaço não encontrado."));
+        logger.info("Criando nova tarefa. espacoId={}", espacoId);
 
-        tarefa.setEspaco(espaco);
+        if (espacoId != null) {
+            Optional<Espaco> espaco = espacoRepository.findById(espacoId);
+            if (espaco.isPresent()) {
+                tarefa.setEspaco(espaco.get());
+            } else {
+                logger.warn("Espaço ID {} não encontrado — tarefa será criada sem espaço.", espacoId);
+            }
+        }
+
         validar(tarefa);
-        Tarefa novaTarefa = tarefaRepository.save(tarefa);
-        logger.info("Tarefa criada com ID: {}", novaTarefa.getId());
-        return novaTarefa;
+        Tarefa nova = tarefaRepository.save(tarefa);
+        logger.info("Tarefa criada com ID: {}", nova.getId());
+        return nova;
     }
 
     /* ── Atualizar ── */
 
     public Tarefa atualizar(Integer id, Tarefa dados, Integer espacoId) {
-        logger.info("Iniciando atualização da tarefa ID: {}", id);
+        logger.info("Atualizando tarefa ID: {}", id);
 
         Tarefa tarefa = tarefaRepository.findById(id)
                 .orElseThrow(() -> {
-                    logger.error("Tarefa com ID {} não encontrada para atualização.", id);
+                    logger.error("Tarefa ID {} não encontrada.", id);
                     return new IllegalArgumentException("Tarefa não encontrada.");
                 });
 
-        Espaco espaco = espacoRepository.findById(espacoId)
-                .orElseThrow(() -> {
-                    logger.error("Espaço com ID {} não encontrado.", espacoId);
-                    return new IllegalArgumentException("Espaço não encontrado.");
-                });
+        if (espacoId != null) {
+            Espaco espaco = espacoRepository.findById(espacoId)
+                    .orElseThrow(() -> new IllegalArgumentException("Espaço não encontrado."));
+            tarefa.setEspaco(espaco);
+        }
 
         if (dados.getTitulo() != null && !dados.getTitulo().trim().isEmpty()) {
             tarefa.setTitulo(dados.getTitulo());
@@ -81,12 +91,11 @@ public class TarefaService {
         if (dados.getProgresso() != null) {
             tarefa.setProgresso(dados.getProgresso());
         }
-        tarefa.setEspaco(espaco);
 
         validar(tarefa);
-        Tarefa tarefaAtualizada = tarefaRepository.save(tarefa);
-        logger.info("Tarefa ID {} atualizada com sucesso.", id);
-        return tarefaAtualizada;
+        Tarefa atualizada = tarefaRepository.save(tarefa);
+        logger.info("Tarefa ID {} atualizada.", id);
+        return atualizada;
     }
 
     /* ── Validações ── */
@@ -105,13 +114,12 @@ public class TarefaService {
                 && tarefa.getDataEntrega().isBefore(tarefa.getDataInicio())) {
             throw new IllegalArgumentException("A data de entrega não pode ser anterior à data de início.");
         }
-        if (tarefa.getProgresso() != null && (tarefa.getProgresso() < 0 || tarefa.getProgresso() > 100)) {
+        if (tarefa.getProgresso() != null
+                && (tarefa.getProgresso() < 0 || tarefa.getProgresso() > 100)) {
             throw new IllegalArgumentException("O progresso deve ser entre 0 e 100.");
         }
-        if (tarefa.getEspaco() == null) {
-            throw new IllegalArgumentException("A tarefa deve estar vinculada a um espaço.");
-        }
 
+        // sanitização
         tarefa.setTitulo(tarefa.getTitulo().trim());
         if (tarefa.getDescricao() != null) {
             tarefa.setDescricao(tarefa.getDescricao().trim());

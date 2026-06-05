@@ -1,0 +1,229 @@
+[33mcommit 129a5345f6baa2335a43492b880eb9d33dba81ae[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/empresa-tarefa[m[33m)[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Fri Jun 5 19:49:31 2026 -0300
+
+    correção tarefa controller
+
+[33mcommit 80e2ad4eded83fd9c9dbe20a9bf0d8ebefdc5467[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Fri Jun 5 19:48:55 2026 -0300
+
+    correção tarefa service
+
+[33mcommit 95994b34d483855306eb1519d8ba12dfdeabf230[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Fri Jun 5 19:48:13 2026 -0300
+
+    css do dashboard
+
+[33mcommit d492a862898d58404ec4873694f536c90d66130c[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Fri Jun 5 19:47:23 2026 -0300
+
+    alteração dashboard
+
+[33mcommit 36ce0a3db14b44b7c86cb0599d4053e263851120[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Fri Jun 5 19:46:47 2026 -0300
+
+    remove obrigatoriedade de espaço em cadastro de tarefa
+
+[33mcommit 9a4028f69bee4c371caa2a34c20152e7a4dbfb3f[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Fri Jun 5 19:30:38 2026 -0300
+
+    correção sidebar
+
+[33mcommit a8d011241c800c9f911ffe7c8d96c01418262110[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Fri Jun 5 19:29:34 2026 -0300
+
+    mudança formulario tarefa
+
+[33mcommit ea0166864152f6887027689f58780b9b82cb2b1c[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Fri Jun 5 19:27:49 2026 -0300
+
+    mudança no security
+
+[33mcommit 22875b618a0f951f52b161f81fa2cc8bd0808339[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Fri Jun 5 19:20:18 2026 -0300
+
+    mudanças formulario tarefa e dashboard
+
+[33mcommit 8a2d9c030653395302ce8add857896d31fc3c53a[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Fri Jun 5 18:51:32 2026 -0300
+
+    ajuste dashboard html
+
+[33mcommit 1bf5eba461af2a084f1d10acf4d23c8ddacbb483[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Fri Jun 5 18:39:03 2026 -0300
+
+    ajuste schema
+
+[33mcommit 335fd72c757947b7a8d8533e3dcd3679a73abefc[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Thu Jun 4 00:04:05 2026 -0300
+
+    Ajuste erros em securityConfig, usuario controller e service
+
+[33mcommit a16ee38f0729a9bb466d473595a7ccc3b57e08c7[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Wed Jun 3 23:55:26 2026 -0300
+
+    Ajuste classe usuário
+
+[33mcommit 0e4400843f8d13a29d228c8585370fdea23d2f34[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Wed Jun 3 23:54:43 2026 -0300
+
+    Ajuste classe tarefa
+
+[33mcommit 0e9f7046307694f489a36e6fce24c6ecde27c095[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Wed Jun 3 23:50:43 2026 -0300
+
+    Ajuste tarefa controller
+
+[33mcommit 5d942c3eeae8f317bc39122e180dc048504e6261[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Wed Jun 3 23:49:58 2026 -0300
+
+    Ajuste controller dashboard
+
+[33mcommit 961fea9b5e1feeb426767a22321b6e64b9fcc001[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Wed Jun 3 23:49:05 2026 -0300
+
+    Ajuste usuario repository
+
+[33mcommit d29f1ebc10e0cd5a7e69e1e8b29ddb8d92c4af3d[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Wed Jun 3 23:48:04 2026 -0300
+
+    Ajuste Tarefa repository e service
+
+[33mcommit b30b4b67f271c5a78fd5eba6c9706e02b046ca5a[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Wed Jun 3 21:59:06 2026 -0300
+
+    Ajuste th:select para comparar tarefa.status
+
+[33mcommit 9a22a7dea266d39987d8576f56e3c9679a127456[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Wed Jun 3 21:46:40 2026 -0300
+
+    Ajuste <a> board-container
+
+[33mcommit 1a8496fd8762b84f65c5ed6cb41f472ed61882dd[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Wed Jun 3 21:40:14 2026 -0300
+
+    Ajuste botão +
+
+[33mcommit b97dff9a2380244588e64105ed60d1cf541b2bf2[m[33m ([m[1;31morigin/feature/empresa-tarefa[m[33m)[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Wed Jun 3 21:24:17 2026 -0300
+
+    mudanca tarefa controller
+
+[33mcommit a9216900f3d6ff8125f9aad4dc90f09eba581d9b[m[33m ([m[1;32mfeature/tarefa-empresa[m[33m)[m
+Author: apololbecker <apololuizbecker@outlook.com>
+Date:   Wed Jun 3 20:14:33 2026 -0300
+
+    teste
+
+[33mcommit 0981741ccae3da41ed4ad6efd69347ce0a245ed4[m[33m ([m[1;31morigin/feature/home[m[33m, [m[1;32mfeature/tarefa/empresa[m[33m, [m[1;32mfeature/home[m[33m)[m
+Author: Eduardo <elemos560@gmail.com>
+Date:   Mon Apr 20 22:47:57 2026 -0300
+
+    feat: dashboard com integração ao PostgreSQL e refatoração para modelo empresa/espaco
+    
+    - CRUD de empresas e espaços
+    - Sidebar dinâmica
+    - Layout ajustado conforme Figma
+    - Configuração de banco via schema.sql
+
+[33mcommit edeefed6fc149a65347c40fb018625e26953c760[m
+Merge: 6440cfa 450104b
+Author: Marcos Engelmann <engelmannmarcos290@gmail.com>
+Date:   Wed Apr 15 21:58:09 2026 -0300
+
+    Merge pull request #3 from basicpavan/feature/telaCadastroTarefas
+    
+    Feature/tela cadastro tarefas
+
+[33mcommit 450104bb6ca103988a687c71e9ae8c43e25ccc78[m
+Author: Marcos Engelmann <engelmannmarcos290@gmail.com>
+Date:   Wed Apr 15 21:52:20 2026 -0300
+
+    small fix estrutura dos dados do formulário
+
+[33mcommit 2f67a2459b910ee5658f087a8f78d4fb5d792191[m
+Author: Marcos Engelmann <engelmannmarcos290@gmail.com>
+Date:   Wed Apr 15 20:53:14 2026 -0300
+
+    Estilização do formulario
+
+[33mcommit e90e69072c6c363f7b1b90a979fd7e882bcd69c6[m
+Author: Marcos Engelmann <engelmannmarcos290@gmail.com>
+Date:   Wed Apr 15 20:50:00 2026 -0300
+
+    Adicionando campos de telefone, data nascimento, setor e cargo ao formulario
+
+[33mcommit 8a16ec9017b6f5aee8a1b9f815fc4e00f387ac08[m
+Author: Marcos Engelmann <engelmannmarcos290@gmail.com>
+Date:   Wed Apr 15 15:49:02 2026 -0300
+
+    Reestruturação da arquitetura do projeto, alinhado ao banco de dados
+
+[33mcommit d2c0f31dd8dea509ed63317ae5e5519b98237ff3[m
+Author: Marcos Engelmann <engelmannmarcos290@gmail.com>
+Date:   Wed Apr 15 15:47:52 2026 -0300
+
+    Reestruturação da arquitetura do projeto, alinhado ao banco de dados
+
+[33mcommit 7031b323c91110a59730034b419ea881ec05be94[m
+Author: Marcos Engelmann <engelmannmarcos290@gmail.com>
+Date:   Tue Apr 14 20:51:42 2026 -0300
+
+    Adicionar campos (nome, email, senha) do formulário ligados ao objeto tarefa
+
+[33mcommit 6440cfa4906742ed55ef08572d6840aee8750ed6[m
+Merge: 539417b d2d86be
+Author: Gustavo Pavan <82918657+basicpavan@users.noreply.github.com>
+Date:   Tue Mar 31 20:13:07 2026 -0300
+
+    Merge pull request #2 from basicpavan/feature/telaCadastroTarefas
+    
+    Adicionando dependências de segurança, validação e o Thymeleaf no pom.xml
+
+[33mcommit d2d86be3871863d66cf3543b26e9d8403e0484c5[m
+Author: Marcos Engelmann <engelmannmarcos290@gmail.com>
+Date:   Tue Mar 31 20:10:17 2026 -0300
+
+    Adicionando dependências de segurança, validação e o Thymeleaf no pom.xml
+
+[33mcommit 539417b0f8953f538ea803849e6348156e60b268[m
+Merge: e597a7e a360022
+Author: Gustavo Pavan <82918657+basicpavan@users.noreply.github.com>
+Date:   Tue Mar 24 21:31:10 2026 -0300
+
+    Merge pull request #1 from basicpavan/feature/telaCadastroTarefas
+    
+    Criacao de pastas MRSC e classes
+
+[33mcommit a360022466557f0240cdb3a00bcfe6a2cf1ade65[m
+Author: Marcos Engelmann <engelmannmarcos290@gmail.com>
+Date:   Tue Mar 24 21:18:09 2026 -0300
+
+    Criacao de pastas MRSC e classes
+
+[33mcommit e597a7e62fbe891c8b4fc384da925a29c3a3baff[m
+Author: Gustavo Antonio Pavan <gustavopavan993@gmail.com>
+Date:   Tue Mar 24 20:08:44 2026 -0300
+
+    Initial commit

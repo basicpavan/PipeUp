@@ -64,7 +64,6 @@
                            th:href="@{/tarefas/{id}(id=${t.id})}">
                             <div class="cartao-topo">
                                 <span class="cartao-titulo" th:text="${t.titulo}"></span>
-                                <img src="https://i.pravatar.cc/150?img=11" class="cartao-avatar" alt="avatar">
                             </div>
                             <div class="cartao-rodape"
                                  th:text="${t.dataEntrega != null ? '📅 ' + t.dataEntrega : '📅 Sem data'}">
