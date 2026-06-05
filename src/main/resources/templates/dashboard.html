@@ -5,15 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PipeUp - Dashboard</title>
-    <<<<<<< HEAD
-
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
-    <link rel="stylesheet" th:href="@{/css/formulario-tarefa.css}">
-    <link rel="stylesheet" th:href="@{/css/formulario-usuario.css}">
-    =======
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
           rel="stylesheet">
     <style>
@@ -46,6 +37,7 @@
             width: 100%;
         }
 
+        /* ── Sidebar ── */
         .sidebar-mini {
             width: 80px;
             min-width: 80px;
@@ -107,6 +99,7 @@
             font-weight: 700;
         }
 
+        /* ── Main ── */
         .main {
             flex: 1;
             display: flex;
@@ -115,6 +108,7 @@
             overflow: hidden;
         }
 
+        /* ── Header ── */
         .header {
             height: 56px;
             background: #1a1a1a;
@@ -201,6 +195,7 @@
             display: block;
         }
 
+        /* ── Orange bar ── */
         .orange-bar {
             height: 40px;
             background: linear-gradient(180deg, #FB7D29, #f07020);
@@ -227,6 +222,7 @@
             cursor: pointer;
         }
 
+        /* ── Content / Kanban ── */
         .content {
             flex: 1;
             padding: 12px;
@@ -334,16 +330,12 @@
             color: rgba(255, 255, 255, 0.7);
         }
     </style>
-    >>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
 </head>
 
 <body>
 <div class="layout">
 
-    <<<<<<< HEAD
     <!-- SIDEBAR -->
-    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-    =======
     <div class="sidebar-mini">
         <div class="mini-logo"><img th:src="@{/img/logo-up.png}" alt="UP"></div>
         <nav class="mini-nav">
@@ -361,17 +353,11 @@
             </a>
         </nav>
     </div>
-    >>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
 
     <!-- MAIN -->
     <div class="main">
-        <<<<<<< HEAD
 
         <!-- HEADER -->
-        <div th:replace="~{fragments/header :: header}"></div>
-
-        <div class="orange-bar"></div>
-        =======
         <div class="header">
             <form action="/dashboard" method="get" class="search-box">
                 <img th:src="@{/img/icon-search.png}" alt="Pesquisar" class="search-icon">
@@ -386,93 +372,28 @@
             </div>
         </div>
 
+        <!-- ORANGE BAR -->
         <div class="orange-bar">
             <div class="titulo-laranja">Recrutamento
                 <a href="/tarefas/nova" class="btn-mais-laranja" style="text-decoration: none; color: inherit;">+</a>
             </div>
         </div>
-        >>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
 
         <!-- CONTENT -->
         <div class="content">
-            <<<<<<< HEAD
-
-            <div class="kanban-board">
-
-                <!-- EM ATRASO -->
-                <div class="kanban-column">
-
-                    <div class="kanban-header">
-
-                        <h3>Em atraso</h3>
-
-                        <button
-                                class="btn-add"
-                                onclick="abrirModal('Em atraso')">
-                            +
-                        </button>
-
-                    </div>
-
-                    <div id="Em atraso" class="kanban-cards"></div>
-
-                </div>
-
-                <!-- EM ANDAMENTO -->
-                <div class="kanban-column">
-
-                    <div class="kanban-header">
-
-                        <h3>Em andamento</h3>
-
-                        <button
-                                class="btn-add"
-                                onclick="abrirModal('Em andamento')">
-                            +
-                        </button>
-
-                    </div>
-
-                    <div id="Em andamento" class="kanban-cards"></div>
-
-                </div>
-
-                <!-- A INICIAR -->
-                <div class="kanban-column">
-
-                    <div class="kanban-header">
-
-                        <h3>A iniciar</h3>
-
-                        <button
-                                class="btn-add"
-                                onclick="abrirModal('A iniciar')">
-                            +
-                        </button>
-
-                    </div>
-
-                    <div id="A iniciar" class="kanban-cards"></div>
-
-                </div>
-
-            </div>
-
-            =======
             <div class="board-container">
 
                 <div th:each="status : ${statusOpcoes}" class="board-coluna">
                     <div class="coluna-topo">
                         <span th:text="${status.displayName}"></span>
-
-                        <!-- ← ALTERADO: href agora passa o status da coluna como parâmetro -->
+                        <!-- Passa o status da coluna para pré-selecionar no formulário -->
                         <a th:href="@{/tarefas/nova(status=${status.name()})}"
                            class="coluna-btn"
                            style="text-decoration: none; color: inherit;">+</a>
-
                     </div>
                     <div class="coluna-cartoes">
-                        <a th:each="t : ${tarefas}" th:if="${t.status == status}"
+                        <a th:each="t : ${tarefas}"
+                           th:if="${t.status == status}"
                            class="cartao"
                            th:href="@{/tarefas/{id}(id=${t.id})}"
                            th:data-titulo="${t.titulo}"
@@ -487,94 +408,14 @@
                         </a>
                     </div>
                 </div>
-            </div>
-            >>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
-        </div>
-
-    </div>
-
-</div>
-<<<<<<< HEAD
-
-<!-- MODAL -->
-<div id="modalTarefa" class="modal-overlay">
-
-    <div class="modal-tarefa">
-
-        <!-- TOPO -->
-        <div class="modal-header-custom">
-
-            <span class="modal-titulo">
-                Tarefa
-            </span>
-
-            <button
-                    class="modal-fechar"
-                    onclick="fecharModal()">
-
-                ✕
-
-            </button>
-
-        </div>
-
-        <!-- FORM -->
-        <div class="modal-form">
-
-            <!-- NOME -->
-            <div class="campo-grupo">
-
-                <label class="campo-label">
-                    Nome:
-                </label>
-
-                <input
-                        class="campo-input"
-                        type="text"
-                        id="nome">
 
             </div>
-
-            <!-- DESCRIÇÃO -->
-            <div class="campo-grupo">
-
-                <label class="campo-label">
-                    Descrição:
-                </label>
-
-                <textarea
-                        class="campo-input textarea-custom"
-                        id="descricao">
-                </textarea>
-
-            </div>
-
-            <!-- BOTÃO -->
-            <div class="modal-rodape">
-
-                <button
-                        class="btn-criar"
-                        onclick="cadastrarTarefa()">
-
-                    Criar Tarefa
-
-                </button>
-
-            </div>
-
         </div>
 
     </div>
 
 </div>
 
-<!-- JS -->
-<script th:src="@{/js/tarefa-modal.js}"></script>
-<script th:src="@{/js/sidebar.js}"></script>
-
-
-=======
->>>>>>> 66aac797dcb5269ffa00671f93e736700f0dd81f
-</body>
 <script th:src="@{/js/dashboard.js}"></script>
+</body>
 </html>
