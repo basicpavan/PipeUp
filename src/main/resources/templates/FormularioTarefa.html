@@ -278,6 +278,7 @@
     <!-- ABA TAREFA -->
     <div id="tab-tarefa" class="tab-content active">
 
+        <!-- Seletores de contexto -->
         <div class="tag-selectors">
             <div class="tag-sel">Recrutamento <span class="tag-arrow">▾</span></div>
             <div class="tag-sel">
@@ -293,28 +294,29 @@
 
         <form th:action="@{/tarefas/nova}" method="post" class="modal-form" id="formTarefa">
 
-            <!-- Status pré-selecionado pela coluna Kanban (obrigatório no backend) -->
             <input type="hidden" name="status"
                    th:value="${tarefa.status != null ? tarefa.status.name() : 'A_INICIAR'}">
 
-            <!--
-                espacoId: opcional — o backend aceita null.
-                Sincronizado com o selector acima via JS, mas sem bloquear o envio.
-            -->
             <input type="hidden" name="espacoId" id="espacoIdHidden" value="">
 
+            <!-- Nome + Empresa -->
             <div class="campo-row">
                 <input class="campo-input" type="text" name="titulo"
                        placeholder="Nome:" maxlength="100" required>
 
+                <!--
+                    CORRIGIDO: itera ${empresas} diretamente em vez de ${espacos},
+                    evitando duplicatas quando uma empresa tem vários espaços.
+                -->
                 <select class="campo-select" name="empresaDisplay">
                     <option value="">Empresa:</option>
-                    <option th:each="esp : ${espacos}"
-                            th:value="${esp.empresa.id}"
-                            th:text="${esp.empresa.nome}"></option>
+                    <option th:each="emp : ${empresas}"
+                            th:value="${emp.id}"
+                            th:text="${emp.nome}"></option>
                 </select>
             </div>
 
+            <!-- Equipe + Responsável -->
             <div class="campo-row">
                 <select class="campo-select" name="equipeDisplay">
                     <option value="">Equipe:</option>
@@ -332,6 +334,7 @@
                 </select>
             </div>
 
+            <!-- Descrição -->
             <textarea class="campo-textarea" name="descricao"
                       placeholder="Descrição:" maxlength="500"></textarea>
 
@@ -375,13 +378,10 @@
 
     espacoCtx.addEventListener('change', sincronizarEspaco);
 
-    // Pré-seleciona o primeiro espaço disponível, mas sem bloquear o envio
     if (espacoCtx.options.length > 1) {
         espacoCtx.selectedIndex = 1;
         sincronizarEspaco();
     }
-
-    // SEM validação de espaço obrigatório — o campo é opcional
 </script>
 </body>
 </html>
