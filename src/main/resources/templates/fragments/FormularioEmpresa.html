@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PipeUp - Cadastrar Empresa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Instrument Sans', sans-serif;
+            background: rgba(0,0,0,0.55);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        /* ── Caixa azul (idêntica ao FormularioTarefa) ── */
+        .modal-box {
+            background: #4d6ef5;
+            border-radius: 18px;
+            width: 560px;
+            max-width: calc(100vw - 32px);
+            padding: 24px 24px 28px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+        }
+
+        /* ── Cabeçalho ── */
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        .modal-titulo {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.2px;
+        }
+
+        /* ── Botão fechar ── */
+        .modal-fechar {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 28px; height: 28px;
+            border: none; border-radius: 50%;
+            background: rgba(255,255,255,0.18);
+            color: #fff; font-size: 0.85rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; text-decoration: none;
+            transition: background 0.2s;
+        }
+        .modal-fechar:hover { background: rgba(255,255,255,0.32); }
+
+        /* ── Alertas ── */
+        .alerta-sucesso {
+            background: rgba(77,255,150,0.2); border: 1px solid #4dff96;
+            border-radius: 8px; padding: 10px 16px; color: #d0ffe8; font-size: 13px;
+        }
+        .alerta-negocio {
+            background: rgba(255,77,77,0.2); border: 1px solid #ff4d4d;
+            border-radius: 8px; padding: 10px 16px; color: #ffe0e0; font-size: 13px;
+        }
+
+        /* ── Form ── */
+        .modal-form { display: flex; flex-direction: column; gap: 10px; }
+
+        /* Linha dupla */
+        .campo-row { display: flex; gap: 10px; }
+        .campo-row > * { flex: 1; min-width: 0; }
+
+        /* Input branco arredondado */
+        .campo-input {
+            width: 100%; height: 44px;
+            border: none; outline: none;
+            border-radius: 999px; padding: 0 18px;
+            background: #fff; color: #222;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.9rem; font-weight: 500;
+        }
+        .campo-input::placeholder { color: #666; }
+
+        /* ── Rodapé / Botão ── */
+        .modal-rodape { display: flex; justify-content: center; margin-top: 6px; }
+
+        .btn-cadastrar {
+            height: 42px; padding: 0 48px;
+            border: none; border-radius: 999px;
+            background: #FB7D29; color: #fff;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            cursor: pointer;
+            transition: filter 0.2s, transform 0.15s;
+            letter-spacing: 0.2px;
+        }
+        .btn-cadastrar:hover { filter: brightness(1.08); transform: translateY(-1px); }
+        .btn-cadastrar:active { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<div class="modal-box">
+
+    <!-- Cabeçalho -->
+    <div class="modal-header">
+        <span class="modal-titulo">Empresa</span>
+        <a class="modal-fechar" href="/dashboard" title="Fechar">✕</a>
+    </div>
+
+    <!-- Alertas flash -->
+    <div class="alerta-sucesso"  th:if="${sucesso}"     th:text="${sucesso}"></div>
+    <div class="alerta-negocio"  th:if="${erroNegocio}" th:text="${erroNegocio}"></div>
+
+    <!-- Formulário -->
+    <form th:action="@{/empresas/cadastrar}" method="post" class="modal-form">
+
+        <!-- Nome (linha inteira) -->
+        <input class="campo-input"
+               type="text"
+               name="nome"
+               placeholder="Nome:"
+               maxlength="45"
+               required>
+
+        <!-- E-mail (linha inteira) -->
+        <input class="campo-input"
+               type="email"
+               name="email"
+               placeholder="E-mail:"
+               maxlength="45">
+
+        <!-- Senha (linha inteira) -->
+        <input class="campo-input"
+               type="password"
+               name="senha"
+               placeholder="Senha:"
+               maxlength="255">
+
+        <!-- Telefone + CNPJ (linha dupla) -->
+        <div class="campo-row">
+            <input class="campo-input"
+                   type="text"
+                   name="telefone"
+                   placeholder="Telefone: (--) ----*----"
+                   maxlength="15"
+                   id="campoTelefone">
+
+            <input class="campo-input"
+                   type="text"
+                   name="cnpj"
+                   placeholder="CNPJ:"
+                   maxlength="18"
+                   id="campoCnpj">
+        </div>
+
+        <!-- Supervisor (linha inteira) -->
+        <input class="campo-input"
+               type="text"
+               name="supervisor"
+               placeholder="Supervisor:"
+               maxlength="45">
+
+        <!-- Botão -->
+        <div class="modal-rodape">
+            <button class="btn-cadastrar" type="submit">Cadastrar</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    /* Máscara de telefone: (11) 99999-9999 */
+    document.getElementById('campoTelefone').addEventListener('input', function (e) {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+        if (v.length > 6) {
+            v = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7);
+        } else if (v.length > 2) {
+            v = '(' + v.slice(0,2) + ') ' + v.slice(2);
+        } else if (v.length > 0) {
+            v = '(' + v;
+        }
+        e.target.value = v;
+    });
+
+    /* Máscara de CNPJ: 00.000.000/0000-00 */
+    document.getElementById('campoCnpj').addEventListener('input', function (e) {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 14);
+        if (v.length > 12) {
+            v = v.slice(0,2) + '.' + v.slice(2,5) + '.' + v.slice(5,8) + '/' + v.slice(8,12) + '-' + v.slice(12);
+        } else if (v.length > 8) {
+            v = v.slice(0,2) + '.' + v.slice(2,5) + '.' + v.slice(5,8) + '/' + v.slice(8);
+        } else if (v.length > 5) {
+            v = v.slice(0,2) + '.' + v.slice(2,5) + '.' + v.slice(5);
+        } else if (v.length > 2) {
+            v = v.slice(0,2) + '.' + v.slice(2);
+        }
+        e.target.value = v;
+    });
+</script>
+</body>
+</html>
