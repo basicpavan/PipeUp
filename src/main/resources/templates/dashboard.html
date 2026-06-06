@@ -1,100 +1,95 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PipeUp - Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 </head>
-<body>
 
+<body>
 <div class="layout">
+
+    <!-- Sidebar completa (mini + expandida) -->
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
     <div class="main">
-        <div th:replace="~{fragments/header :: header}"></div>
 
+        <!-- Header -->
+        <div class="header">
+            <form action="/dashboard" method="get" class="search-box">
+                <img th:src="@{/img/icon-search.png}" alt="Pesquisar" class="search-icon">
+                <input type="text" name="filtro" placeholder="Pesquisar tarefa">
+            </form>
+            <div class="header-icons">
+                <button type="button" class="header-btn">
+                    <img th:src="@{/img/icon-menu.png}" alt="Menu">
+                </button>
+                <button type="button" class="header-btn">
+                    <img th:src="@{/img/icon-bell.png}" alt="Notificações">
+                </button>
+                <button type="button" class="header-btn">
+                    <img th:src="@{/img/icon-gear.png}" alt="Config">
+                </button>
+                <div class="avatar">
+                    <img th:src="@{/img/icon-avatar.png}" alt="Avatar">
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra laranja — o "+" aqui é decorativo (identifica o espaço ativo) -->
         <div class="orange-bar">
             <div class="titulo-laranja">
-                Recrutamento <span class="btn-mais-laranja">+</span>
+                Recrutamento
+                <span class="btn-mais-laranja">+</span>
             </div>
         </div>
 
+        <!-- Kanban board -->
         <div class="content">
-
             <div class="board-container">
 
-                <div class="board-coluna">
-                    <div class="coluna-topo">
-                        <span>Em Atraso</span>
-                        <span class="coluna-btn">+</span>
-                    </div>
-                    <div class="coluna-cartoes">
+                <!--
+                    Itera os status na ordem definida pelo enum:
+                    EM_ATRASO → EM_ANDAMENTO → A_INICIAR → CONCLUIDO
+                    O botão "+" de cada coluna leva para /tarefas/nova?status=<ENUM_NAME>
+                    e o FormularioTarefa.html pré-seleciona o status correto.
+                -->
+                <div th:each="status : ${statusOpcoes}" class="board-coluna">
 
-                        <div class="cartao">
+                    <div class="coluna-topo">
+                        <span th:text="${status.displayName}"></span>
+                        <a th:href="@{/tarefas/nova(status=${status.name()})}"
+                           class="coluna-btn"
+                           title="Nova tarefa nesta coluna">+</a>
+                    </div>
+
+                    <div class="coluna-cartoes">
+                        <a th:each="t : ${tarefas}"
+                           th:if="${t.status == status}"
+                           class="cartao"
+                           th:href="@{/tarefas/{id}(id=${t.id})}">
                             <div class="cartao-topo">
-                                <span class="cartao-titulo">Tarefa</span>
-                                <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="cartao-avatar">
+                                <span class="cartao-titulo" th:text="${t.titulo}"></span>
+                                <img src="https://i.pravatar.cc/150?img=11"
+                                     class="cartao-avatar" alt="avatar">
                             </div>
-                            <div class="cartao-rodape">
-                                <span>📅 12/12/2100</span>
+                            <div class="cartao-rodape"
+                                 th:text="${t.dataEntrega != null
+                                           ? '📅 ' + t.dataEntrega
+                                           : '📅 Sem data'}">
                             </div>
-                        </div>
-
-                        <div class="cartao">
-                            <div class="cartao-topo">
-                                <span class="cartao-titulo">Tarefa</span>
-                                <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="cartao-avatar">
-                            </div>
-                            <div class="cartao-rodape">
-                                <span>📅 12/12/2100</span>
-                            </div>
-                        </div>
-
+                        </a>
                     </div>
-                </div>
 
-                <div class="board-coluna">
-                    <div class="coluna-topo">
-                        <span>Em Andamento</span>
-                        <span class="coluna-btn">+</span>
-                    </div>
-                    <div class="coluna-cartoes">
-
-                        <div class="cartao">
-                            <div class="cartao-topo">
-                                <span class="cartao-titulo">Tarefa</span>
-                                <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="cartao-avatar">
-                            </div>
-                            <div class="cartao-rodape">
-                                <span>📅 12/12/2100</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="board-coluna">
-                    <div class="coluna-topo">
-                        <span>A Iniciar</span>
-                        <span class="coluna-btn">+</span>
-                    </div>
-                    <div class="coluna-cartoes">
-                    </div>
-                </div>
-
-                <div class="board-coluna">
-                    <div class="coluna-topo">
-                        <span>Concluído</span>
-                        <span class="coluna-btn">+</span>
-                    </div>
-                    <div class="coluna-cartoes">
-                    </div>
                 </div>
 
             </div>
         </div>
+
     </div>
 </div>
 
