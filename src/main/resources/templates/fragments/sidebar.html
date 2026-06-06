@@ -12,7 +12,8 @@
                 <span>Início</span>
             </a>
 
-            <a href="/empresas" class="mini-item">
+            <!-- CORRIGIDO: aponta para /empresas/cadastrar em vez de /empresas -->
+            <a href="/empresas/cadastrar" class="mini-item">
                 <div class="mini-icon-box">
                     <img th:src="@{/img/icon-company.png}" alt="Empresas" class="mini-icon-img">
                 </div>
@@ -42,11 +43,7 @@
         <section class="spaces-block">
             <div class="spaces-title-row">
                 <span>Espaços</span>
-                <!--
-                    CORRIGIDO: o botão + de Espaços agora abre o formulário
-                    de NOVO ESPAÇO (novoEspacoForm), não o de empresa.
-                    A criação de empresas é feita pelo menu "Empresas" na mini-sidebar.
-                -->
+                <!-- Botão + abre formulário de novo espaço -->
                 <button type="button"
                         class="plain-icon-btn"
                         onclick="toggleNovoEspacoForm()"
@@ -55,7 +52,7 @@
                 </button>
             </div>
 
-            <!-- Formulário novo espaço (abre pelo botão + de Espaços) -->
+            <!-- Formulário novo espaço -->
             <form action="/espacos" method="post" class="novo-espaco-form" id="novoEspacoForm">
                 <label class="novo-espaco-label">Empresa</label>
                 <select name="empresaId" required>
@@ -83,12 +80,10 @@
                     </div>
 
                     <div class="space-controls empresa-controls">
-                        <!-- Menu ⋯ de editar/excluir empresa -->
                         <div class="empresa-menu-wrapper">
                             <button type="button"
                                     class="plain-icon-btn small"
-                                    onclick="toggleEmpresaMenu(this)">
-                                ⋯
+                                    onclick="toggleEmpresaMenu(this)">⋯
                             </button>
 
                             <div class="empresa-menu">
@@ -106,12 +101,10 @@
                             </div>
                         </div>
 
-                        <!-- Botão + rápido para adicionar espaço a esta empresa -->
                         <button type="button"
                                 class="plain-icon-btn small"
                                 th:attr="data-empresa-id=${empresa.id}"
-                                onclick="abrirNovoEspacoParaEmpresa(this)">
-                            +
+                                onclick="abrirNovoEspacoParaEmpresa(this)">+
                         </button>
                     </div>
                 </div>
@@ -126,8 +119,7 @@
                     <div class="space-subitem-actions">
                         <button type="button"
                                 class="plain-icon-btn small"
-                                onclick="toggleEspacoMenu(this)">
-                            ⋯
+                                onclick="toggleEspacoMenu(this)">⋯
                         </button>
 
                         <div class="espaco-menu">
@@ -146,7 +138,6 @@
                     </div>
                 </div>
 
-                <!-- Botão + Novo Espaço inline da empresa -->
                 <button type="button"
                         class="space-subitem add-space-subitem add-space-button"
                         th:attr="data-empresa-id=${empresa.id}"
