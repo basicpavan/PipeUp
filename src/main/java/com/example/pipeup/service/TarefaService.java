@@ -1,5 +1,6 @@
 package com.example.pipeup.service;
 
+import com.example.pipeup.model.Atualizacao;
 import com.example.pipeup.model.Espaco;
 import com.example.pipeup.model.Tarefa;
 import com.example.pipeup.repository.EspacoRepository;
@@ -7,6 +8,8 @@ import com.example.pipeup.repository.TarefaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger; // Importar Logger
 import org.slf4j.LoggerFactory; // Importar LoggerFactory
@@ -21,6 +24,9 @@ public class TarefaService {
 
     @Autowired
     private EspacoRepository espacoRepository;
+
+    @Autowired
+    private AtualizacaoService atualizacaoService; // RF-04: registro automático de histórico
 
     /* ── Busca ── */
 
@@ -46,6 +52,10 @@ public class TarefaService {
         validar(tarefa);
         Tarefa novaTarefa = tarefaRepository.save(tarefa);
         logger.info("Tarefa criada com ID: {}", novaTarefa.getId());
+
+        // RF-04: registra a criação no histórico
+        registrarHistorico(novaTarefa.getId(), "Tarefa criada: \"" + novaTarefa.getTitulo() + "\"");
+
         return novaTarefa;
     }
 
@@ -64,6 +74,13 @@ public class TarefaService {
                     logger.error("Espaço com ID {} não encontrado para atualização da tarefa ID {}.", espacoId, id);
                     return new IllegalArgumentException("Espaço não encontrado.");
                 });
+
+        // RF-04: captura o estado anterior ANTES de aplicar as mudanças
+        Tarefa.Status statusAntigo       = tarefa.getStatus();
+        Tarefa.Prioridade prioridadeAnt  = tarefa.getPrioridade();
+        Float progressoAntigo            = tarefa.getProgresso();
+        LocalDate entregaAntiga          = tarefa.getDataEntrega();
+        String espacoAntigo              = tarefa.getEspaco() != null ? tarefa.getEspaco().getNome() : null;
 
         // Atualiza apenas os campos que foram fornecidos (não são nulos)
         if (dados.getTitulo() != null && !dados.getTitulo().trim().isEmpty()) {
@@ -100,7 +117,55 @@ public class TarefaService {
         validar(tarefa);
         Tarefa tarefaAtualizada = tarefaRepository.save(tarefa);
         logger.info("Tarefa ID {} atualizada e salva com sucesso.", id);
+
+        // RF-04: registra no histórico cada campo que mudou
+        if (tarefaAtualizada.getStatus() != statusAntigo) {
+            registrarHistorico(id, "Status alterado de "
+                    + nome(statusAntigo) + " para " + nome(tarefaAtualizada.getStatus()));
+        }
+        if (tarefaAtualizada.getPrioridade() != prioridadeAnt) {
+            registrarHistorico(id, "Prioridade alterada de "
+                    + nome(prioridadeAnt) + " para " + nome(tarefaAtualizada.getPrioridade()));
+        }
+        if (!Objects.equals(tarefaAtualizada.getProgresso(), progressoAntigo)) {
+            registrarHistorico(id, "Progresso: " + progressoAntigo + "% → "
+                    + tarefaAtualizada.getProgresso() + "%");
+        }
+        if (!Objects.equals(tarefaAtualizada.getDataEntrega(), entregaAntiga)) {
+            registrarHistorico(id, "Data de entrega alterada de "
+                    + entregaAntiga + " para " + tarefaAtualizada.getDataEntrega());
+        }
+        String espacoNovo = tarefaAtualizada.getEspaco() != null ? tarefaAtualizada.getEspaco().getNome() : null;
+        if (!Objects.equals(espacoNovo, espacoAntigo)) {
+            registrarHistorico(id, "Espaço alterado de " + espacoAntigo + " para " + espacoNovo);
+        }
+
         return tarefaAtualizada;
+    }
+
+    /* ── Histórico (RF-04) ── */
+
+    private static String nome(Tarefa.Status s) {
+        return s != null ? s.getDisplayName() : "—";
+    }
+
+    private static String nome(Tarefa.Prioridade p) {
+        return p != null ? p.getDisplayName() : "—";
+    }
+
+    /**
+     * Registra uma entrada de histórico do tipo ATIVIDADE. Falhas no registro
+     * não interrompem a operação principal sobre a tarefa.
+     */
+    private void registrarHistorico(Integer tarefaId, String descricao) {
+        try {
+            if (descricao != null && descricao.length() > 255) {
+                descricao = descricao.substring(0, 255);
+            }
+            atualizacaoService.adicionar(tarefaId, descricao, Atualizacao.Tipo.ATIVIDADE);
+        } catch (Exception e) {
+            logger.warn("Não foi possível registrar histórico da tarefa ID {}: {}", tarefaId, e.getMessage());
+        }
     }
 
     /* ── Validações ── */
