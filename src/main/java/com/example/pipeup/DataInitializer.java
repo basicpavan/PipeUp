@@ -27,9 +27,24 @@ public class DataInitializer {
             if (empresaRepo.count() > 0) return;
 
             // Empresas
-            Empresa emp1 = new Empresa(); emp1.setNome("TechCorp Solutions");
-            Empresa emp2 = new Empresa(); emp2.setNome("InnovaTech Ltda");
-            Empresa emp3 = new Empresa(); emp3.setNome("StartupXYZ");
+            Empresa emp1 = new Empresa();
+            emp1.setNome("TechCorp Solutions");
+            emp1.setEndereco("Av. Paulista, 1000 - São Paulo/SP");
+            emp1.setCnpj("12.345.678/0001-90");
+            emp1.setFuncao("Desenvolvimento de software");
+
+            Empresa emp2 = new Empresa();
+            emp2.setNome("InnovaTech Ltda");
+            emp2.setEndereco("Rua das Inovações, 250 - Curitiba/PR");
+            emp2.setCnpj("98.765.432/0001-10");
+            emp2.setFuncao("Consultoria em TI");
+
+            Empresa emp3 = new Empresa();
+            emp3.setNome("StartupXYZ");
+            emp3.setEndereco("Rua Startup, 42 - Florianópolis/SC");
+            emp3.setCnpj("11.222.333/0001-44");
+            emp3.setFuncao("Produtos digitais");
+
             empresaRepo.save(emp1); empresaRepo.save(emp2); empresaRepo.save(emp3);
 
             // Espaços

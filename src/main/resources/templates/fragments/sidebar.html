@@ -51,6 +51,11 @@
             <form action="/empresas" method="post" class="novo-espaco-form" id="novaEmpresaForm">
                 <label class="novo-espaco-label">Nova Empresa</label>
                 <input type="text" name="nome" placeholder="Nome da empresa" required>
+                <input type="text" name="endereco" placeholder="Endereço">
+                <input type="text" name="cnpj" placeholder="CNPJ (00.000.000/0000-00)"
+                       pattern="\d{14}|\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}"
+                       title="Use 14 dígitos ou o formato 00.000.000/0000-00">
+                <input type="text" name="funcao" placeholder="Função / ramo de atuação">
                 <div class="novo-espaco-actions">
                     <button type="submit" class="novo-espaco-btn">Criar empresa</button>
                 </div>
@@ -93,6 +98,11 @@
                                 <form action="/empresas/editar" method="post" class="empresa-menu-form">
                                     <input type="hidden" name="empresaId" th:value="${empresa.id}">
                                     <input type="text" name="nome" th:value="${empresa.nome}" required>
+                                    <input type="text" name="endereco" th:value="${empresa.endereco}" placeholder="Endereço">
+                                    <input type="text" name="cnpj" th:value="${empresa.cnpj}" placeholder="CNPJ"
+                                           pattern="\d{14}|\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}"
+                                           title="Use 14 dígitos ou o formato 00.000.000/0000-00">
+                                    <input type="text" name="funcao" th:value="${empresa.funcao}" placeholder="Função">
                                     <button type="submit" class="empresa-menu-btn editar">Salvar</button>
                                 </form>
 

@@ -28,9 +28,12 @@ public class ApiController {
     /* ── API para criar empresa via AJAX ── */
     @PostMapping("/empresas")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> criarEmpresa(@RequestParam String nome) {
+    public ResponseEntity<Map<String, Object>> criarEmpresa(@RequestParam String nome,
+                                                            @RequestParam(required = false) String endereco,
+                                                            @RequestParam(required = false) String cnpj,
+                                                            @RequestParam(required = false) String funcao) {
         Map<String, Object> response = new HashMap<>();
-        
+
         try {
             if (nome == null || nome.trim().isEmpty()) {
                 response.put("success", false);
@@ -40,9 +43,12 @@ public class ApiController {
 
             Empresa empresa = new Empresa();
             empresa.setNome(nome.trim());
-            
+            empresa.setEndereco(endereco != null ? endereco.trim() : null);
+            empresa.setCnpj(cnpj != null && !cnpj.isBlank() ? cnpj.trim() : null);
+            empresa.setFuncao(funcao != null ? funcao.trim() : null);
+
             empresa = empresaRepository.save(empresa);
-            
+
             response.put("success", true);
             response.put("message", "Empresa criada com sucesso");
             response.put("empresa", Map.of(

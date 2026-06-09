@@ -79,9 +79,18 @@ public class DashboardController {
     }
 
     @PostMapping("/empresas")
-    public String criarEmpresa(@RequestParam String nome) {
+    public String criarEmpresa(@RequestParam String nome,
+                               @RequestParam(required = false) String endereco,
+                               @RequestParam(required = false) String cnpj,
+                               @RequestParam(required = false) String funcao) {
+        if (nome == null || nome.isBlank()) {
+            return "redirect:/dashboard";
+        }
         Empresa empresa = new Empresa();
-        empresa.setNome(nome);
+        empresa.setNome(nome.trim());
+        empresa.setEndereco(endereco != null ? endereco.trim() : null);
+        empresa.setCnpj(cnpj != null && !cnpj.isBlank() ? cnpj.trim() : null);
+        empresa.setFuncao(funcao != null ? funcao.trim() : null);
         empresaRepository.save(empresa);
         return "redirect:/dashboard";
     }
@@ -112,10 +121,16 @@ public class DashboardController {
 
     @PostMapping("/empresas/editar")
     public String editarEmpresa(@RequestParam Integer empresaId,
-                                @RequestParam String nome) {
+                                @RequestParam String nome,
+                                @RequestParam(required = false) String endereco,
+                                @RequestParam(required = false) String cnpj,
+                                @RequestParam(required = false) String funcao) {
         empresaRepository.findById(empresaId).ifPresent(empresa -> {
             if (!nome.isBlank()) {
                 empresa.setNome(nome.trim());
+                empresa.setEndereco(endereco != null ? endereco.trim() : null);
+                empresa.setCnpj(cnpj != null && !cnpj.isBlank() ? cnpj.trim() : null);
+                empresa.setFuncao(funcao != null ? funcao.trim() : null);
                 empresaRepository.save(empresa);
             }
         });
