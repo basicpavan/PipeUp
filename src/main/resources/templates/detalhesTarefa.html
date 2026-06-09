@@ -61,6 +61,9 @@
         .form-titulo { font-size: 0.88rem; font-weight: 700; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.5px; }
         .btn-salvar { height: 36px; padding: 0 22px; border: none; border-radius: 8px; background: #FB7D29; color: #fff; font-size: 0.88rem; font-weight: 700; cursor: pointer; flex-shrink: 0; }
         .btn-salvar:hover { filter: brightness(1.1); }
+        .form-header-acoes { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .btn-excluir { height: 36px; padding: 0 18px; border: 1px solid #ff4d4d; border-radius: 8px; background: transparent; color: #ff6b6b; font-size: 0.88rem; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+        .btn-excluir:hover { background: #ff4d4d; color: #fff; }
 
         .form-scroll { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; padding-bottom: 12px; }
         .form-scroll::-webkit-scrollbar { width: 4px; }
@@ -191,7 +194,11 @@
                 <!-- Cabeçalho fixo com botão salvar sempre visível -->
                 <div class="form-header">
                     <span class="form-titulo">Editar Tarefa</span>
-                    <button type="submit" class="btn-salvar">Salvar</button>
+                    <div class="form-header-acoes">
+                        <button type="submit" form="formExcluirTarefa" class="btn-excluir"
+                                onclick="return confirm('Tem certeza que deseja excluir esta tarefa? Esta ação não pode ser desfeita.');">Excluir</button>
+                        <button type="submit" class="btn-salvar">Salvar</button>
+                    </div>
                 </div>
 
                 <div th:if="${sucesso}" class="alerta-sucesso" th:text="${sucesso}"></div>
@@ -299,6 +306,9 @@
 
                 </div><!-- fim form-scroll -->
             </form>
+
+            <!-- Form isolado para exclusão (botão "Excluir" no cabeçalho aponta para este form) -->
+            <form id="formExcluirTarefa" th:action="@{/tarefas/{id}/excluir(id=${tarefa.id})}" method="post" style="display:none;"></form>
 
             <div class="col-dir">
                 <div class="abas">

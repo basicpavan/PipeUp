@@ -143,6 +143,20 @@ public class TarefaService {
         return tarefaAtualizada;
     }
 
+    /* ── Exclusão ── */
+
+    public void deletar(Integer id) {
+        logger.info("Solicitada exclusão da tarefa ID: {}", id);
+        Tarefa tarefa = tarefaRepository.findById(id)
+                .orElseThrow(() -> {
+                    logger.error("Tarefa com ID {} não encontrada para exclusão.", id);
+                    return new IllegalArgumentException("Tarefa não encontrada.");
+                });
+        // O histórico (atualizacoes) é removido em cascata pela própria entidade.
+        tarefaRepository.delete(tarefa);
+        logger.info("Tarefa ID {} excluída com sucesso.", id);
+    }
+
     /* ── Histórico (RF-04) ── */
 
     private static String nome(Tarefa.Status s) {

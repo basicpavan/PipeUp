@@ -198,6 +198,22 @@ public class TarefaController {
         }
     }
 
+    /* ── POST /tarefas/{id}/excluir — exclui a tarefa ── */
+
+    @PostMapping("/{id}/excluir")
+    public String excluir(@PathVariable Integer id, RedirectAttributes redirect) {
+        logger.info("Recebida requisição para excluir tarefa ID: {}", id);
+        try {
+            tarefaService.deletar(id);
+            redirect.addFlashAttribute("sucesso", "Tarefa excluída com sucesso.");
+            logger.info("Tarefa ID {} excluída.", id);
+        } catch (IllegalArgumentException e) {
+            logger.error("Erro ao excluir tarefa ID {}: {}", id, e.getMessage());
+            redirect.addFlashAttribute("erroNegocio", e.getMessage());
+        }
+        return "redirect:/dashboard";
+    }
+
     @PostMapping("/{id}/atividades")
     public String adicionarAtividade(@PathVariable Integer id,
                                      @RequestParam String descricao,
