@@ -280,7 +280,7 @@
                             </th:block>
                             <div th:each="d : ${#numbers.sequence(1, calDiasNoMes)}"
                                  th:with="diaAtual=${calMesAtual.atDay(d)}"
-                                 th:classappend="${diaAtual == hoje} ? ' hoje' : (${tarefa.dataInicio != null and diaAtual == tarefa.dataInicio} or ${tarefa.dataEntrega != null and diaAtual == tarefa.dataEntrega}) ? ' marcado'"
+                                 th:classappend="${diaAtual == hoje ? ' hoje' : ((tarefa.dataInicio != null and diaAtual == tarefa.dataInicio) or (tarefa.dataEntrega != null and diaAtual == tarefa.dataEntrega) ? ' marcado' : '')}"
                                  class="cal-d" th:text="${d}"></div>
                         </div>
                     </div>
