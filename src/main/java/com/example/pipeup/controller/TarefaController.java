@@ -178,7 +178,8 @@ public class TarefaController {
             tarefa.setTitulo(titulo);
             tarefa.setDescricao(descricao);
             tarefa.setStatus(Tarefa.Status.valueOf(status));
-            tarefa.setDataInicio(dataInicio != null && !dataInicio.isBlank() ? LocalDate.parse(dataInicio) : null);
+            // Data de início = data informada ou, por padrão, o dia da criação
+            tarefa.setDataInicio(dataInicio != null && !dataInicio.isBlank() ? LocalDate.parse(dataInicio) : LocalDate.now());
             tarefa.setDataEntrega(dataEntrega != null && !dataEntrega.isBlank() ? LocalDate.parse(dataEntrega) : null);
 
             if (prioridade != null && !prioridade.isBlank()) {
@@ -198,6 +199,22 @@ public class TarefaController {
             redirect.addFlashAttribute("erroNegocio", e.getMessage());
             return "redirect:/tarefas/nova";
         }
+    }
+
+    /* ── POST /tarefas/{id}/excluir — exclui a tarefa ── */
+
+    @PostMapping("/{id}/excluir")
+    public String excluir(@PathVariable Integer id, RedirectAttributes redirect) {
+        logger.info("Recebida requisição para excluir tarefa ID: {}", id);
+        try {
+            tarefaService.deletar(id);
+            redirect.addFlashAttribute("sucesso", "Tarefa excluída com sucesso.");
+            logger.info("Tarefa ID {} excluída.", id);
+        } catch (IllegalArgumentException e) {
+            logger.error("Erro ao excluir tarefa ID {}: {}", id, e.getMessage());
+            redirect.addFlashAttribute("erroNegocio", e.getMessage());
+        }
+        return "redirect:/dashboard";
     }
 
     /* ── POST /tarefas/{id}/atividades — adiciona atividade ao histórico ── */
