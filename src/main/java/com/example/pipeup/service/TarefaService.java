@@ -6,9 +6,13 @@ import com.example.pipeup.model.Tarefa;
 import com.example.pipeup.repository.EspacoRepository;
 import com.example.pipeup.repository.TarefaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger; // Importar Logger
@@ -43,6 +47,7 @@ public class TarefaService {
         return tarefaRepository.save(tarefa);
     }
 
+    @Transactional
     public Tarefa criar(Tarefa tarefa, Integer espacoId) {
         logger.info("Criando nova tarefa para espaço ID: {}", espacoId);
         Espaco espaco = espacoRepository.findById(espacoId)
@@ -59,6 +64,7 @@ public class TarefaService {
         return novaTarefa;
     }
 
+    @Transactional
     public Tarefa atualizar(Integer id, Tarefa dados, Integer espacoId) {
         logger.info("Iniciando atualização da tarefa ID: {}", id);
         logger.debug("Dados recebidos para atualização: titulo={}, status={}, espacoId={}", dados.getTitulo(), dados.getStatus(), espacoId);
@@ -145,6 +151,7 @@ public class TarefaService {
 
     /* ── Exclusão ── */
 
+    @Transactional
     public void deletar(Integer id) {
         logger.info("Solicitada exclusão da tarefa ID: {}", id);
         Tarefa tarefa = tarefaRepository.findById(id)
@@ -155,6 +162,53 @@ public class TarefaService {
         // O histórico (atualizacoes) é removido em cascata pela própria entidade.
         tarefaRepository.delete(tarefa);
         logger.info("Tarefa ID {} excluída com sucesso.", id);
+    }
+
+    /* ── RF-08: verificação automática de atraso (SLA / prazo de entrega) ── */
+
+    /**
+     * Marca como EM_ATRASO toda tarefa ainda não concluída cujo prazo expirou.
+     * Prazo = data de entrega (se houver); senão, data de criação + SLA da prioridade.
+     * Roda 20s após a inicialização e, depois, a cada hora.
+     */
+    @Scheduled(initialDelay = 20_000, fixedDelay = 3_600_000)
+    @Transactional
+    public void marcarTarefasAtrasadas() {
+        LocalDate hoje = LocalDate.now();
+        LocalDateTime agora = LocalDateTime.now();
+
+        List<Tarefa.Status> ativos = List.of(Tarefa.Status.A_INICIAR, Tarefa.Status.EM_ANDAMENTO);
+        List<Tarefa> candidatas = tarefaRepository.findByStatusIn(ativos);
+
+        int marcadas = 0;
+        for (Tarefa t : candidatas) {
+            String motivo = null;
+
+            if (t.getDataEntrega() != null) {
+                if (t.getDataEntrega().isBefore(hoje)) {
+                    motivo = "prazo de entrega (" + t.getDataEntrega() + ") expirado";
+                }
+            } else if (t.getDataCriacao() != null && t.getPrioridade() != null) {
+                LocalDateTime limiteSla = t.getDataCriacao().plusHours(t.getPrioridade().getHorasSla());
+                if (limiteSla.isBefore(agora)) {
+                    motivo = "SLA de " + t.getPrioridade().getHorasSla() + "h (prioridade "
+                            + t.getPrioridade().getDisplayName() + ") expirado";
+                }
+            }
+
+            if (motivo != null) {
+                t.setStatus(Tarefa.Status.EM_ATRASO);
+                tarefaRepository.save(t);
+                registrarHistorico(t.getId(), "Marcada como Em Atraso automaticamente — " + motivo);
+                marcadas++;
+            }
+        }
+
+        if (marcadas > 0) {
+            logger.info("Verificação de atraso concluída: {} tarefa(s) marcada(s) como Em Atraso.", marcadas);
+        } else {
+            logger.debug("Verificação de atraso concluída: nenhuma tarefa atrasada.");
+        }
     }
 
     /* ── Histórico (RF-04) ── */

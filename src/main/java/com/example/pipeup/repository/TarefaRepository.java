@@ -4,6 +4,7 @@ import com.example.pipeup.model.Tarefa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface TarefaRepository extends JpaRepository<Tarefa, Integer> {
@@ -11,6 +12,9 @@ public interface TarefaRepository extends JpaRepository<Tarefa, Integer> {
     List<Tarefa> findByDescricaoContaining(String filtro);
 
     List<Tarefa> findByStatus(Tarefa.Status status);
+
+    /* RF-08: tarefas em um conjunto de status (ex.: ainda não concluídas/atrasadas) */
+    List<Tarefa> findByStatusIn(Collection<Tarefa.Status> statuses);
 
     List<Tarefa> findByEspaco_Id(Integer espacoId);
 
