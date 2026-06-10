@@ -1,6 +1,7 @@
 package com.example.pipeup.controller;
 
 import com.example.pipeup.model.Atualizacao;
+import com.example.pipeup.model.Espaco;
 import com.example.pipeup.model.Tarefa;
 import com.example.pipeup.repository.EmpresaRepository;
 import com.example.pipeup.repository.EspacoRepository;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.List;
 
 @Controller
 @RequestMapping("/tarefas")
@@ -169,10 +171,13 @@ public class TarefaController {
                               @RequestParam(required = false) String dataInicio,
                               @RequestParam(required = false) String dataEntrega,
                               @RequestParam(required = false) Integer espacoId,  // ← opcional
+                              @RequestParam(required = false) Integer empresaDisplay,    // empresa escolhida no form
+                              @RequestParam(required = false) Integer responsavelDisplay, // responsável escolhido no form
                               @RequestParam(required = false) String prioridade,
                               @RequestParam(required = false) Float progresso,
                               RedirectAttributes redirect) {
-        logger.info("Criando nova tarefa: titulo={}, status={}, espacoId={}", titulo, status, espacoId);
+        logger.info("Criando nova tarefa: titulo={}, status={}, espacoId={}, empresa={}, responsavel={}",
+                titulo, status, espacoId, empresaDisplay, responsavelDisplay);
         try {
             Tarefa tarefa = new Tarefa();
             tarefa.setTitulo(titulo);
@@ -189,7 +194,25 @@ public class TarefaController {
                 tarefa.setProgresso(progresso);
             }
 
-            Tarefa novaTarefa = tarefaService.criar(tarefa, espacoId);
+            // Responsável escolhido no formulário
+            if (responsavelDisplay != null) {
+                usuarioRepository.findById(responsavelDisplay)
+                        .ifPresent(u -> tarefa.getResponsaveis().add(u));
+            }
+
+            // Empresa escolhida → vincula a tarefa a um espaço dessa empresa
+            // (o modelo liga a tarefa a um Espaço, e o Espaço pertence à Empresa)
+            Integer espacoFinal = espacoId;
+            if (empresaDisplay != null) {
+                List<Espaco> espacosDaEmpresa = espacoRepository.findByEmpresaId(empresaDisplay);
+                if (!espacosDaEmpresa.isEmpty()) {
+                    espacoFinal = espacosDaEmpresa.get(0).getId();
+                } else {
+                    logger.warn("Empresa ID {} não possui espaços; tarefa ficará sem espaço.", empresaDisplay);
+                }
+            }
+
+            Tarefa novaTarefa = tarefaService.criar(tarefa, espacoFinal);
             redirect.addFlashAttribute("sucesso", "Tarefa criada com sucesso.");
             logger.info("Nova tarefa ID {} criada com sucesso.", novaTarefa.getId());
             return "redirect:/tarefas/" + novaTarefa.getId();
