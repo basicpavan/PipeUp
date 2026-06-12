@@ -803,3 +803,14 @@ img {
     font-size: 0.8rem;
     color: var(--text-muted);
 }
+/* Efeito no cartão que está sendo arrastado no momento */
+.cartao.arrastando {
+    opacity: 0.5;
+    border: 1px dashed var(--accent);
+}
+
+/* Efeito na coluna quando um cartão está passando por cima dela */
+.hover-zona {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+}
