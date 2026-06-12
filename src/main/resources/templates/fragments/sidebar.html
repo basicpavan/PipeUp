@@ -76,7 +76,7 @@
                 <div class="space-header empresa-header">
                     <div class="space-name-wrap">
                         <div class="space-badge">E</div>
-                        <span class="space-name" th:text="${empresa.nome}"></span>
+                        <span class="space-name"  th:text="${#strings.substring(empresa.nome,0,1)}">></span>
                     </div>
 
                     <div class="space-controls empresa-controls">
